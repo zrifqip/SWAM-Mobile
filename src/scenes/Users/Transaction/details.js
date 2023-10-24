@@ -27,6 +27,8 @@ function UsersTransactionDetails({ navigation, transactions }) {
   const [loading, setLoading] = useState(false);
   let details = transactions.details;
 
+  console.log(details.detail);
+
   let image = "";
 
   if (details.images?.length > 0) {
@@ -96,7 +98,7 @@ function UsersTransactionDetails({ navigation, transactions }) {
                   ) : (
                     <>
                       <Text style={styles.txtName}>
-                        {res?.item?.name} {numberFloat(res?.weight)} kg
+                        {res?.name} {numberFloat(res?.weight)} kg
                       </Text>
                       <Text style={styles.txtValue}>
                         {currencyFloat(res.totalPrice)}
