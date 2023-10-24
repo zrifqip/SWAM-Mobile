@@ -53,11 +53,16 @@ function WasteBankTransaction({ navigation, transactions }) {
 
     let arr = [];
 
+    console.log(trans);
+
     for (let i = 0; i < trans.length; i++) {
       let temp = {
-        Nasabah: trans[i].customer.fullName,
-        Waktu: trans[i].schedule.day,
-        Status: trans[i].status,
+        Nasabah: trans[i]?.customer?.fullName,
+        Waktu: trans[i]?.date,
+        Delivery: trans[i]?.deliveryType,
+        "Total Price": trans[i]?.totalPrice,
+        "Total Weight": trans[i]?.totalWeight,
+        Status: trans[i]?.status,
       };
 
       arr.push(temp);
@@ -74,7 +79,7 @@ function WasteBankTransaction({ navigation, transactions }) {
     var file =
       RNFS.DownloadDirectoryPath +
       "/" +
-      moment().format("DDMMYY-") +
+      moment().format("DDMMYY-kkmmss-") +
       "Transaction.xlsx";
 
     writeFile(file, wbout, "ascii")
@@ -82,7 +87,7 @@ function WasteBankTransaction({ navigation, transactions }) {
         showToast("Laporan berhasil di download");
       })
       .catch((e) => {
-        showToast("Laporan gagal di download");
+        showToast("Laporan gagal di download : " + e.toString());
       });
   };
 
