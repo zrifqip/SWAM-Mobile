@@ -1,6 +1,18 @@
-import { normalize } from "@utils";
+import {normalize} from '@utils';
 
-export const SIZES = ["XS", "S", "M", "XM", "L", "XL", "BTN LINK", "OPT BTN", "BTN DESC", "DOT", "MF"];
+export const SIZES = [
+  'XS',
+  'S',
+  'M',
+  'XM',
+  'L',
+  'XL',
+  'BTN LINK',
+  'OPT BTN',
+  'BTN DESC',
+  'DOT',
+  'MF',
+];
 export const FONT_SIZES = [
   normalize(9), // XS
   normalize(11), // S

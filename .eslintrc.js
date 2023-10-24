@@ -18,7 +18,7 @@ module.exports = {
           '@scenes': './src/scenes',
           '@stores': './src/stores',
           '@styles': './src/styles',
-          '@utils': './src/utils'
+          '@utils': './src/utils',
         },
       },
     },

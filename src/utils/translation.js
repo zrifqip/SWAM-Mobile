@@ -1,15 +1,14 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {createContext, useContext, useState} from 'react';
 import MMKVStorage from 'react-native-mmkv-storage';
-import LocalizedStrings from "react-native-localization";
-import * as RNLocalize from "react-native-localize";
-import moment from "moment";
-import idLocale from "moment/locale/id";
-import { Localization } from "@assets";
+import LocalizedStrings from 'react-native-localization';
+import * as RNLocalize from 'react-native-localize';
+import moment from 'moment';
+import idLocale from 'moment/locale/id';
+import {Localization} from '@assets';
 
-
-const DEFAULT_LANGUAGE = "id";
-const APP_LANGUAGE = "appLanguage";
-const languages = { id: Localization.id, en: Localization.en };
+const DEFAULT_LANGUAGE = 'id';
+const APP_LANGUAGE = 'appLanguage';
+const languages = {id: Localization.id, en: Localization.en};
 const translations = new LocalizedStrings(languages);
 
 const LocalizationContext = createContext({
@@ -19,24 +18,22 @@ const LocalizationContext = createContext({
   initializeAppLanguage: () => null,
 });
 
-export const LocalizationProvider = ({ children }) => {
+export const LocalizationProvider = ({children}) => {
   const [appLanguage, setAppLanguage] = useState(DEFAULT_LANGUAGE);
 
-  storage = new MMKVStorage.Loader().initialize()
+  storage = new MMKVStorage.Loader().initialize();
 
   const setLanguage = (language) => {
     translations.setLanguage(language);
     moment.updateLocale(language, [idLocale]);
     setAppLanguage(language);
 
-    this.storage.setItem(APP_LANGUAGE, language)
-
+    this.storage.setItem(APP_LANGUAGE, language);
   };
 
   const initializeAppLanguage = async () => {
-
     const storage = new MMKVStorage.Loader().initialize();
-  
+
     const currentLanguage = await storage.getItem(APP_LANGUAGE);
 
     if (currentLanguage) {
@@ -44,7 +41,9 @@ export const LocalizationProvider = ({ children }) => {
     } else {
       let localeCode = DEFAULT_LANGUAGE;
       const supportedLocaleCodes = translations.getAvailableLanguages();
-      const phoneLocaleCodes = RNLocalize.getLocales().map((locale) => locale.languageCode);
+      const phoneLocaleCodes = RNLocalize.getLocales().map(
+        (locale) => locale.languageCode,
+      );
 
       phoneLocaleCodes.some((code) => {
         if (supportedLocaleCodes.includes(code)) {
@@ -63,7 +62,8 @@ export const LocalizationProvider = ({ children }) => {
         appLanguage,
         setAppLanguage: setLanguage,
         initializeAppLanguage,
-      }}>
+      }}
+    >
       {children}
     </LocalizationContext.Provider>
   );

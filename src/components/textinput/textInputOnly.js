@@ -1,20 +1,25 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { TextInput, IconButton } from "react-native-paper";
-import PropTypes from "prop-types";
+import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {TextInput, IconButton} from 'react-native-paper';
+import PropTypes from 'prop-types';
 
-const TextInputOnly = ({ mode, inputProps, iconProps, forwardRef }) => {
+const TextInputOnly = ({mode, inputProps, iconProps, forwardRef}) => {
   const [visiblePassword, setVisiblePassword] = useState(false);
 
-  return mode === "password" ? (
+  return mode === 'password' ? (
     <View style={styles.container}>
-      <TextInput ref={forwardRef} {...inputProps} autoCompleteType="password" secureTextEntry={!visiblePassword} />
+      <TextInput
+        ref={forwardRef}
+        {...inputProps}
+        autoCompleteType="password"
+        secureTextEntry={!visiblePassword}
+      />
       <IconButton
         {...iconProps}
-        icon={!visiblePassword ? "eye-off" : "eye"}
+        icon={!visiblePassword ? 'eye-off' : 'eye'}
         style={{
           ...iconProps.style,
-          position: "absolute",
+          position: 'absolute',
           right: 0,
           top: 3,
           zIndex: 2,
@@ -29,13 +34,13 @@ const TextInputOnly = ({ mode, inputProps, iconProps, forwardRef }) => {
 
 TextInputOnly.propTypes = {
   forwardRef: PropTypes.any,
-  mode: PropTypes.oneOf(["regular", "password"]).isRequired,
+  mode: PropTypes.oneOf(['regular', 'password']).isRequired,
   inputProps: PropTypes.object,
   iconProps: PropTypes.object,
 };
 
 TextInputOnly.defaultProps = {
-  mode: "regular",
+  mode: 'regular',
 };
 
 export default TextInputOnly;

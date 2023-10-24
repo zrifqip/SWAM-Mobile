@@ -24,7 +24,7 @@ import UsersWithdraw from './Users/Withdraw';
 import WasteBankCustomers from './WasteBank/Customers';
 import WasteBankDashboard from './WasteBank/Dashboard';
 import WasteBankProduct from './WasteBank/Product';
-import WasteBankProductForm from "./WasteBank/Product/form";
+import WasteBankProductForm from './WasteBank/Product/form';
 import WasteBankProfile from './WasteBank/Profile';
 import WasteBankTransaction from './WasteBank/Transaction';
 import WasteBankTransactionDetails from './WasteBank/Transaction/details';
@@ -32,36 +32,36 @@ import WasteBankTransactionForm from './WasteBank/Transaction/form';
 import WasteBankWithdraw from './WasteBank/Withdraw';
 
 export {
-    Account,
-    Chats,
-    ChatsRoom,
-    CompanyDashboard,
-    CompanyProfile,
-    CompanyWasteBank,
-    CompanyWasteBankDetail,
-    OnBoarding,
-    ResultsAddress,
-    ResultsCategory,
-    ResultsCustomers,
-    ResultsSchedule,
-    ResultsWasteBank,
-    SettingLanguage,
-    SignIn,
-    SignUp,
-    UsersDashboard,
-    UsersProfile,
-    UsersTransaction,
-    UsersTransactionDetails,
-    UsersWasteBank,
-    UsersWasteBankDetail,
-    UsersWithdraw,
-    WasteBankCustomers,
-    WasteBankDashboard,
-    WasteBankProduct,
-    WasteBankProductForm,
-    WasteBankProfile,
-    WasteBankTransaction,
-    WasteBankTransactionDetails,
-    WasteBankTransactionForm,
-    WasteBankWithdraw
-}
+  Account,
+  Chats,
+  ChatsRoom,
+  CompanyDashboard,
+  CompanyProfile,
+  CompanyWasteBank,
+  CompanyWasteBankDetail,
+  OnBoarding,
+  ResultsAddress,
+  ResultsCategory,
+  ResultsCustomers,
+  ResultsSchedule,
+  ResultsWasteBank,
+  SettingLanguage,
+  SignIn,
+  SignUp,
+  UsersDashboard,
+  UsersProfile,
+  UsersTransaction,
+  UsersTransactionDetails,
+  UsersWasteBank,
+  UsersWasteBankDetail,
+  UsersWithdraw,
+  WasteBankCustomers,
+  WasteBankDashboard,
+  WasteBankProduct,
+  WasteBankProductForm,
+  WasteBankProfile,
+  WasteBankTransaction,
+  WasteBankTransactionDetails,
+  WasteBankTransactionForm,
+  WasteBankWithdraw,
+};
