@@ -75,13 +75,13 @@ class TransactionsUtils {
   // WASTE BANK
   async createTransactionsWasteBank(params, photo) {
     return await createTransactionsWasteBank(params)
-      .then((response) => {
+      .then(async (response) => {
         const respon = response.data;
 
         if (respon.status == "success") {
-          this.uploadTransactionsUsersDetail(respon.data.id, photo);
-          this.getTransactionsWasteBanksDetail(respon.data.id);
-          this.getTransactionsWasteBanks();
+          await this.uploadTransactionsUsersDetail(respon.data.id, photo);
+          await this.getTransactionsWasteBanksDetail(respon.data.id);
+          await this.getTransactionsWasteBanks();
 
           return 200;
         } else {
