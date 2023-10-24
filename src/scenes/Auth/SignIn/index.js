@@ -12,6 +12,7 @@ import {
 } from "@components";
 import { responsiveHeight, useTranslation } from "@utils";
 import { phoneRegex } from "@constants";
+import { env } from "@constants/ENV";
 import { Formik } from "formik";
 import { RFValue } from "react-native-responsive-fontsize";
 import authUtils from "@utils/AuthUtils";
@@ -44,8 +45,9 @@ const SignIn = ({ navigation }) => {
       phoneNumber: values.phoneNumber,
     };
 
-    let response = await authUtils.signInUsers(params);
-    // let response =  await authUtils.signInUsersByPass(params)
+    let response;
+    if (env == "prod") response = await authUtils.signInUsers(params);
+    else if (env == "dev") response = await authUtils.signInUsersByPass(params);
 
     if (response == 200) {
       // navigation.navigate('dashboard')
