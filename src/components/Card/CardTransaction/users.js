@@ -1,32 +1,31 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {formatDateDay, currencyFloat, arrStatus} from '@constants';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { formatDateDay, currencyFloat, arrStatus } from "@constants";
+import { RFValue } from "react-native-responsive-fontsize";
 
-function CardTrasactionUsers({item, onPress}) {
+function CardTrasactionUsers({ item, onPress }) {
   let status = arrStatus(item.status);
 
   return (
     <View style={styles.cardMenu}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Text style={styles.item}>Berat Sampah : {item.totalWeight} kg</Text>
         <Text style={styles.item}>
           Total Transaksi : {currencyFloat(item?.totalPrice)}
         </Text>
-        <Text style={[styles.status, {color: status.color}]}>
+        <Text style={[styles.status, { color: status.color }]}>
           {status.label}
         </Text>
       </View>
-      <View style={{alignItems: 'flex-end'}}>
+      <View style={{ alignItems: "flex-end" }}>
         <Text style={styles.date} numberOfLines={1}>
           {formatDateDay(item.date)}
         </Text>
         <TouchableOpacity
           style={styles.btn}
           activeOpacity={0.5}
-          onPress={onPress}
-        >
+          onPress={onPress}>
           <Text style={styles.textBtn}>Detail</Text>
         </TouchableOpacity>
       </View>

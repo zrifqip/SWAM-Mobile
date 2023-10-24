@@ -1,23 +1,22 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {currencyFloat, numberFloat} from '@constants';
-import {base_uri} from '@constants/BASE_URL';
+import React from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { currencyFloat, numberFloat } from "@constants";
+import { base_uri } from "@constants/BASE_URL";
 
-function CardWasteBankProduct({item, index, onPress}) {
+function CardWasteBankProduct({ item, index, onPress }) {
   return (
     <TouchableOpacity
-      style={[styles.cardMenu, index == 0 && {marginLeft: RFValue(15)}]}
+      style={[styles.cardMenu, index == 0 && { marginLeft: RFValue(15) }]}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <Image
         source={{
           uri:
             item?.images?.length > 0
               ? base_uri + item?.images[0]?.original?.path
-              : 'https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg',
+              : "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg",
         }}
         style={styles.image}
       />
@@ -62,7 +61,7 @@ const styles = {
     ...Font.SemiBold,
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: RFValue(70),
     borderRadius: 10,
   },
@@ -80,6 +79,6 @@ const styles = {
   cardPrice: {
     ...StC.flexR,
     ...StC.mT10,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
 };

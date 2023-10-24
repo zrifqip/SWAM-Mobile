@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
-import {FlatList, View, RefreshControl} from 'react-native';
-import {CardWithdrawWasteBank, Search, EmptyData} from '@components';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {createFilter} from 'react-native-search-filter';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React, { useState } from "react";
+import { FlatList, View, RefreshControl } from "react-native";
+import { CardWithdrawWasteBank, Search, EmptyData } from "@components";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { createFilter } from "react-native-search-filter";
+import { RFValue } from "react-native-responsive-fontsize";
 const KEYS_TO_FILTERS = [
-  'nominal',
-  'status',
-  'createdAt',
-  'customerID.fullName',
+  "nominal",
+  "status",
+  "createdAt",
+  "customerID.fullName",
 ];
 
-function History({withdraw, _onRefresh}) {
-  const {translations} = useTranslation();
+function History({ withdraw, _onRefresh }) {
+  const { translations } = useTranslation();
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const arr = withdraw.withdraw.filter(
-    (x) => x.status == 'accept' || x.status == 'reject',
+    (x) => x.status == "accept" || x.status == "reject",
   );
 
   const filteredData = arr.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
@@ -26,20 +26,20 @@ function History({withdraw, _onRefresh}) {
   return (
     <>
       <Search
-        placeholder={translations['search.withdraw']}
+        placeholder={translations["search.withdraw"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
       />
-      <View style={{marginBottom: RFValue(10)}} />
+      <View style={{ marginBottom: RFValue(10) }} />
       <FlatList
         data={filteredData}
-        renderItem={({item}) => <CardWithdrawWasteBank item={item} />}
+        renderItem={({ item }) => <CardWithdrawWasteBank item={item} />}
         ListEmptyComponent={
-          <EmptyData message={translations['empty.withdraw']} />
+          <EmptyData message={translations["empty.withdraw"]} />
         }
         refreshControl={<RefreshControl onRefresh={_onRefresh} />}
       />
@@ -48,8 +48,8 @@ function History({withdraw, _onRefresh}) {
 }
 
 const mapStateToProps = function (state) {
-  const {withdraw} = state;
-  return {withdraw};
+  const { withdraw } = state;
+  return { withdraw };
 };
 
 export default connect(mapStateToProps)(History);

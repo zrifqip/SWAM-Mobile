@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,30 +7,30 @@ import {
   FlatList,
   TouchableOpacity,
   RefreshControl,
-} from 'react-native';
-import {BaseContainer, AppBar} from '@components';
-import {Icon} from 'native-base';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import {formatDateChatsDetail} from '@constants';
-import socketIOClient from 'socket.io-client';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import chatsUtils from '@utils/ChatsUtils';
+} from "react-native";
+import { BaseContainer, AppBar } from "@components";
+import { Icon } from "native-base";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import { formatDateChatsDetail } from "@constants";
+import socketIOClient from "socket.io-client";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import chatsUtils from "@utils/ChatsUtils";
 
-function ChatsRoom({navigation, chats, users}) {
-  let socket = socketIOClient('https://api.apps4swam.com/chat', {
+function ChatsRoom({ navigation, chats, users }) {
+  let socket = socketIOClient("https://api.apps4swam.com/chat", {
     auth: {
-      token: 'nT4GOTvQ7GhFHuQjzTGw',
+      token: "nT4GOTvQ7GhFHuQjzTGw",
     },
-    transports: ['websocket'],
+    transports: ["websocket"],
     forceNew: true,
     upgrade: false,
   });
 
   socket.connect();
-  socket.on('connect', () => '');
-  socket.on('disconnect', () => '');
+  socket.on("connect", () => "");
+  socket.on("disconnect", () => "");
 
   let detail = chats.detail;
   const [loading, setLoading] = useState(false);
@@ -73,14 +73,14 @@ function ChatsRoom({navigation, chats, users}) {
       // _onNewMsg()
       chatsUtils.chatsCompanyDetail(detail._id);
       _scrollToBottom(50);
-      setChatMessage('');
+      setChatMessage("");
     }
   };
 
   const _scrollToBottom = async (offset) => {
     const scrollHeight = contentHeight - scrollViewHeight + offset;
     if (scrollHeight > 0) {
-      flatlist.scrollToOffset({offset: scrollHeight, animated: true});
+      flatlist.scrollToOffset({ offset: scrollHeight, animated: true });
     }
   };
 
@@ -99,28 +99,28 @@ function ChatsRoom({navigation, chats, users}) {
   return (
     <BaseContainer>
       <AppBar onBackCustom={() => goBack()} title={name} />
-      <View style={{flex: 1, backgroundColor: '#eee4dc'}}>
-        <View style={{flex: 1}}>
+      <View style={{ flex: 1, backgroundColor: "#eee4dc" }}>
+        <View style={{ flex: 1 }}>
           <FlatList
             ref={(flatlist) => setFlatlist(flatlist)}
             data={detail.chats}
             keyExtractor={(item, index) => `${index}`}
             onContentSizeChange={(w, h) => setContentHeight(h)}
             onLayout={(ev) => setScrollViewHeight(ev.nativeEvent.layout.height)}
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               const cellStyle = {
                 container: {
-                  justifyContent: 'center',
-                  alignItems: userID == item.userID ? 'flex-end' : 'flex-start',
+                  justifyContent: "center",
+                  alignItems: userID == item.userID ? "flex-end" : "flex-start",
                 },
                 textContainer: {
-                  maxWidth: '70%',
+                  maxWidth: "70%",
                   marginHorizontal: RFValue(10),
                   marginVertical: RFValue(4),
                   paddingHorizontal: RFValue(10),
                   paddingVertical: RFValue(5),
                   backgroundColor:
-                    userID == item.userID ? '#dbf5b4' : '#bfbfbf',
+                    userID == item.userID ? "#dbf5b4" : "#bfbfbf",
                   borderRadius: RFValue(8),
                 },
               };
@@ -149,13 +149,13 @@ function ChatsRoom({navigation, chats, users}) {
               value={chatMessage}
               onChangeText={(val) => setChatMessage(val)}
               underlineColorAndroid="transparent"
-              placeholder={'Ketik pesan disini ...'}
+              placeholder={"Ketik pesan disini ..."}
               variant="unstyled"
             />
           </View>
           <TouchableOpacity style={styles.btn} onPress={() => _sendMessage()}>
             <Icon
-              as={<FontAwesome name={'send'} />}
+              as={<FontAwesome name={"send"} />}
               size={RFValue(5)}
               color={Colors.WHITE}
             />
@@ -167,8 +167,8 @@ function ChatsRoom({navigation, chats, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {chats, users} = state;
-  return {chats, users};
+  const { chats, users } = state;
+  return { chats, users };
 };
 
 export default connect(mapStateToProps)(ChatsRoom);
@@ -176,7 +176,7 @@ export default connect(mapStateToProps)(ChatsRoom);
 const styles = StyleSheet.create({
   cardFooter: {
     ...StC.flexR,
-    alignItems: 'center',
+    alignItems: "center",
     paddingVertical: RFValue(10),
     paddingHorizontal: RFValue(10),
   },
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     marginRight: RFValue(10),
     height: RFValue(45),
     paddingHorizontal: RFValue(10),
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   btn: {
     ...StC.centerPage,
@@ -213,12 +213,12 @@ const styles = StyleSheet.create({
   message: {
     ...Font.F12,
     ...Font.Regular,
-    color: '#0d0d0d',
+    color: "#0d0d0d",
   },
   time: {
     ...Font.F10,
     ...Font.Regular,
-    color: '#999999',
-    textAlign: 'right',
+    color: "#999999",
+    textAlign: "right",
   },
 });

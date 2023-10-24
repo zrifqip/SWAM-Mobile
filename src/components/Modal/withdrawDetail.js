@@ -1,36 +1,36 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
-import {Font, StC, Shadow, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {showToast, currencyFloat} from '@constants';
-import {useTranslation} from '@utils';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import withdrawUtils from '@utils/WithdrawUtils';
-import sendNotifUtils from '@utils/SendNotifUtils';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { Font, StC, Shadow, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { showToast, currencyFloat } from "@constants";
+import { useTranslation } from "@utils";
+import RBSheet from "react-native-raw-bottom-sheet";
+import withdrawUtils from "@utils/WithdrawUtils";
+import sendNotifUtils from "@utils/SendNotifUtils";
 
-function ModalWithdrawDetail({open, item, onPress, users}) {
-  const {translations} = useTranslation();
+function ModalWithdrawDetail({ open, item, onPress, users }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   let customer = item.customer;
   let bank = customer?.bankAccount;
 
   const confirmationAccept = (type) => {
     Alert.alert(
-      translations['confirmation'],
-      type == 'reject'
-        ? translations['confirm.reject']
-        : translations['confirmation.approved'],
+      translations["confirmation"],
+      type == "reject"
+        ? translations["confirm.reject"]
+        : translations["confirmation.approved"],
       [
         {
-          text: translations['confirmation.no'],
+          text: translations["confirmation.no"],
         },
         {
-          text: translations['confirmation.yes'],
+          text: translations["confirmation.yes"],
           onPress: () => accept(type),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
@@ -47,10 +47,10 @@ function ModalWithdrawDetail({open, item, onPress, users}) {
 
     if (respons == 200) {
       sendNotif(type);
-      showToast(translations['status.update']);
+      showToast(translations["status.update"]);
       onPress();
     } else {
-      showToast(translations['please.try.again']);
+      showToast(translations["please.try.again"]);
     }
 
     setLoading(false);
@@ -58,35 +58,35 @@ function ModalWithdrawDetail({open, item, onPress, users}) {
 
   const sendNotif = async (type) => {
     let message =
-      'Hai *' +
+      "Hai *" +
       customer.fullName +
-      '*,' +
-      '\n\n' +
-      'Pengajuan withdraw kamu sebesar *' +
+      "*," +
+      "\n\n" +
+      "Pengajuan withdraw kamu sebesar *" +
       currencyFloat(item.nominal) +
-      '* ditolak oleh *' +
+      "* ditolak oleh *" +
       users.users.organization.companyName +
-      '*,' +
-      '\n\n' +
-      'Silahkan coba kembali atau menghubungi bank sampah yang bersangkutan' +
-      '\n\n' +
-      'Terima Kasih';
+      "*," +
+      "\n\n" +
+      "Silahkan coba kembali atau menghubungi bank sampah yang bersangkutan" +
+      "\n\n" +
+      "Terima Kasih";
 
-    if (type == 'accept') {
+    if (type == "accept") {
       message =
-        'Hai *' +
+        "Hai *" +
         customer.fullName +
-        '*,' +
-        '\n\n' +
-        'Pengajuan withdraw kamu sebesar *' +
+        "*," +
+        "\n\n" +
+        "Pengajuan withdraw kamu sebesar *" +
         currencyFloat(item.nominal) +
-        '* disetujui oleh *' +
+        "* disetujui oleh *" +
         users.users.organization.companyName +
-        '*,' +
-        '\n\n' +
-        'Silahkan hubungi bank sampah untuk lebih lanjut' +
-        '\n\n' +
-        'Terima Kasih';
+        "*," +
+        "\n\n" +
+        "Silahkan hubungi bank sampah untuk lebih lanjut" +
+        "\n\n" +
+        "Terima Kasih";
     }
 
     let send = {
@@ -106,41 +106,39 @@ function ModalWithdrawDetail({open, item, onPress, users}) {
         container: {
           ...StC.centerPage,
         },
-      }}
-    >
+      }}>
       {customer ? (
         <View style={styles.modal}>
           <Text style={styles.name}>{customer.fullName}</Text>
           <Text style={styles.balance}>
-            {translations['balance']}: {currencyFloat(customer.balance)}
+            {translations["balance"]}: {currencyFloat(customer.balance)}
           </Text>
           <Text style={styles.nominal}>
-            Nominal {translations['withdraw']}: {currencyFloat(item.nominal)}
+            Nominal {translations["withdraw"]}: {currencyFloat(item.nominal)}
           </Text>
           <Text style={styles.nominal}>
-            {item.method == 'cash' ? 'Cash' : 'Transfer'}
+            {item.method == "cash" ? "Cash" : "Transfer"}
           </Text>
-          {item.method == 'transfer' && (
+          {item.method == "transfer" && (
             <Text style={styles.nominal}>
               {bank.name} - {bank.accountName} ({bank.accountNumber})
             </Text>
           )}
-          <View style={[StC.flexR, StC.mT15, {marginHorizontal: RFValue(-10)}]}>
-            {item.status == 'pending' && (
+          <View
+            style={[StC.flexR, StC.mT15, { marginHorizontal: RFValue(-10) }]}>
+            {item.status == "pending" && (
               <>
                 <TouchableOpacity
                   activeOpacity={0.5}
-                  onPress={() => confirmationAccept('reject')}
-                  style={[styles.btn, styles.btnReject]}
-                >
-                  <Text style={styles.label}>{translations['reject']}</Text>
+                  onPress={() => confirmationAccept("reject")}
+                  style={[styles.btn, styles.btnReject]}>
+                  <Text style={styles.label}>{translations["reject"]}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.5}
-                  onPress={() => confirmationAccept('accept')}
-                  style={[styles.btn, styles.btnApproved]}
-                >
-                  <Text style={styles.label}>{translations['approved']}</Text>
+                  onPress={() => confirmationAccept("accept")}
+                  style={[styles.btn, styles.btnApproved]}>
+                  <Text style={styles.label}>{translations["approved"]}</Text>
                 </TouchableOpacity>
               </>
             )}
@@ -152,8 +150,8 @@ function ModalWithdrawDetail({open, item, onPress, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users} = state;
-  return {users};
+  const { users } = state;
+  return { users };
 };
 
 export default connect(mapStateToProps)(ModalWithdrawDetail);
@@ -201,7 +199,7 @@ const styles = StyleSheet.create({
     ...Font.Regular,
     ...Font.F12,
     ...Font.WHITE,
-    textAlign: 'center',
+    textAlign: "center",
   },
   nominal: {
     ...Font.F13,

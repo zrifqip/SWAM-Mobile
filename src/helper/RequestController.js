@@ -1,15 +1,15 @@
-import Axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
+import Axios from "axios";
+import AsyncStorage from "@react-native-community/async-storage";
 
 const axiosCustomHeader = Axios.create();
 const roAxios = Axios.create();
 
 axiosCustomHeader.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem('userToken');
+    const token = await AsyncStorage.getItem("userToken");
     if (token) {
       config.headers = {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         params: token,
       };
     }
@@ -23,7 +23,7 @@ axiosCustomHeader.interceptors.request.use(
 // FOR REQUEST WITH USER TOKEN
 Axios.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem('userToken');
+    const token = await AsyncStorage.getItem("userToken");
     if (token) {
       config.headers = {
         params: token,

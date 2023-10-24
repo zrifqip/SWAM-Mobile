@@ -1,23 +1,22 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {numberFloat} from '@constants';
-import {base_uri} from '@constants/BASE_URL';
+import React from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { numberFloat } from "@constants";
+import { base_uri } from "@constants/BASE_URL";
 
-function CardWasteBankList({item, onPress}) {
+function CardWasteBankList({ item, onPress }) {
   return (
     <TouchableOpacity
       style={styles.cardMenu}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <Image
         source={{
           uri:
             item?.image?.length > 0
               ? base_uri + item?.image[0].original?.path
-              : 'https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg',
+              : "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg",
         }}
         style={styles.image}
       />

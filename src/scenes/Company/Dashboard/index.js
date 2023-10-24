@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   ScrollView,
   FlatList,
   PermissionsAndroid,
-} from 'react-native';
+} from "react-native";
 import {
   BaseContainer,
   CardWasteBank,
@@ -16,26 +16,26 @@ import {
   MyView,
   ButtonChats,
   FilterDate,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Icon, HStack, Center} from 'native-base';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import {Images, Icons} from '@assets';
-import {useTranslation} from '@utils';
-import {arrSortDistance, numberFloat} from '@constants';
-import {GetCoordinate, GetWasteBanksDetails} from '@actions';
-import store from '@stores/store';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-import LinearGradient from 'react-native-linear-gradient';
-import Geolocation from '@react-native-community/geolocation';
-import Entypo from 'react-native-vector-icons/Entypo';
-import moment from 'moment';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Icon, HStack, Center } from "native-base";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import { Images, Icons } from "@assets";
+import { useTranslation } from "@utils";
+import { arrSortDistance, numberFloat } from "@constants";
+import { GetCoordinate, GetWasteBanksDetails } from "@actions";
+import store from "@stores/store";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
+import LinearGradient from "react-native-linear-gradient";
+import Geolocation from "@react-native-community/geolocation";
+import Entypo from "react-native-vector-icons/Entypo";
+import moment from "moment";
 
-function CompanyDashboard({navigation, users, wasteBanks}) {
+function CompanyDashboard({ navigation, users, wasteBanks }) {
   let user = users.users;
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
   const [loadingWaste, setLoadingWaste] = useState(false);
   const [amount, setAmount] = useState(0);
   const [date, setDate] = useState(new Date());
@@ -56,13 +56,13 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
   const getDashboard = async (val) => {
     setDate(val);
     await wasteBanksUtils.getCompanyDashboard(
-      `year=${moment(val).format('YYYY')}&month=${moment(val).format('M')}`,
+      `year=${moment(val).format("YYYY")}&month=${moment(val).format("M")}`,
     );
   };
 
   const getResultWasteBanks = async (item) => {
     store.dispatch(GetWasteBanksDetails(item));
-    navigation.navigate('CompanyWasteBankDetail');
+    navigation.navigate("CompanyWasteBankDetail");
   };
 
   // LOCATION
@@ -72,14 +72,14 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-            title: 'Location Access Required',
-            message: 'This App needs to Access your location',
+            title: "Location Access Required",
+            message: "This App needs to Access your location",
           },
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           callLocation();
         } else {
-          alert('Aktifkan GPS');
+          alert("Aktifkan GPS");
         }
       } catch (err) {}
     }
@@ -98,7 +98,7 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
         storeCoordinate(coordinate);
       },
       (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000000, maximumAge: 1000},
+      { enableHighAccuracy: true, timeout: 20000000, maximumAge: 1000 },
     );
     watchID = Geolocation.watchPosition((position) => {
       let coordinate = {
@@ -119,30 +119,31 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
   return (
     <BaseContainer>
       <StatusBar barStyle="light-content" backgroundColor={Colors.PRIMARY} />
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <LinearGradient
           colors={[Colors.PRIMARY, Colors.PRIMARY]}
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 0}}
-          style={styles.header}
-        >
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.header}>
           <Image source={Images.swam_putih} style={styles.logo} />
           <Text
             style={styles.welcome}
-            numberOfLines={2}
-          >{`${translations['hello']}, ${user?.organization?.companyName}, ${translations['how.are.you']}`}</Text>
-          <View style={[StC.flexR, {alignItems: 'center'}]}>
+            numberOfLines={
+              2
+            }>{`${translations["hello"]}, ${user?.organization?.companyName}, ${translations["how.are.you"]}`}</Text>
+          <View style={[StC.flexR, { alignItems: "center" }]}>
             <Image source={Icons.location} style={styles.iconPin} />
             <Text
               style={styles.address}
-              numberOfLines={1}
-            >{`${user?.organization?.address?.street}`}</Text>
+              numberOfLines={
+                1
+              }>{`${user?.organization?.address?.street}`}</Text>
           </View>
         </LinearGradient>
         <View style={styles.cardSaldo}>
           <View style={styles.itemSaldo}>
             <Text style={styles.saldo}>{numberFloat(amount)}</Text>
-            <Text style={styles.labelSaldo}>{translations['waste.bank']}</Text>
+            <Text style={styles.labelSaldo}>{translations["waste.bank"]}</Text>
           </View>
           <View style={styles.itemSaldo}>
             <Image source={Images.logo_biru} style={styles.icon} />
@@ -158,7 +159,7 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
             <HStack>
               <Icon
                 as={Entypo}
-                name={'dot-single'}
+                name={"dot-single"}
                 size={RFValue(5)}
                 color={Colors.GRAY_LABEL}
               />
@@ -175,7 +176,7 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
           )}
         </View>
         <MyView>
-          <Text style={styles.waste}>{translations['waste.banks']}</Text>
+          <Text style={styles.waste}>{translations["waste.banks"]}</Text>
           {loadingWaste ? (
             <View style={styles.wastePlaceholder}>
               {[0, 1, 2].map((item, index) => (
@@ -196,7 +197,7 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
               data={sortir}
               horizontal
               showsHorizontalScrollIndicator={false}
-              renderItem={({item, index}) =>
+              renderItem={({ item, index }) =>
                 index < 10 ? (
                   <CardWasteBank
                     item={item}
@@ -212,22 +213,22 @@ function CompanyDashboard({navigation, users, wasteBanks}) {
       </ScrollView>
       <ButtonChats
         navigation={navigation}
-        onPress={() => navigation.navigate('Chats')}
+        onPress={() => navigation.navigate("Chats")}
       />
     </BaseContainer>
   );
 }
 
 const mapStateToProps = function (state) {
-  const {users, wasteBanks} = state;
-  return {users, wasteBanks};
+  const { users, wasteBanks } = state;
+  return { users, wasteBanks };
 };
 
 export default connect(mapStateToProps)(CompanyDashboard);
 
 const styles = StyleSheet.create({
   header: {
-    width: '100%',
+    width: "100%",
     height: RFValue(160),
     borderBottomLeftRadius: RFValue(20),
     borderBottomRightRadius: RFValue(20),
@@ -238,7 +239,7 @@ const styles = StyleSheet.create({
     width: RFValue(100),
     height: RFValue(30),
     marginTop: RFValue(20),
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   icon: {
     width: RFValue(30),
@@ -248,7 +249,7 @@ const styles = StyleSheet.create({
     marginRight: RFValue(10),
     width: RFValue(13),
     height: RFValue(13),
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   welcome: {
     ...Font.F12,
@@ -296,8 +297,8 @@ const styles = StyleSheet.create({
   },
   itemSaldo: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   saldo: {
     ...Font.F14,

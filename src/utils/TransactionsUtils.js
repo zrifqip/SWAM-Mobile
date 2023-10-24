@@ -2,19 +2,19 @@ import {
   GetTransactionsUsers,
   GetTransactionsUsersDetail,
   CurrentWaste,
-} from '@actions';
-import {showToast} from '@constants';
+} from "@actions";
+import { showToast } from "@constants";
 import {
   getTransactionsUsers,
   getTransactionsUsersDetail,
   getTransactionsWasteBanks,
   getTransactionsWasteBanksDetail,
   createTransactionsWasteBank,
-} from '@constants/apiTransactions';
-import {base_uri} from '@constants/BASE_URL';
-import store from '@stores/store';
-import MMKVStorage from 'react-native-mmkv-storage';
-import Axios from 'axios';
+} from "@constants/apiTransactions";
+import { base_uri } from "@constants/BASE_URL";
+import store from "@stores/store";
+import MMKVStorage from "react-native-mmkv-storage";
+import Axios from "axios";
 const AxiosForms = Axios.create();
 
 class TransactionsUtils {
@@ -23,7 +23,7 @@ class TransactionsUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           store.dispatch(GetTransactionsUsersDetail(respon.data));
           return 200;
         }
@@ -38,7 +38,7 @@ class TransactionsUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           if (respon.data.length != 0) {
             store.dispatch(CurrentWaste(true));
           }
@@ -52,19 +52,19 @@ class TransactionsUtils {
 
   async uploadTransactionsUsersDetail(id, photo) {
     const storage = new MMKVStorage.Loader().initialize();
-    const session = await storage.getItem('token');
+    const session = await storage.getItem("token");
 
     const formData = new FormData();
-    formData.append('images', photo);
+    formData.append("images", photo);
 
     let api = `${base_uri}users/client/transaction?id=` + id;
 
     AxiosForms({
       url: api,
-      method: 'PATCH',
+      method: "PATCH",
       data: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
         Authorization: `Gosnix ${session}`,
       },
     })
@@ -78,19 +78,19 @@ class TransactionsUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.uploadTransactionsUsersDetail(respon.data.id, photo);
           this.getTransactionsWasteBanksDetail(respon.data.id);
           this.getTransactionsWasteBanks();
 
           return 200;
         } else {
-          showToast('Transaksi Gagal');
+          showToast("Transaksi Gagal");
           return 400;
         }
       })
       .catch((error) => {
-        showToast('Transaksi Gagal');
+        showToast("Transaksi Gagal");
         return 400;
       });
   }
@@ -100,7 +100,7 @@ class TransactionsUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           store.dispatch(GetTransactionsUsersDetail(respon.data));
           return 200;
         }
@@ -111,10 +111,10 @@ class TransactionsUtils {
   }
 
   async getTransactionsWasteBanks() {
-    return await getTransactionsWasteBanks('page=1&limit=5000')
+    return await getTransactionsWasteBanks("page=1&limit=5000")
       .then((response) => {
         const respon = response.data;
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           return store.dispatch(GetTransactionsUsers(respon.data));
         }
       })

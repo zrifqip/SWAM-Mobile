@@ -1,33 +1,33 @@
-import React, {useState, useEffect} from 'react';
-import {PermissionsAndroid, FlatList, RefreshControl} from 'react-native';
+import React, { useState, useEffect } from "react";
+import { PermissionsAndroid, FlatList, RefreshControl } from "react-native";
 import {
   BaseContainer,
   ButtonFab,
   CardTrasactionWasteBank,
   Search,
   EmptyData,
-} from '@components';
-import {useTranslation} from '@utils';
-import {writeFile} from 'react-native-fs';
-import {showToast} from '@constants';
-import {connect} from 'react-redux';
-import {createFilter} from 'react-native-search-filter';
-import transactionsUtils from '@utils/TransactionsUtils';
-import XLSX from 'xlsx';
-import moment from 'moment';
+} from "@components";
+import { useTranslation } from "@utils";
+import { writeFile } from "react-native-fs";
+import { showToast } from "@constants";
+import { connect } from "react-redux";
+import { createFilter } from "react-native-search-filter";
+import transactionsUtils from "@utils/TransactionsUtils";
+import XLSX from "xlsx";
+import moment from "moment";
 const KEYS_TO_FILTERS = [
-  'status',
-  'totalWeight',
-  'totalPrice',
-  'customer.fullName',
-  'date',
+  "status",
+  "totalWeight",
+  "totalPrice",
+  "customer.fullName",
+  "date",
 ];
 
-function WasteBankTransaction({navigation, transactions}) {
-  const {translations} = useTranslation();
+function WasteBankTransaction({ navigation, transactions }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getTransaction();
@@ -43,7 +43,7 @@ function WasteBankTransaction({navigation, transactions}) {
     setLoading(true);
 
     await transactionsUtils.getTransactionsWasteBanksDetail(id);
-    navigation.navigate('WasteBankTransactionDetails');
+    navigation.navigate("WasteBankTransactionDetails");
 
     setLoading(false);
   };
@@ -66,23 +66,23 @@ function WasteBankTransaction({navigation, transactions}) {
     var ws = XLSX.utils.json_to_sheet(arr);
 
     var wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Prova');
+    XLSX.utils.book_append_sheet(wb, ws, "Prova");
 
-    const wbout = XLSX.write(wb, {type: 'binary', bookType: 'xlsx'});
+    const wbout = XLSX.write(wb, { type: "binary", bookType: "xlsx" });
 
-    var RNFS = require('react-native-fs');
+    var RNFS = require("react-native-fs");
     var file =
       RNFS.DownloadDirectoryPath +
-      '/' +
-      moment().format('DDMMYY-') +
-      'Transaction.xlsx';
+      "/" +
+      moment().format("DDMMYY-") +
+      "Transaction.xlsx";
 
-    writeFile(file, wbout, 'ascii')
+    writeFile(file, wbout, "ascii")
       .then((r) => {
-        showToast('Laporan berhasil di download');
+        showToast("Laporan berhasil di download");
       })
       .catch((e) => {
-        showToast('Laporan gagal di download');
+        showToast("Laporan gagal di download");
       });
   };
 
@@ -98,27 +98,27 @@ function WasteBankTransaction({navigation, transactions}) {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
           {
-            title: 'Storage permission needed',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
+            title: "Storage permission needed",
+            buttonNeutral: "Ask Me Later",
+            buttonNegative: "Cancel",
+            buttonPositive: "OK",
           },
         );
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           // Permission Granted (calling our exportDataToExcel function)
           exportDataToExcel();
-          console.log('Permission granted');
+          console.log("Permission granted");
         } else {
           // Permission denied
-          console.log('Permission denied');
+          console.log("Permission denied");
         }
       } else {
         // Already have Permission (calling our exportDataToExcel function)
         exportDataToExcel();
       }
     } catch (e) {
-      console.log('Error while checking permission');
+      console.log("Error while checking permission");
       console.log(e);
       return;
     }
@@ -131,10 +131,10 @@ function WasteBankTransaction({navigation, transactions}) {
   return (
     <BaseContainer loading={loading}>
       <Search
-        placeholder={translations['search.transaction']}
+        placeholder={translations["search.transaction"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
@@ -142,27 +142,27 @@ function WasteBankTransaction({navigation, transactions}) {
       <FlatList
         data={filteredData}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <CardTrasactionWasteBank
             item={item}
             onPress={() => getTransactionDetail(item._id)}
           />
         )}
         ListEmptyComponent={
-          <EmptyData message={translations['empty.transaction']} />
+          <EmptyData message={translations["empty.transaction"]} />
         }
         refreshControl={<RefreshControl onRefresh={getTransaction} />}
       />
       {transactions.transactions.length != 0 ? (
-        <ButtonFab label={'Download'} onPress={() => handleClick()} />
+        <ButtonFab label={"Download"} onPress={() => handleClick()} />
       ) : null}
     </BaseContainer>
   );
 }
 
 const mapStateToProps = function (state) {
-  const {transactions} = state;
-  return {transactions};
+  const { transactions } = state;
+  return { transactions };
 };
 
 export default connect(mapStateToProps)(WasteBankTransaction);

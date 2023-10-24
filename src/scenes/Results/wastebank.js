@@ -1,33 +1,33 @@
-import React, {useEffect, useState} from 'react';
-import {View, ScrollView, FlatList} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, ScrollView, FlatList } from "react-native";
 import {
   BaseContainer,
   CardWasteBankResult,
   Search,
   EmptyData,
   AppBar,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {arrSortDistance} from '@constants';
-import {createFilter} from 'react-native-search-filter';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import usersUtils from '@utils/UsersUtils';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { arrSortDistance } from "@constants";
+import { createFilter } from "react-native-search-filter";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import usersUtils from "@utils/UsersUtils";
 const KEYS_TO_FILTERS = [
-  'companyName',
-  'nameCEO',
-  'phoneNumber',
-  'address.country',
-  'address.district',
-  'address.street',
+  "companyName",
+  "nameCEO",
+  "phoneNumber",
+  "address.country",
+  "address.district",
+  "address.street",
 ];
 
-function ResultsWasteBank({navigation, wasteBanks, users}) {
-  const {translations} = useTranslation();
+function ResultsWasteBank({ navigation, wasteBanks, users }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getWasteBanks();
@@ -62,28 +62,28 @@ function ResultsWasteBank({navigation, wasteBanks, users}) {
 
   return (
     <BaseContainer loading={loading}>
-      <AppBar navigation={navigation} title={translations['waste.bank']} />
+      <AppBar navigation={navigation} title={translations["waste.bank"]} />
       <Search
-        placeholder={translations['search.wastebank']}
+        placeholder={translations["search.wastebank"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
       />
       <ScrollView>
-        <View style={{marginTop: RFValue(4)}} />
+        <View style={{ marginTop: RFValue(4) }} />
         <FlatList
           data={filteredData}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <CardWasteBankResult
               item={item}
               onPress={() => getResultWasteBanks(item)}
             />
           )}
           ListEmptyComponent={
-            <EmptyData message={translations['empty.wastebank']} />
+            <EmptyData message={translations["empty.wastebank"]} />
           }
         />
       </ScrollView>
@@ -92,8 +92,8 @@ function ResultsWasteBank({navigation, wasteBanks, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks, users} = state;
-  return {wasteBanks, users};
+  const { wasteBanks, users } = state;
+  return { wasteBanks, users };
 };
 
 export default connect(mapStateToProps)(ResultsWasteBank);

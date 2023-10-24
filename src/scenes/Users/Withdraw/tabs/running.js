@@ -1,38 +1,38 @@
-import React, {useState} from 'react';
-import {FlatList, View, RefreshControl} from 'react-native';
-import {CardWithdrawUsers, Search, EmptyData} from '@components';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {createFilter} from 'react-native-search-filter';
-import {RFValue} from 'react-native-responsive-fontsize';
-const KEYS_TO_FILTERS = ['nominal', 'status', 'createdAt'];
+import React, { useState } from "react";
+import { FlatList, View, RefreshControl } from "react-native";
+import { CardWithdrawUsers, Search, EmptyData } from "@components";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { createFilter } from "react-native-search-filter";
+import { RFValue } from "react-native-responsive-fontsize";
+const KEYS_TO_FILTERS = ["nominal", "status", "createdAt"];
 
-function Running({withdraw, _onRefresh}) {
-  const {translations} = useTranslation();
+function Running({ withdraw, _onRefresh }) {
+  const { translations } = useTranslation();
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const arr = withdraw.withdraw.filter((x) => x.status == 'pending');
+  const arr = withdraw.withdraw.filter((x) => x.status == "pending");
 
   const filteredData = arr.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
   return (
     <>
       <Search
-        placeholder={translations['search.withdraw']}
+        placeholder={translations["search.withdraw"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
       />
-      <View style={{marginBottom: RFValue(10)}} />
+      <View style={{ marginBottom: RFValue(10) }} />
       <FlatList
         data={filteredData}
-        renderItem={({item}) => <CardWithdrawUsers item={item} />}
+        renderItem={({ item }) => <CardWithdrawUsers item={item} />}
         ListEmptyComponent={
-          <EmptyData message={translations['empty.withdraw']} />
+          <EmptyData message={translations["empty.withdraw"]} />
         }
         refreshControl={<RefreshControl onRefresh={_onRefresh} />}
       />
@@ -41,8 +41,8 @@ function Running({withdraw, _onRefresh}) {
 }
 
 const mapStateToProps = function (state) {
-  const {withdraw} = state;
-  return {withdraw};
+  const { withdraw } = state;
+  return { withdraw };
 };
 
 export default connect(mapStateToProps)(Running);

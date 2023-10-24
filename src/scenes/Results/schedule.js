@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
-import {View, ScrollView, FlatList} from 'react-native';
+import React, { useState } from "react";
+import { View, ScrollView, FlatList } from "react-native";
 import {
   BaseContainer,
   CardScheduleResult,
   Search,
   EmptyData,
   AppBar,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {createFilter} from 'react-native-search-filter';
-import {GetWasteBanksDetails} from '@actions';
-import store from '@stores/store';
-const KEYS_TO_FILTERS = ['day', 'startTime', 'endTime'];
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { createFilter } from "react-native-search-filter";
+import { GetWasteBanksDetails } from "@actions";
+import store from "@stores/store";
+const KEYS_TO_FILTERS = ["day", "startTime", "endTime"];
 
-function ResultsSchedule({navigation, wasteBanks}) {
-  const {translations} = useTranslation();
+function ResultsSchedule({ navigation, wasteBanks }) {
+  const { translations } = useTranslation();
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const setSchedule = async (item) => {
     let details = wasteBanks.details;
@@ -34,25 +34,25 @@ function ResultsSchedule({navigation, wasteBanks}) {
 
   return (
     <BaseContainer>
-      <AppBar navigation={navigation} title={translations['schedule']} />
+      <AppBar navigation={navigation} title={translations["schedule"]} />
       <Search
-        placeholder={translations['search.schedule']}
+        placeholder={translations["search.schedule"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
       />
       <ScrollView>
-        <View style={{marginTop: RFValue(4)}} />
+        <View style={{ marginTop: RFValue(4) }} />
         <FlatList
           data={filteredData}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <CardScheduleResult item={item} onPress={() => setSchedule(item)} />
           )}
           ListEmptyComponent={
-            <EmptyData message={translations['empty.schedule']} />
+            <EmptyData message={translations["empty.schedule"]} />
           }
         />
       </ScrollView>
@@ -61,8 +61,8 @@ function ResultsSchedule({navigation, wasteBanks}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(ResultsSchedule);

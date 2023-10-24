@@ -1,26 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Text, ScrollView, FlatList} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, ScrollView, FlatList } from "react-native";
 import {
   BaseContainer,
   AppBar,
   CardWasteBankProductList,
   FilterCategory,
   ButtonChats,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {Icon, HStack} from 'native-base';
-import {StC, Colors, Font} from '@styles';
-import {useTranslation} from '@utils';
-import {arrTypeCompany} from '@constants';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import chatsUtils from '@utils/ChatsUtils';
-import Entypo from 'react-native-vector-icons/Entypo';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { Icon, HStack } from "native-base";
+import { StC, Colors, Font } from "@styles";
+import { useTranslation } from "@utils";
+import { arrTypeCompany } from "@constants";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import chatsUtils from "@utils/ChatsUtils";
+import Entypo from "react-native-vector-icons/Entypo";
 
-function CompanyWasteBankDetail({navigation, wasteBanks}) {
-  const {translations} = useTranslation();
+function CompanyWasteBankDetail({ navigation, wasteBanks }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [selectCategory, setSelectCategory] = useState('Semua');
+  const [selectCategory, setSelectCategory] = useState("Semua");
   let details = wasteBanks.details;
 
   useEffect(() => {
@@ -42,19 +42,19 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
 
   let arr = [
     {
-      name: translations['organization.name'],
+      name: translations["organization.name"],
       value: details.companyName,
     },
     {
-      name: translations['ceo.name'],
+      name: translations["ceo.name"],
       value: details.nameCEO,
     },
     {
-      name: translations['address'],
+      name: translations["address"],
       value: details.address?.street,
     },
     {
-      name: translations['type'] + ' ' + translations['waste.bank'],
+      name: translations["type"] + " " + translations["waste.bank"],
       value: arrTypeCompany(details.companyType),
     },
   ];
@@ -64,7 +64,7 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
     const response = await chatsUtils.chatsCompanyStart(details.accountID);
 
     if (response == 200) {
-      navigation.navigate('ChatsRoom');
+      navigation.navigate("ChatsRoom");
     }
 
     setLoading(false);
@@ -72,7 +72,7 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
 
   const product = wasteBanks?.items.filter((x) => x.isSell);
   const filter =
-    selectCategory == 'Semua'
+    selectCategory == "Semua"
       ? product
       : product.filter((x) => x.category._id == selectCategory);
 
@@ -80,13 +80,13 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
     <BaseContainer>
       <AppBar
         navigation={navigation}
-        title={'Detail ' + translations['waste.banks']}
+        title={"Detail " + translations["waste.banks"]}
       />
       <ScrollView>
         <View style={styles.card}>
           <FlatList
             data={arr}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <View style={styles.flex}>
                 <Text style={styles.txtName}>{item.name}</Text>
                 <Text style={styles.txtValue}>{item.value}</Text>
@@ -94,7 +94,7 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
             )}
           />
         </View>
-        <Text style={[styles.txtTitle, StC.mB5, {marginLeft: RFValue(15)}]}>
+        <Text style={[styles.txtTitle, StC.mB5, { marginLeft: RFValue(15) }]}>
           Stok
         </Text>
         <View style={styles.summary}>
@@ -103,7 +103,7 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
               <HStack>
                 <Icon
                   as={Entypo}
-                  name={'dot-single'}
+                  name={"dot-single"}
                   size={RFValue(5)}
                   color={Colors.GRAY_LABEL}
                 />
@@ -112,8 +112,8 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
               </HStack>
             ))}
         </View>
-        <Text style={[styles.txtTitle, StC.mB5, {marginLeft: RFValue(15)}]}>
-          {translations['product']}
+        <Text style={[styles.txtTitle, StC.mB5, { marginLeft: RFValue(15) }]}>
+          {translations["product"]}
         </Text>
         <FilterCategory
           selected={selectCategory}
@@ -121,7 +121,7 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
         />
         <FlatList
           data={filter}
-          renderItem={({item}) => <CardWasteBankProductList item={item} />}
+          renderItem={({ item }) => <CardWasteBankProductList item={item} />}
         />
       </ScrollView>
       <ButtonChats navigation={navigation} onPress={() => addChats()} />
@@ -130,8 +130,8 @@ function CompanyWasteBankDetail({navigation, wasteBanks}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(CompanyWasteBankDetail);

@@ -1,26 +1,25 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {currencyFloat} from '@constants';
-import {base_uri} from '@constants/BASE_URL';
-import {useTranslation} from '@utils';
+import React from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { currencyFloat } from "@constants";
+import { base_uri } from "@constants/BASE_URL";
+import { useTranslation } from "@utils";
 
-function CardCustomers({item, onPress, customers = false}) {
-  const {translations} = useTranslation();
+function CardCustomers({ item, onPress, customers = false }) {
+  const { translations } = useTranslation();
 
   return (
     <TouchableOpacity
       style={styles.cardMenu}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <Image
         source={{
           uri:
             item?.photo?.length > 0
               ? base_uri + item?.photo[0]?.original?.path
-              : 'https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg',
+              : "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg",
         }}
         style={styles.image}
       />
@@ -31,7 +30,7 @@ function CardCustomers({item, onPress, customers = false}) {
         <Text style={styles.textStreet}>{item.address?.street}</Text>
         {customers ? (
           <Text style={styles.price}>
-            {translations['balance']}: {currencyFloat(item.balance)}
+            {translations["balance"]}: {currencyFloat(item.balance)}
           </Text>
         ) : null}
       </View>
@@ -83,6 +82,6 @@ const styles = {
     ...Font.PRIMARY,
     ...Font.Medium,
     ...StC.mT5,
-    textAlign: 'right',
+    textAlign: "right",
   },
 };

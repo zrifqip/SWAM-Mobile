@@ -1,7 +1,7 @@
-import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {OnBoarding, SignIn, SignUp, ResultsAddress} from '@scenes';
-import {HorizontalSlide} from './CustomTransaction';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { OnBoarding, SignIn, SignUp, ResultsAddress } from "@scenes";
+import { HorizontalSlide } from "./CustomTransaction";
 
 const Stack = createStackNavigator();
 
@@ -12,7 +12,7 @@ const AuthNavigator = () => {
         name="OnBoarding"
         component={OnBoarding}
         options={{
-          animationTypeForReplace: 'push',
+          animationTypeForReplace: "push",
           headerShown: false,
           cardStyleInterpolator: HorizontalSlide,
         }}
@@ -21,7 +21,7 @@ const AuthNavigator = () => {
         name="SignIn"
         component={SignIn}
         options={{
-          animationTypeForReplace: 'push',
+          animationTypeForReplace: "push",
           headerShown: false,
           cardStyleInterpolator: HorizontalSlide,
         }}
@@ -30,7 +30,7 @@ const AuthNavigator = () => {
         name="SignUp"
         component={SignUp}
         options={{
-          animationTypeForReplace: 'push',
+          animationTypeForReplace: "push",
           headerShown: false,
           cardStyleInterpolator: HorizontalSlide,
         }}
@@ -39,7 +39,7 @@ const AuthNavigator = () => {
         name="ResultsAddress"
         component={ResultsAddress}
         options={{
-          animationTypeForReplace: 'push',
+          animationTypeForReplace: "push",
           headerShown: false,
           cardStyleInterpolator: HorizontalSlide,
         }}

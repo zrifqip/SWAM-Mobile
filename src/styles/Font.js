@@ -1,28 +1,28 @@
-import {StyleSheet} from 'react-native';
-import {Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { StyleSheet } from "react-native";
+import { Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export default StyleSheet.create({
   Bold: {
-    fontFamily: 'Poppins-Bold',
+    fontFamily: "Poppins-Bold",
   },
   BoldItalic: {
-    fontFamily: 'Poppins-BoldItalic',
+    fontFamily: "Poppins-BoldItalic",
   },
   ExtraLight: {
-    fontFamily: 'Poppins-ExtraLight',
+    fontFamily: "Poppins-ExtraLight",
   },
   Light: {
-    fontFamily: 'Poppins-Light.ttf',
+    fontFamily: "Poppins-Light.ttf",
   },
   Medium: {
-    fontFamily: 'Poppins-Medium',
+    fontFamily: "Poppins-Medium",
   },
   Regular: {
-    fontFamily: 'Poppins-Regular',
+    fontFamily: "Poppins-Regular",
   },
   SemiBold: {
-    fontFamily: 'Poppins-SemiBold',
+    fontFamily: "Poppins-SemiBold",
   },
 
   F7: {
@@ -128,26 +128,26 @@ export default StyleSheet.create({
 
   titleCenter: {
     fontSize: RFValue(15),
-    fontFamily: 'Poppins-Medium',
+    fontFamily: "Poppins-Medium",
     color: Colors.BLACK,
-    textAlign: 'center',
+    textAlign: "center",
   },
   descCenter: {
     fontSize: RFValue(11),
-    fontFamily: 'Poppins-Regular',
+    fontFamily: "Poppins-Regular",
     color: Colors.BLACK,
-    textAlign: 'center',
+    textAlign: "center",
   },
   titleMenu: {
     fontSize: RFValue(12),
-    fontFamily: 'Poppins-Medium',
+    fontFamily: "Poppins-Medium",
     color: Colors.DARK,
     marginHorizontal: RFValue(15),
     marginBottom: RFValue(10),
   },
   subTitle: {
     fontSize: RFValue(11),
-    fontFamily: 'Poppins-Regular',
+    fontFamily: "Poppins-Regular",
     color: Colors.BLACK_SOFT,
     marginHorizontal: RFValue(15),
     marginBottom: RFValue(10),

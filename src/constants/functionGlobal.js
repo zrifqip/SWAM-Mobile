@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Alert,
   Dimensions,
@@ -6,39 +6,39 @@ import {
   Platform,
   ToastAndroid,
   Text,
-} from 'react-native';
-import {Font, Colors} from '@styles';
-import Toast from 'react-native-simple-toast';
-import moment from 'moment';
-import 'moment/locale/id';
-import {useTranslation} from '@utils';
+} from "react-native";
+import { Font, Colors } from "@styles";
+import Toast from "react-native-simple-toast";
+import moment from "moment";
+import "moment/locale/id";
+import { useTranslation } from "@utils";
 
 export const currencyFloat = (number) => {
   let num = parseFloat(number);
   if (!isNaN(num)) {
-    if (num.toString().indexOf('.') != -1) {
+    if (num.toString().indexOf(".") != -1) {
       return (
-        'Rp ' +
+        "Rp " +
         num
           .toFixed(2)
-          .replace('.', ',')
-          .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+          .replace(".", ",")
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
       );
     } else {
-      var rupiah = '';
-      var numrev = num.toString().split('').reverse().join('');
+      var rupiah = "";
+      var numrev = num.toString().split("").reverse().join("");
       for (var i = 0; i < numrev.length; i++)
-        if (i % 3 == 0) rupiah += numrev.substr(i, 3) + '.';
+        if (i % 3 == 0) rupiah += numrev.substr(i, 3) + ".";
 
       let ret = rupiah
-        .split('', rupiah.length - 1)
+        .split("", rupiah.length - 1)
         .reverse()
-        .join('');
+        .join("");
 
       if (ret < 0) {
-        return '- Rp ' + ret.replace('-', '');
+        return "- Rp " + ret.replace("-", "");
       } else {
-        return 'Rp ' + ret;
+        return "Rp " + ret;
       }
     }
   } else {
@@ -49,20 +49,20 @@ export const currencyFloat = (number) => {
 export const numberFloat = (number) => {
   let num = parseFloat(number);
   if (!isNaN(num)) {
-    if (num.toString().indexOf('.') != -1) {
+    if (num.toString().indexOf(".") != -1) {
       return num
         .toFixed(2)
-        .replace('.', ',')
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        .replace(".", ",")
+        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
     } else {
-      var rupiah = '';
-      var numrev = num.toString().split('').reverse().join('');
+      var rupiah = "";
+      var numrev = num.toString().split("").reverse().join("");
       for (var i = 0; i < numrev.length; i++)
-        if (i % 3 == 0) rupiah += numrev.substr(i, 3) + '.';
+        if (i % 3 == 0) rupiah += numrev.substr(i, 3) + ".";
       return rupiah
-        .split('', rupiah.length - 1)
+        .split("", rupiah.length - 1)
         .reverse()
-        .join('');
+        .join("");
     }
   } else {
     return 0;
@@ -71,30 +71,30 @@ export const numberFloat = (number) => {
 
 export const formatDate = (date, short) => {
   return short
-    ? moment(date).format('DD MMM YYYY')
-    : moment(date).format('DD MMMM YYYY');
+    ? moment(date).format("DD MMM YYYY")
+    : moment(date).format("DD MMMM YYYY");
 };
 
 export const formatDateTime = (date, type) => {
-  return moment(date).format('DD MMMM YYYY (HH:mm)');
+  return moment(date).format("DD MMMM YYYY (HH:mm)");
 };
 
 export const formatDateChats = (date) => {
-  return moment(date).format('DD/MM/YY, HH:mm');
+  return moment(date).format("DD/MM/YY, HH:mm");
 };
 
 export const formatDateChatsDetail = (date) => {
-  return moment(date).format('HH:mm');
+  return moment(date).format("HH:mm");
 };
 
 export const formatDateDay = (date, short) => {
   return short
-    ? moment(date).format('ddd, D MMM YYYY')
-    : moment(date).format('dddd, DD MMMM YYYY');
+    ? moment(date).format("ddd, D MMM YYYY")
+    : moment(date).format("dddd, DD MMMM YYYY");
 };
 
 export const onRotate = () => {
-  const {width, height} = Dimensions.get('window');
+  const { width, height } = Dimensions.get("window");
   return height >= width;
 };
 
@@ -105,7 +105,7 @@ export const Notif = (title, message) => {
 };
 
 export const ToastConnection = () => {
-  Alert.alert('Perhatian', 'Tidak dapat memproses data, silahkan coba kembali');
+  Alert.alert("Perhatian", "Tidak dapat memproses data, silahkan coba kembali");
 };
 
 export const AnimationLayout = () => {
@@ -126,7 +126,7 @@ export const phoneRegex = () => {
 };
 
 export const showToast = async (msg) => {
-  if (Platform.OS == 'ios') {
+  if (Platform.OS == "ios") {
     Toast.show(`${msg}`, Toast.SHORT);
   } else {
     ToastAndroid.show(`${msg}`, ToastAndroid.SHORT);
@@ -138,18 +138,18 @@ export const requireds = (required) => {
 };
 
 export const serviceWasteBank = (service) => {
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
   let arr = [
     {
-      service: 'pickup',
-      name: translations['pick.up'],
-      enabled: service.find((x) => x == 'pickup'),
+      service: "pickup",
+      name: translations["pick.up"],
+      enabled: service.find((x) => x == "pickup"),
       color: Colors.SECONDARY,
     },
     {
-      service: 'self-delivery',
-      name: translations['self.delivery'],
-      enabled: service.find((x) => x == 'self-delivery'),
+      service: "self-delivery",
+      name: translations["self.delivery"],
+      enabled: service.find((x) => x == "self-delivery"),
       color: Colors.THIRD,
     },
   ];
@@ -158,35 +158,35 @@ export const serviceWasteBank = (service) => {
 };
 
 export const serviceWasteBankName = (service) => {
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
 
-  let findPickup = service.find((x) => x == 'pickup');
-  let findDelivery = service.find((x) => x == 'self-delivery');
+  let findPickup = service.find((x) => x == "pickup");
+  let findDelivery = service.find((x) => x == "self-delivery");
   let str;
 
   if (findPickup && findDelivery) {
     str =
-      '[ ' +
-      translations['pick.up'] +
-      ', ' +
-      translations['self.delivery'] +
-      ' ]';
+      "[ " +
+      translations["pick.up"] +
+      ", " +
+      translations["self.delivery"] +
+      " ]";
   } else if (findPickup) {
-    str = '[ ' + translations['pick.up'] + ' ]';
+    str = "[ " + translations["pick.up"] + " ]";
   } else {
-    str = '[ ' + translations['self.delivery'] + ' ]';
+    str = "[ " + translations["self.delivery"] + " ]";
   }
 
   return str;
 };
 
 export const serviceName = (service) => {
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
 
-  let res = translations['self.delivery'];
+  let res = translations["self.delivery"];
 
-  if (service == 'pickup') {
-    res = translations['pick.up'];
+  if (service == "pickup") {
+    res = translations["pick.up"];
   }
 
   return res;
@@ -195,32 +195,32 @@ export const serviceName = (service) => {
 export const arrTypeCompany = (filter) => {
   let arr = [
     {
-      name: 'PT',
-      key: 'pt',
+      name: "PT",
+      key: "pt",
     },
     {
-      name: 'Maatschap',
-      key: 'maatschap',
+      name: "Maatschap",
+      key: "maatschap",
     },
     {
-      name: 'CV',
-      key: 'cv',
+      name: "CV",
+      key: "cv",
     },
     {
-      name: 'Firma',
-      key: 'firma',
+      name: "Firma",
+      key: "firma",
     },
     {
-      name: 'Yayasan',
-      key: 'yayasan',
+      name: "Yayasan",
+      key: "yayasan",
     },
     {
-      name: 'Keperasi',
-      key: 'koperasi',
+      name: "Keperasi",
+      key: "koperasi",
     },
     {
-      name: 'BUMN',
-      key: 'bumn',
+      name: "BUMN",
+      key: "bumn",
     },
   ];
 
@@ -233,35 +233,35 @@ export const arrTypeCompany = (filter) => {
 };
 
 export const arrDay = (filter) => {
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
   let arr = [
     {
-      name: translations['day.monday'],
-      key: 'Senin',
+      name: translations["day.monday"],
+      key: "Senin",
     },
     {
-      name: translations['day.tuesday'],
-      key: 'Selasa',
+      name: translations["day.tuesday"],
+      key: "Selasa",
     },
     {
-      name: translations['day.wednesday'],
-      key: 'Rabu',
+      name: translations["day.wednesday"],
+      key: "Rabu",
     },
     {
-      name: translations['day.thursday'],
-      key: 'Kamis',
+      name: translations["day.thursday"],
+      key: "Kamis",
     },
     {
-      name: translations['day.friday'],
-      key: 'Jumat',
+      name: translations["day.friday"],
+      key: "Jumat",
     },
     {
-      name: translations['day.saturday'],
-      key: 'Sabtu',
+      name: translations["day.saturday"],
+      key: "Sabtu",
     },
     {
-      name: translations['day.sunday'],
-      key: 'Minggu',
+      name: translations["day.sunday"],
+      key: "Minggu",
     },
   ];
 
@@ -274,39 +274,39 @@ export const arrDay = (filter) => {
 };
 
 export const arrDayAll = () => {
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
   let arr = [
     {
-      name: translations['all.day'],
-      key: 'Semua',
+      name: translations["all.day"],
+      key: "Semua",
     },
     {
-      name: translations['day.monday'],
-      key: 'Senin',
+      name: translations["day.monday"],
+      key: "Senin",
     },
     {
-      name: translations['day.tuesday'],
-      key: 'Selasa',
+      name: translations["day.tuesday"],
+      key: "Selasa",
     },
     {
-      name: translations['day.wednesday'],
-      key: 'Rabu',
+      name: translations["day.wednesday"],
+      key: "Rabu",
     },
     {
-      name: translations['day.thursday'],
-      key: 'Kamis',
+      name: translations["day.thursday"],
+      key: "Kamis",
     },
     {
-      name: translations['day.friday'],
-      key: 'Jumat',
+      name: translations["day.friday"],
+      key: "Jumat",
     },
     {
-      name: translations['day.saturday'],
-      key: 'Sabtu',
+      name: translations["day.saturday"],
+      key: "Sabtu",
     },
     {
-      name: translations['day.sunday'],
-      key: 'Minggu',
+      name: translations["day.sunday"],
+      key: "Minggu",
     },
   ];
 
@@ -316,7 +316,7 @@ export const arrDayAll = () => {
 export const arrService = (service) => {
   if (service) {
     let str = JSON.stringify(service);
-    let str2 = str.replace(/(")/g, ' ');
+    let str2 = str.replace(/(")/g, " ");
 
     return str2;
   } else {
@@ -325,13 +325,13 @@ export const arrService = (service) => {
 };
 
 export const arrStatus = (status) => {
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
 
-  let sts = '';
+  let sts = "";
 
-  if (status == 'success') {
+  if (status == "success") {
     sts = {
-      label: translations['status.success'],
+      label: translations["status.success"],
       color: Colors.SUCCESS,
     };
   }

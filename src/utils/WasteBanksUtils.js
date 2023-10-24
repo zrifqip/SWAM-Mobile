@@ -20,7 +20,7 @@ import {
   getSummary,
   getCompanyDashboard,
   getStock,
-} from '@constants/apiWasteBanks';
+} from "@constants/apiWasteBanks";
 import {
   GetWasteBanks,
   GetWasteBanksDetails,
@@ -33,11 +33,11 @@ import {
   GetSummary,
   GetCompanyDashboard,
   GetStock,
-} from '@actions';
-import {base_uri} from '@constants/BASE_URL';
-import store from '@stores/store';
-import MMKVStorage from 'react-native-mmkv-storage';
-import Axios from 'axios';
+} from "@actions";
+import { base_uri } from "@constants/BASE_URL";
+import store from "@stores/store";
+import MMKVStorage from "react-native-mmkv-storage";
+import Axios from "axios";
 const AxiosForms = Axios.create();
 
 class WasteBanksUtils {
@@ -46,7 +46,7 @@ class WasteBanksUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetWasteBanks(respon.data));
         }
       })
@@ -60,10 +60,10 @@ class WasteBanksUtils {
     return (params = await getWasteBanksDetails(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           let arr = respon.data[0];
 
-          arr.scheduleActive = arr.schedule.length == 0 ? '' : arr.schedule[0];
+          arr.scheduleActive = arr.schedule.length == 0 ? "" : arr.schedule[0];
           arr.serviceActive = arr.companyService[0];
           arr.itemActive = [];
 
@@ -84,7 +84,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksItems(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetWasteBanksItems(respon.data));
         }
       })
@@ -99,7 +99,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksProductCategory(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetWasteBanksProductCategory(respon.data));
         }
       })
@@ -113,7 +113,7 @@ class WasteBanksUtils {
     return (params = await addWasteBanksProductCategory(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksProductCategory();
           return 200;
         }
@@ -128,7 +128,7 @@ class WasteBanksUtils {
     return (params = await updateWasteBanksProductCategory(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksProductCategory();
           return 200;
         }
@@ -144,7 +144,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksProduct(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetWasteBanksProduct(respon.data));
         }
       })
@@ -158,7 +158,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksProductDetail(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetWasteBanksProductDetail(respon.data));
         }
       })
@@ -172,7 +172,7 @@ class WasteBanksUtils {
     return (params = await addWasteBanksProduct(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return respon.data._id;
         }
       })
@@ -185,7 +185,7 @@ class WasteBanksUtils {
     return (params = await updateWasteBanksProduct(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksProduct();
           return 200;
         }
@@ -199,7 +199,7 @@ class WasteBanksUtils {
     return (params = await deleteWasteBanksProduct(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksProduct();
           return 200;
         }
@@ -211,19 +211,19 @@ class WasteBanksUtils {
 
   async updatePhotoWasteBanksProduct(photo, id) {
     const storage = new MMKVStorage.Loader().initialize();
-    const session = await storage.getItem('token');
+    const session = await storage.getItem("token");
 
     const formData = new FormData();
-    formData.append('images', photo);
+    formData.append("images", photo);
 
     let api = `${base_uri}company/item?id=` + id;
 
     AxiosForms({
       url: api,
-      method: 'PATCH',
+      method: "PATCH",
       data: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
         Authorization: `Gosnix ${session}`,
       },
     })
@@ -236,7 +236,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksSchedule(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetWasteBanksSchedule(respon.data));
         }
       })
@@ -249,7 +249,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksScheduleDetail(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           let data = respon.data;
           data._id = params;
           return store.dispatch(GetWasteBanksScheduleDetail(data));
@@ -264,7 +264,7 @@ class WasteBanksUtils {
     return (params = await addWasteBanksSchedule(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksSchedule();
           return 200;
         }
@@ -278,7 +278,7 @@ class WasteBanksUtils {
     return (params = await updateWasteBanksSchedule(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksSchedule();
           return 200;
         }
@@ -292,7 +292,7 @@ class WasteBanksUtils {
     return (params = await deleteWasteBanksSchedule(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksSchedule();
           return 200;
         }
@@ -307,7 +307,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksCompany(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           store.dispatch(GetWasteBanks(respon.data));
           return respon.data.length;
         }
@@ -322,7 +322,7 @@ class WasteBanksUtils {
     return (params = await getWasteBanksCompanyItems(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetWasteBanksItems(respon.data));
         }
       })
@@ -336,7 +336,7 @@ class WasteBanksUtils {
     return (params = await getSummary(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetSummary(respon.data));
         }
       })
@@ -350,7 +350,7 @@ class WasteBanksUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetCompanyDashboard(respon.data));
         }
       })
@@ -364,7 +364,7 @@ class WasteBanksUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetStock(respon.data));
         }
       })

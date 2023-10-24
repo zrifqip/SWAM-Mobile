@@ -1,20 +1,20 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Font, StC} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {requireds, showToast, currencyFloat} from '@constants';
-import {ButtonFlex, FormInput, FormInputPicker} from '@components';
-import {useTranslation} from '@utils';
-import {GetWasteBanksItemsActive} from '@actions';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import store from '@stores/store';
-import PickerModal from 'react-native-picker-modal-view';
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Font, StC } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { requireds, showToast, currencyFloat } from "@constants";
+import { ButtonFlex, FormInput, FormInputPicker } from "@components";
+import { useTranslation } from "@utils";
+import { GetWasteBanksItemsActive } from "@actions";
+import RBSheet from "react-native-raw-bottom-sheet";
+import store from "@stores/store";
+import PickerModal from "react-native-picker-modal-view";
 
-function ModalWasteSale({open, wasteBanks, onPress}) {
-  const {translations} = useTranslation();
-  const [type, setType] = useState('');
-  const [weight, setWight] = useState('');
+function ModalWasteSale({ open, wasteBanks, onPress }) {
+  const { translations } = useTranslation();
+  const [type, setType] = useState("");
+  const [weight, setWight] = useState("");
   let active = wasteBanks.itemsActive;
 
   const saveItems = () => {
@@ -29,12 +29,12 @@ function ModalWasteSale({open, wasteBanks, onPress}) {
     let find = active.find((x) => x.itemID == type._id);
 
     if (find) {
-      showToast('Item sudah ditambahkan');
+      showToast("Item sudah ditambahkan");
     } else {
       active.push(res);
       store.dispatch(GetWasteBanksItemsActive(active));
-      setType('');
-      setWight('');
+      setType("");
+      setWight("");
       onPress();
     }
   };
@@ -56,18 +56,17 @@ function ModalWasteSale({open, wasteBanks, onPress}) {
         container: {
           ...StC.centerPage,
         },
-      }}
-    >
+      }}>
       <View style={styles.modal}>
         <Text style={StC.title}>
-          {translations['waste.type']} {requireds('*')}
+          {translations["waste.type"]} {requireds("*")}
         </Text>
         <PickerModal
           renderSelectView={(disabled, selected, showModal) => (
             <View style={styles.dropdown}>
               <FormInputPicker
-                label={'Nasabah'}
-                placeholder={'Pilih Nasabah'}
+                label={"Nasabah"}
+                placeholder={"Pilih Nasabah"}
                 value={type.Name}
                 onPress={showModal}
                 required
@@ -78,28 +77,28 @@ function ModalWasteSale({open, wasteBanks, onPress}) {
           onClosed={onClosed.bind(this)}
           onBackButtonPressed={onBackButtonPressed.bind(this)}
           items={wasteBanks.productSort}
-          sortingLanguage={'tr'}
+          sortingLanguage={"tr"}
           showToTopButton={true}
           selected={type}
           showAlphabeticalIndex={false}
           autoGenerateAlphabeticalIndex={false}
-          selectPlaceholderText={'Choose one...'}
-          onEndReached={() => console.log('list ended...')}
-          searchPlaceholderText={'Search...'}
+          selectPlaceholderText={"Choose one..."}
+          onEndReached={() => console.log("list ended...")}
+          searchPlaceholderText={"Search..."}
           requireSelection={false}
           autoSort={false}
         />
         <FormInput
-          label={translations['waste.weight']}
-          placeholder={'0'}
+          label={translations["waste.weight"]}
+          placeholder={"0"}
           value={weight}
           onChangeText={(val) => setWight(val)}
-          keyboardType={'number-pad'}
+          keyboardType={"number-pad"}
           required
         />
         <View style={styles.cardPrice}>
           <Text style={styles.labelPrice}>
-            {translations['estimate.price']}
+            {translations["estimate.price"]}
           </Text>
           <Text style={styles.price}>
             {currencyFloat(type.purchasePrice)} / kg
@@ -112,10 +111,10 @@ function ModalWasteSale({open, wasteBanks, onPress}) {
           </Text>
         </View>
         <ButtonFlex
-          title={'+ ' + translations['add'] + ' Item'}
+          title={"+ " + translations["add"] + " Item"}
           onPress={() => saveItems()}
           style={StC.mT10}
-          disabled={weight == 0 || weight == '' || type == ''}
+          disabled={weight == 0 || weight == "" || type == ""}
         />
       </View>
     </RBSheet>
@@ -123,8 +122,8 @@ function ModalWasteSale({open, wasteBanks, onPress}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(ModalWasteSale);

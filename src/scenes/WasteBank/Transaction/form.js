@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, { useEffect, useState, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-} from 'react-native';
+} from "react-native";
 import {
   BaseContainer,
   AppBar,
@@ -17,28 +17,28 @@ import {
   ButtonFlex,
   ModalWasteSale,
   MyView,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {Icon} from 'native-base';
-import {StC, Colors, Font} from '@styles';
-import {useTranslation} from '@utils';
-import {numberFloat, currencyFloat, showToast} from '@constants';
-import {GetWasteBanksItemsActive, ResultCustomers} from '@actions';
-import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import store from '@stores/store';
-import transactionsUtils from '@utils/TransactionsUtils';
-import sendNotifUtils from '@utils/SendNotifUtils';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { Icon } from "native-base";
+import { StC, Colors, Font } from "@styles";
+import { useTranslation } from "@utils";
+import { numberFloat, currencyFloat, showToast } from "@constants";
+import { GetWasteBanksItemsActive, ResultCustomers } from "@actions";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import store from "@stores/store";
+import transactionsUtils from "@utils/TransactionsUtils";
+import sendNotifUtils from "@utils/SendNotifUtils";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-function WasteBankTransactionForm({navigation, wasteBanks, users}) {
-  const {translations} = useTranslation();
+function WasteBankTransactionForm({ navigation, wasteBanks, users }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [loadingItems, setLoadingItems] = useState(false);
   const refModalWaste = useRef();
-  const [photo, setPhoto] = useState('');
-  const [photoUri, setPhotoUri] = useState('');
+  const [photo, setPhoto] = useState("");
+  const [photoUri, setPhotoUri] = useState("");
 
   let itemsActive = wasteBanks.itemsActive;
 
@@ -84,27 +84,27 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
     };
 
     let message =
-      '*## NEW INVOICE ##*' +
-      '\n\n' +
-      'Hai *' +
+      "*## NEW INVOICE ##*" +
+      "\n\n" +
+      "Hai *" +
       nasabah?.fullName +
-      '*,' +
-      '\n\n' +
-      'Berikut invoice untuk transaksi terbaru kamu' +
-      '\n\n' +
-      'Nama Nasabah : ' +
+      "*," +
+      "\n\n" +
+      "Berikut invoice untuk transaksi terbaru kamu" +
+      "\n\n" +
+      "Nama Nasabah : " +
       nasabah?.fullName +
-      '\n' +
-      'No. Telp : ' +
+      "\n" +
+      "No. Telp : " +
       nasabah?.phoneNumber +
-      '\n' +
-      'Alamat : ' +
+      "\n" +
+      "Alamat : " +
       nasabah?.address?.street +
-      '\n' +
-      '\n\n\n' +
-      'Silahkan membuka aplikasi untuk melihat detail transaksi' +
-      '\n' +
-      'Terima Kasih';
+      "\n" +
+      "\n\n\n" +
+      "Silahkan membuka aplikasi untuk melihat detail transaksi" +
+      "\n" +
+      "Terima Kasih";
 
     let send = {
       message: message,
@@ -117,10 +117,10 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
     );
 
     if (respons == 200) {
-      showToast(translations['save.success']);
+      showToast(translations["save.success"]);
       await sendNotifUtils.sendNotifUser(send);
       setTimeout(() => {
-        navigation.navigate('WasteBankTransactionDetails');
+        navigation.navigate("WasteBankTransactionDetails");
         store.dispatch(GetWasteBanksItemsActive([]));
         store.dispatch(ResultCustomers([]));
       }, 1000);
@@ -138,46 +138,46 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
 
   const setModal = async () => {
     Alert.alert(
-      'Upload Photo From',
-      '',
+      "Upload Photo From",
+      "",
       [
         {
-          text: 'Close',
+          text: "Close",
         },
         {
-          text: 'Galery',
-          onPress: () => handlePickImage('galery'),
+          text: "Galery",
+          onPress: () => handlePickImage("galery"),
         },
         {
-          text: 'Camera',
-          onPress: () => handlePickImage('camera'),
+          text: "Camera",
+          onPress: () => handlePickImage("camera"),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
   const handlePickImage = (type) => {
-    if (type == 'camera') {
+    if (type == "camera") {
       launchCamera(
         {
-          mediaType: 'photo',
+          mediaType: "photo",
           quality: 0.5,
         },
         (response) => {
           if (response.didCancel) {
-            console.log('User cancelled image picker');
+            console.log("User cancelled image picker");
           } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
+            console.log("ImagePicker Error: ", response.error);
           } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
+            console.log("User tapped custom button: ", response.customButton);
           } else {
             const res = response?.assets?.[0];
 
             if (res) {
               handleUpdatePhoto(res);
             } else {
-              console.log('Fail to pick image!');
+              console.log("Fail to pick image!");
             }
           }
         },
@@ -185,23 +185,23 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
     } else {
       launchImageLibrary(
         {
-          mediaType: 'photo',
+          mediaType: "photo",
           quality: 0.5,
         },
         (response) => {
           if (response.didCancel) {
-            console.log('User cancelled image picker');
+            console.log("User cancelled image picker");
           } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
+            console.log("ImagePicker Error: ", response.error);
           } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
+            console.log("User tapped custom button: ", response.customButton);
           } else {
             const res = response?.assets?.[0];
 
             if (res) {
               handleUpdatePhoto(res);
             } else {
-              console.log('Fail to pick image!');
+              console.log("Fail to pick image!");
             }
           }
         },
@@ -212,7 +212,7 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
   const handleUpdatePhoto = async (respons) => {
     let photo = {
       uri: respons.uri,
-      type: 'image/jpg',
+      type: "image/jpg",
       name: respons.fileName,
     };
 
@@ -224,15 +224,15 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
     <BaseContainer loading={loading}>
       <AppBar
         navigation={navigation}
-        title={translations['create.transaction']}
+        title={translations["create.transaction"]}
       />
       <ScrollView>
         <View style={styles.dropdown}>
           <FormInputPicker
-            label={'Nasabah'}
-            placeholder={'Pilih Nasabah'}
+            label={"Nasabah"}
+            placeholder={"Pilih Nasabah"}
             value={users?.customers?.fullName}
-            onPress={() => navigation.navigate('ResultsCustomers')}
+            onPress={() => navigation.navigate("ResultsCustomers")}
             required
           />
         </View>
@@ -240,13 +240,13 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
           <FlatList
             data={itemsActive}
             showsVerticalScrollIndicator={false}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <View style={styles.cardItem} activeOpacity={0.5}>
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                   <Text style={styles.txtItem}>{item.itemName}</Text>
                   <View style={StC.flexR}>
                     <Text style={styles.txtWeight}>
-                      {numberFloat(item.weight)} kg x{' '}
+                      {numberFloat(item.weight)} kg x{" "}
                       {currencyFloat(item.price)}
                     </Text>
                     <Text style={styles.subtotal}>
@@ -257,10 +257,9 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
                 <TouchableOpacity
                   onPress={() => removeItems(item.itemID)}
                   activeOpacity={0.5}
-                  style={styles.btnRemove}
-                >
+                  style={styles.btnRemove}>
                   <Icon
-                    as={<FontAwesome5 name={'trash'} />}
+                    as={<FontAwesome5 name={"trash"} />}
                     size={RFValue(4)}
                     color={Colors.DANGER}
                   />
@@ -278,19 +277,18 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
         </MyView>
         <View style={styles.dropdown}>
           <Text style={StC.title}>
-            {translations['photo']}{' '}
+            {translations["photo"]}{" "}
             <Text style={styles.optional}>(Opsional)</Text>
           </Text>
           <TouchableOpacity
             style={styles.cardImage}
             activeOpacity={0.5}
-            onPress={() => setModal()}
-          >
+            onPress={() => setModal()}>
             {photo ? (
-              <Image source={{uri: photoUri}} style={styles.image} />
+              <Image source={{ uri: photoUri }} style={styles.image} />
             ) : (
               <Icon
-                as={<FontAwesome5 name={'camera'} />}
+                as={<FontAwesome5 name={"camera"} />}
                 size={RFValue(8)}
                 color={Colors.GRAY_SOFT}
               />
@@ -300,7 +298,7 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
       </ScrollView>
       <ButtonFlex
         outline
-        title={'+ ' + translations['add'] + ' Item'}
+        title={"+ " + translations["add"] + " Item"}
         onPress={() => refModalWaste.current.open()}
         style={{
           marginHorizontal: RFValue(15),
@@ -310,10 +308,10 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
       />
       <ButtonFlex
         disabled={
-          !(users?.customers?.fullName && users?.customers?.fullName != '') ||
+          !(users?.customers?.fullName && users?.customers?.fullName != "") ||
           itemsActive.length == 0
         }
-        title={translations['save']}
+        title={translations["save"]}
         onPress={() => _handleSave()}
         form
       />
@@ -327,8 +325,8 @@ function WasteBankTransactionForm({navigation, wasteBanks, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks, users} = state;
-  return {wasteBanks, users};
+  const { wasteBanks, users } = state;
+  return { wasteBanks, users };
 };
 
 export default connect(mapStateToProps)(WasteBankTransactionForm);
@@ -357,7 +355,7 @@ const styles = StyleSheet.create({
     paddingVertical: RFValue(10),
     paddingLeft: RFValue(15),
     borderRadius: RFValue(5),
-    alignItems: 'center',
+    alignItems: "center",
   },
   txtItem: {
     ...Font.F13,
@@ -396,15 +394,15 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     ...StC.centerPage,
-    width: '100%',
+    width: "100%",
     height: RFValue(150),
     borderWidth: RFValue(1),
     borderRadius: RFValue(5),
     borderColor: Colors.GRAY_SOFT,
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     borderRadius: RFValue(5),
   },
   optional: {

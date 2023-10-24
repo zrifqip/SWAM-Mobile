@@ -1,17 +1,17 @@
-import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
-import {Icon} from 'native-base';
-import {StC, Font, Colors} from '@styles';
-import {connect} from 'react-redux';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {arrDay} from '@constants';
-import {MyView} from '@components';
-import {useTranslation} from '@utils';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { View, Text, ScrollView } from "react-native";
+import { Icon } from "native-base";
+import { StC, Font, Colors } from "@styles";
+import { connect } from "react-redux";
+import { RFValue } from "react-native-responsive-fontsize";
+import { arrDay } from "@constants";
+import { MyView } from "@components";
+import { useTranslation } from "@utils";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-function CardScheduleList({wasteBanks}) {
+function CardScheduleList({ wasteBanks }) {
   let details = wasteBanks.details;
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
 
   let schedule = [];
 
@@ -23,7 +23,7 @@ function CardScheduleList({wasteBanks}) {
 
   return (
     <MyView style={styles.cardContent} hide={schedule.length == 0}>
-      <Text style={styles.txtTitle}>{translations['schedule']}</Text>
+      <Text style={styles.txtTitle}>{translations["schedule"]}</Text>
       <ScrollView showsHorizontalScrollIndicator={false} horizontal>
         <View style={styles.content}>
           {schedule.map((item) => (
@@ -31,7 +31,7 @@ function CardScheduleList({wasteBanks}) {
               <View style={styles.icon}>
                 <Icon
                   as={MaterialCommunityIcons}
-                  name={'timetable'}
+                  name={"timetable"}
                   color={Colors.PRIMARY}
                   size={RFValue(4)}
                 />
@@ -48,8 +48,8 @@ function CardScheduleList({wasteBanks}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(CardScheduleList);
@@ -72,7 +72,7 @@ const styles = {
     paddingRight: RFValue(15),
     marginRight: RFValue(10),
     borderRadius: RFValue(20),
-    alignItems: 'center',
+    alignItems: "center",
   },
   icon: {
     ...StC.centerPage,

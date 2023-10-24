@@ -1,12 +1,12 @@
-import {GetUsersDetail} from '@actions';
-import {showToast} from '@constants';
+import { GetUsersDetail } from "@actions";
+import { showToast } from "@constants";
 import {
   usersDetail,
   usersUpdate,
   companyDetail,
   companyUpdate,
-} from '@constants/apiUsers';
-import store from '@stores/store';
+} from "@constants/apiUsers";
+import store from "@stores/store";
 
 class UsersUtils {
   async usersDetail() {
@@ -14,7 +14,7 @@ class UsersUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetUsersDetail(respon.data[0]));
         }
       })
@@ -27,7 +27,7 @@ class UsersUtils {
     return await usersUpdate(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.usersDetail();
           return 200;
         }
@@ -42,7 +42,7 @@ class UsersUtils {
     return await companyDetail()
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return store.dispatch(GetUsersDetail(respon.data[0]));
         }
       })
@@ -55,7 +55,7 @@ class UsersUtils {
     return await companyUpdate(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.companyDetail();
           return 200;
         }

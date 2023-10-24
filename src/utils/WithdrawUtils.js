@@ -1,13 +1,13 @@
-import {GetWasteBanksCustomers, GetWithdraw} from '@actions';
+import { GetWasteBanksCustomers, GetWithdraw } from "@actions";
 import {
   getWasteBanksCustomers,
   getWasteBanksWithdraw,
   acceptWasteBanksWithdraw,
   getUsersWithdraw,
   createUsersWithdraw,
-} from '@constants/apiWithdraw';
-import store from '@stores/store';
-import usersUtils from '@utils/UsersUtils';
+} from "@constants/apiWithdraw";
+import store from "@stores/store";
+import usersUtils from "@utils/UsersUtils";
 
 class WithdrawUtils {
   async getWasteBanksCustomers(params) {
@@ -15,7 +15,7 @@ class WithdrawUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           store.dispatch(GetWasteBanksCustomers(respon.data));
           return 200;
         }
@@ -30,7 +30,7 @@ class WithdrawUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           store.dispatch(GetWithdraw(respon.data));
           return 200;
         }
@@ -45,7 +45,7 @@ class WithdrawUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           this.getWasteBanksWithdraw();
           return 200;
         }
@@ -60,7 +60,7 @@ class WithdrawUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           store.dispatch(GetWithdraw(respon.data));
           return 200;
         }
@@ -75,7 +75,7 @@ class WithdrawUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           usersUtils.usersDetail(params);
           this.getUsersWithdraw();
           return 200;

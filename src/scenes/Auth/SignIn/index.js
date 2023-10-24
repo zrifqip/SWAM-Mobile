@@ -1,7 +1,7 @@
-import React, {useState, useRef} from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
-import {Colors, StC, Font} from '@styles';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import React, { useState, useRef } from "react";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Colors, StC, Font } from "@styles";
+import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import {
   BaseContainer,
   TypographyText,
@@ -9,27 +9,27 @@ import {
   AppBar,
   FormInput,
   ModalOTP,
-} from '@components';
-import {responsiveHeight, useTranslation} from '@utils';
-import {phoneRegex} from '@constants';
-import {Formik} from 'formik';
-import {RFValue} from 'react-native-responsive-fontsize';
-import authUtils from '@utils/AuthUtils';
-import * as yup from 'yup';
+} from "@components";
+import { responsiveHeight, useTranslation } from "@utils";
+import { phoneRegex } from "@constants";
+import { Formik } from "formik";
+import { RFValue } from "react-native-responsive-fontsize";
+import authUtils from "@utils/AuthUtils";
+import * as yup from "yup";
 
-const SignIn = ({navigation}) => {
-  const {translations} = useTranslation();
+const SignIn = ({ navigation }) => {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
   const refModalOTP = useRef();
 
   const profileValidationSchema = yup.object().shape({
     phoneNumber: yup
       .string()
-      .min(10, ({min}) => `Nomor handphone minimal ${min} digit`)
-      .max(13, ({max}) => `Nomor handphone maksimal ${max} digit`)
-      .matches(phoneRegex(), translations['phoneNumber.invalid'])
-      .required(translations['phoneNumber.required']),
+      .min(10, ({ min }) => `Nomor handphone minimal ${min} digit`)
+      .max(13, ({ max }) => `Nomor handphone maksimal ${max} digit`)
+      .matches(phoneRegex(), translations["phoneNumber.invalid"])
+      .required(translations["phoneNumber.required"]),
   });
 
   const actionNavigation = (uri) => {
@@ -60,29 +60,27 @@ const SignIn = ({navigation}) => {
       <AppBar navigation={navigation} />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{backgroundColor: Colors.WHITE}}
-      >
+        style={{ backgroundColor: Colors.WHITE }}>
         <View style={styles.authCont}>
           <TypographyText
-            text={translations['login']}
+            text={translations["login"]}
             fontType="bold"
             fontSize="L"
           />
           <TypographyText
-            text={translations['sub.login']}
-            style={{marginTop: responsiveHeight(8)}}
+            text={translations["sub.login"]}
+            style={{ marginTop: responsiveHeight(8) }}
             fontSize="S"
             color={Colors.GRAY_DARK}
           />
-          <View style={{marginTop: RFValue(80)}} />
+          <View style={{ marginTop: RFValue(80) }} />
           <Formik
             validationSchema={profileValidationSchema}
             isValidating={true}
-            initialValues={{phoneNumber: ''}}
+            initialValues={{ phoneNumber: "" }}
             // initialValues={{ phoneNumber: '081325666958'}}
             // initialValues={{ phoneNumber: '081227617570'}}
-            onSubmit={(value) => handleSignIn(value)}
-          >
+            onSubmit={(value) => handleSignIn(value)}>
             {({
               handleChange,
               handleSubmit,
@@ -93,28 +91,27 @@ const SignIn = ({navigation}) => {
             }) => (
               <>
                 <FormInput
-                  label={translations['phone.number'] + ' (WhatsApp)'}
-                  placeholder={translations['phone.number']}
+                  label={translations["phone.number"] + " (WhatsApp)"}
+                  placeholder={translations["phone.number"]}
                   value={values.phoneNumber}
-                  onChangeText={handleChange('phoneNumber')}
-                  onBlur={handleBlur('phoneNumber')}
+                  onChangeText={handleChange("phoneNumber")}
+                  onBlur={handleBlur("phoneNumber")}
                   isError={errors.phoneNumber && touched.phoneNumber}
                   errorMessage={errors.phoneNumber}
-                  keyboardType={'number-pad'}
+                  keyboardType={"number-pad"}
                 />
                 <ButtonFlex
-                  title={translations['login']}
+                  title={translations["login"]}
                   onPress={() => handleSubmit()}
-                  style={{marginTop: RFValue(20)}}
+                  style={{ marginTop: RFValue(20) }}
                   flex
                 />
                 <Text style={styles.labelSignIn}>
-                  {translations['dont.have.acc']}
+                  {translations["dont.have.acc"]}
                   <Text
                     style={[Font.SemiBold, Font.PRIMARY]}
-                    onPress={actionNavigation.bind(this, 'SignUp')}
-                  >
-                    {translations['register']}
+                    onPress={actionNavigation.bind(this, "SignUp")}>
+                    {translations["register"]}
                   </Text>
                 </Text>
               </>
@@ -141,8 +138,8 @@ const styles = StyleSheet.create({
   },
   imgCont: {
     flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: wp(40),
   },
   labelForgot: {
@@ -150,13 +147,13 @@ const styles = StyleSheet.create({
     ...Font.F12,
     ...Font.Medium,
     ...Font.PRIMARY,
-    textAlign: 'right',
+    textAlign: "right",
   },
   labelSignIn: {
     ...Font.F12,
     ...Font.Regular,
     ...Font.BLACK,
     ...StC.mT10,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

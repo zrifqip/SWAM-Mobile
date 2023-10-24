@@ -1,22 +1,21 @@
-import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
-import {Icon} from 'native-base';
-import {Colors, StC, Font} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import Feather from 'react-native-vector-icons/Feather';
+import React from "react";
+import { TouchableOpacity, View, Text } from "react-native";
+import { Icon } from "native-base";
+import { Colors, StC, Font } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import Feather from "react-native-vector-icons/Feather";
 
-const AppBar = ({onBackCustom, navigation, title}) => {
+const AppBar = ({ onBackCustom, navigation, title }) => {
   return (
     <View style={styles.header}>
       <TouchableOpacity
         style={styles.btnBack}
         onPress={
           onBackCustom == null ? () => navigation.goBack() : onBackCustom
-        }
-      >
+        }>
         <Icon
           as={Feather}
-          name={'chevron-left'}
+          name={"chevron-left"}
           color={Colors.BLACK}
           size={RFValue(5)}
         />
@@ -37,7 +36,7 @@ const styles = {
     height: RFValue(50),
     borderBottomWidth: 1,
     borderBottomColor: Colors.WHITE,
-    alignItems: 'center',
+    alignItems: "center",
   },
   btnBack: {
     ...StC.centerPage,

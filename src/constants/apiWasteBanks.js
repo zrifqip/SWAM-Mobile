@@ -1,5 +1,5 @@
-import Axios from 'axios';
-import {base_uri} from '@constants/BASE_URL';
+import Axios from "axios";
+import { base_uri } from "@constants/BASE_URL";
 
 export const getWasteBanks = (payload) =>
   Axios.get(`${base_uri}users/client/company/all?page=1&limit=` + payload);

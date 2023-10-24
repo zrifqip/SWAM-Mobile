@@ -1,4 +1,4 @@
-import * as ACTION_TYPES from '@constants/ActionTypes';
+import * as ACTION_TYPES from "@constants/ActionTypes";
 
 export const GetWasteBanksCustomers = (customers) => ({
   type: ACTION_TYPES.GET_WASTE_BANK_CUSTOMERS,

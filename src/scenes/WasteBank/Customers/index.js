@@ -1,32 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
   ScrollView,
   FlatList,
   RefreshControl,
-} from 'react-native';
+} from "react-native";
 import {
   BaseContainer,
   CardCustomers,
   Search,
   EmptyData,
   AppBar,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {createFilter} from 'react-native-search-filter';
-import LinearGradient from 'react-native-linear-gradient';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-import withdrawUtils from '@utils/WithdrawUtils';
-const KEYS_TO_FILTERS = ['fullName', 'address.street'];
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { createFilter } from "react-native-search-filter";
+import LinearGradient from "react-native-linear-gradient";
+import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
+import withdrawUtils from "@utils/WithdrawUtils";
+const KEYS_TO_FILTERS = ["fullName", "address.street"];
 
-function WasteBankCustomers({navigation, withdraw}) {
-  const {translations} = useTranslation();
+function WasteBankCustomers({ navigation, withdraw }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getWasteBanksCustomers();
@@ -44,18 +44,18 @@ function WasteBankCustomers({navigation, withdraw}) {
 
   return (
     <BaseContainer>
-      <AppBar navigation={navigation} title={translations['customers']} />
+      <AppBar navigation={navigation} title={translations["customers"]} />
       <Search
-        placeholder={translations['search.customers']}
+        placeholder={translations["search.customers"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
       />
       <ScrollView>
-        <View style={{marginTop: RFValue(10)}} />
+        <View style={{ marginTop: RFValue(10) }} />
         {loading ? (
           <View style={styles.wastePlaceholder}>
             {[0, 1, 2].map((item, index) => (
@@ -69,9 +69,9 @@ function WasteBankCustomers({navigation, withdraw}) {
         ) : (
           <FlatList
             data={filteredData}
-            renderItem={({item}) => <CardCustomers item={item} customers />}
+            renderItem={({ item }) => <CardCustomers item={item} customers />}
             ListEmptyComponent={
-              <EmptyData message={translations['empty.customers']} />
+              <EmptyData message={translations["empty.customers"]} />
             }
             refreshControl={
               <RefreshControl onRefresh={() => getWasteBanksCustomers()} />
@@ -84,8 +84,8 @@ function WasteBankCustomers({navigation, withdraw}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users, withdraw} = state;
-  return {users, withdraw};
+  const { users, withdraw } = state;
+  return { users, withdraw };
 };
 
 export default connect(mapStateToProps)(WasteBankCustomers);
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     borderRadius: RFValue(10),
-    width: '100%',
+    width: "100%",
     height: RFValue(70),
     marginBottom: RFValue(10),
   },

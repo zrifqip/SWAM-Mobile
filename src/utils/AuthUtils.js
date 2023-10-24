@@ -4,13 +4,13 @@ import {
   signUpWasteBank,
   verifyOTP,
   signInUsersByPass,
-} from '@constants/apiAuth';
-import {showToast} from '@constants';
-import {SignIn} from '@actions';
-import store from '@stores/store';
-import usersUtils from '@utils/UsersUtils';
-import MMKVStorage from 'react-native-mmkv-storage';
-import AsyncStorage from '@react-native-community/async-storage';
+} from "@constants/apiAuth";
+import { showToast } from "@constants";
+import { SignIn } from "@actions";
+import store from "@stores/store";
+import usersUtils from "@utils/UsersUtils";
+import MMKVStorage from "react-native-mmkv-storage";
+import AsyncStorage from "@react-native-community/async-storage";
 
 class AuthUtils {
   storage = new MMKVStorage.Loader().initialize();
@@ -20,7 +20,7 @@ class AuthUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return 200;
         } else {
           showToast(respon.message);
@@ -28,7 +28,7 @@ class AuthUtils {
         }
       })
       .catch((error) => {
-        showToast('Pengguna tidak ditemukan');
+        showToast("Pengguna tidak ditemukan");
         return 400;
       }));
   }
@@ -37,18 +37,18 @@ class AuthUtils {
     return (params = await verifyOTP(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.status == 'success') {
-          this.storage.setItem('token', respon.data.token);
+        if (respon.status == "success") {
+          this.storage.setItem("token", respon.data.token);
 
-          AsyncStorage.setItem('role', respon.data.role);
+          AsyncStorage.setItem("role", respon.data.role);
 
           store.dispatch(SignIn(respon.data.token));
 
-          if (respon.data.role == 'user') {
+          if (respon.data.role == "user") {
             usersUtils.usersDetail(params);
           } else if (
-            respon.data.role == 'bank-sampah' ||
-            respon.data.role == 'pengepul'
+            respon.data.role == "bank-sampah" ||
+            respon.data.role == "pengepul"
           ) {
             usersUtils.companyDetail(params);
           }
@@ -59,7 +59,7 @@ class AuthUtils {
         }
       })
       .catch((error) => {
-        showToast('Kode OTP Salah');
+        showToast("Kode OTP Salah");
         return 400;
       }));
   }
@@ -69,18 +69,18 @@ class AuthUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
-          this.storage.setItem('token', respon.data.token);
+        if (respon.status == "success") {
+          this.storage.setItem("token", respon.data.token);
 
-          AsyncStorage.setItem('role', respon.data.role);
+          AsyncStorage.setItem("role", respon.data.role);
 
           store.dispatch(SignIn(respon.data.token));
 
-          if (respon.data.role == 'user') {
+          if (respon.data.role == "user") {
             usersUtils.usersDetail(params);
           } else if (
-            respon.data.role == 'bank-sampah' ||
-            respon.data.role == 'pengepul'
+            respon.data.role == "bank-sampah" ||
+            respon.data.role == "pengepul"
           ) {
             usersUtils.companyDetail(params);
           }
@@ -91,7 +91,7 @@ class AuthUtils {
         }
       })
       .catch((error) => {
-        showToast('Pengguna tidak dtemukan');
+        showToast("Pengguna tidak dtemukan");
         return 400;
       }));
   }
@@ -101,7 +101,7 @@ class AuthUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return 200;
         } else {
           showToast(respon.message);
@@ -109,7 +109,7 @@ class AuthUtils {
         }
       })
       .catch((error) => {
-        showToast('Data Anda tidak dapat di proses');
+        showToast("Data Anda tidak dapat di proses");
         return 400;
       }));
   }
@@ -119,7 +119,7 @@ class AuthUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           return 200;
         } else {
           showToast(respon.message);
@@ -127,7 +127,7 @@ class AuthUtils {
         }
       })
       .catch((error) => {
-        showToast('Data Anda tidak dapat di proses');
+        showToast("Data Anda tidak dapat di proses");
         return 400;
       }));
   }

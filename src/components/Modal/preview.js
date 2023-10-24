@@ -1,18 +1,17 @@
-import React from 'react';
-import {Image, TouchableOpacity} from 'react-native';
-import {Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import Modal from 'react-native-modal';
+import React from "react";
+import { Image, TouchableOpacity } from "react-native";
+import { Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import Modal from "react-native-modal";
 
-function ModalPreview({image, onPress, isVisible}) {
+function ModalPreview({ image, onPress, isVisible }) {
   return (
     <Modal isVisible={isVisible} onBackdropPress={onPress}>
       <TouchableOpacity
         style={styles.contentPreview}
         onPress={onPress}
-        activeOpacity={1}
-      >
-        <Image source={{uri: image}} style={styles.imagePreview} />
+        activeOpacity={1}>
+        <Image source={{ uri: image }} style={styles.imagePreview} />
       </TouchableOpacity>
     </Modal>
   );
@@ -33,9 +32,9 @@ const styles = {
     borderRadius: RFValue(10),
   },
   imagePreview: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
     borderRadius: RFValue(10),
   },
 };

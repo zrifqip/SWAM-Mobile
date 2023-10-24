@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Font, StC} from '@styles';
-import {FormInputCurrency, FormInputRadio} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {showToast, currencyFloat, requireds} from '@constants';
-import {ButtonFlex} from '@components';
-import {useTranslation} from '@utils';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import withdrawUtils from '@utils/WithdrawUtils';
-import sendNotifUtils from '@utils/SendNotifUtils';
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Font, StC } from "@styles";
+import { FormInputCurrency, FormInputRadio } from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { showToast, currencyFloat, requireds } from "@constants";
+import { ButtonFlex } from "@components";
+import { useTranslation } from "@utils";
+import RBSheet from "react-native-raw-bottom-sheet";
+import withdrawUtils from "@utils/WithdrawUtils";
+import sendNotifUtils from "@utils/SendNotifUtils";
 
-function ModalWithdraw({open, onPress, users}) {
+function ModalWithdraw({ open, onPress, users }) {
   let user = users.users;
   let bank = user.biodata?.bankAccount;
   let min = 0;
   let balance = user?.biodata?.balance;
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
   const [amount, setAmount] = useState(
-    user.role == 'bank-sampah' ? user.organization.minimumWithdrawal : '',
+    user.role == "bank-sampah" ? user.organization.minimumWithdrawal : "",
   );
   const [isTransfer, setIsTransfer] = useState(false);
 
@@ -28,19 +28,19 @@ function ModalWithdraw({open, onPress, users}) {
 
   const saveItems = async () => {
     if (amount < min) {
-      showToast(translations['min.withdraw'] + ' ' + currencyFloat(min));
+      showToast(translations["min.withdraw"] + " " + currencyFloat(min));
     } else if (amount > balance) {
-      showToast(translations['max.withdraw'] + ' ' + currencyFloat(balance));
+      showToast(translations["max.withdraw"] + " " + currencyFloat(balance));
     } else {
       let params = {
         nominal: amount,
-        method: isTransfer ? 'transfer' : 'cash',
+        method: isTransfer ? "transfer" : "cash",
       };
 
       let respons = await withdrawUtils.createUsersWithdraw(params);
       if (respons == 200) {
         sendNotif();
-        showToast(translations['save.success']);
+        showToast(translations["save.success"]);
         setAmount(0);
         setTimeout(() => {
           onPress();
@@ -51,26 +51,26 @@ function ModalWithdraw({open, onPress, users}) {
 
   const sendNotif = async () => {
     let message =
-      '*## NEW WITHDRAW ##*' +
-      '\n\n' +
-      'Hai *' +
+      "*## NEW WITHDRAW ##*" +
+      "\n\n" +
+      "Hai *" +
       user.biodata.company.companyName +
-      '*,' +
-      '\n\n' +
-      'Berikut invoice untuk pengajuan withdraw' +
-      '\n\n' +
-      'Nama Nasabah : ' +
+      "*," +
+      "\n\n" +
+      "Berikut invoice untuk pengajuan withdraw" +
+      "\n\n" +
+      "Nama Nasabah : " +
       user.biodata.fullName +
-      '\n' +
-      'Alamat : ' +
+      "\n" +
+      "Alamat : " +
       user.biodata.address.street +
-      '\n' +
-      'Nominal : *' +
+      "\n" +
+      "Nominal : *" +
       currencyFloat(amount) +
-      '*\n\n' +
-      'Silahkan membuka aplikasi untuk melihat detail transaksi' +
-      '\n\n' +
-      'Terima Kasih';
+      "*\n\n" +
+      "Silahkan membuka aplikasi untuk melihat detail transaksi" +
+      "\n\n" +
+      "Terima Kasih";
 
     let send = {
       message: message,
@@ -89,44 +89,43 @@ function ModalWithdraw({open, onPress, users}) {
         container: {
           ...StC.centerPage,
         },
-      }}
-    >
+      }}>
       <View style={styles.modal}>
         <Text style={styles.balance}>
-          {translations['balance']}: {currencyFloat(balance)}
+          {translations["balance"]}: {currencyFloat(balance)}
         </Text>
         <Text style={styles.service}>
-          Nominal {translations['withdraw']} {requireds('*')}
+          Nominal {translations["withdraw"]} {requireds("*")}
         </Text>
-        <View style={{height: RFValue(52)}}>
+        <View style={{ height: RFValue(52) }}>
           <FormInputCurrency
-            placeholder={'0'}
+            placeholder={"0"}
             value={amount}
-            prefix={'Rp '}
+            prefix={"Rp "}
             onChangeText={(val) => setAmount(val)}
-            keyboardType={'number-pad'}
+            keyboardType={"number-pad"}
             required
             precision={0}
           />
         </View>
         <Text style={styles.min}>
-          * Minimum {translations['withdraw']} :{' '}
+          * Minimum {translations["withdraw"]} :{" "}
           {currencyFloat(user?.biodata?.company?.minimumWithdrawal)}
         </Text>
         <View style={StC.mT10}>
-          <Text style={StC.title}>Metode Penarikan {requireds('*')}</Text>
+          <Text style={StC.title}>Metode Penarikan {requireds("*")}</Text>
           <View style={StC.flexR}>
             <FormInputRadio
               onPress={() => setIsTransfer(!isTransfer)}
               checked={!isTransfer}
-              title={'Cash'}
-              style={{width: RFValue(90)}}
+              title={"Cash"}
+              style={{ width: RFValue(90) }}
             />
             <FormInputRadio
               onPress={() => setIsTransfer(!isTransfer)}
               checked={isTransfer}
-              title={'Transfer'}
-              style={{width: RFValue(90)}}
+              title={"Transfer"}
+              style={{ width: RFValue(90) }}
             />
           </View>
           <View style={StC.mB10} />
@@ -145,10 +144,10 @@ function ModalWithdraw({open, onPress, users}) {
           </View>
         )}
         <ButtonFlex
-          title={translations['send']}
+          title={translations["send"]}
           onPress={() => saveItems()}
           style={StC.mT30}
-          disabled={amount == ''}
+          disabled={amount == ""}
         />
       </View>
     </RBSheet>
@@ -156,8 +155,8 @@ function ModalWithdraw({open, onPress, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users} = state;
-  return {users};
+  const { users } = state;
+  return { users };
 };
 
 export default connect(mapStateToProps)(ModalWithdraw);

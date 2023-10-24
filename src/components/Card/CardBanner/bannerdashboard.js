@@ -1,8 +1,8 @@
-import React from 'react';
-import {View, ScrollView, Image} from 'react-native';
-import {StC} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Images} from '@assets';
+import React from "react";
+import { View, ScrollView, Image } from "react-native";
+import { StC } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Images } from "@assets";
 
 function CardBannerDashboard({}) {
   return (

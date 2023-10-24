@@ -1,7 +1,7 @@
-import React from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {Colors, Font, StC, Shadow} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React from "react";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Colors, Font, StC, Shadow } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const ButtonFlex = ({
   disabled,
@@ -23,23 +23,24 @@ const ButtonFlex = ({
           styles.btn,
           style,
           small ? styles.small : styles.normal,
-          !outline && {backgroundColor: Colors.PRIMARY},
-          disabled && {backgroundColor: Colors.GRAY, borderColor: Colors.GRAY},
+          !outline && { backgroundColor: Colors.PRIMARY },
+          disabled && {
+            backgroundColor: Colors.GRAY,
+            borderColor: Colors.GRAY,
+          },
           remove && {
             backgroundColor: Colors.BACKGROUND,
             borderColor: Colors.DANGER,
           },
           form && styles.form,
-        ]}
-      >
+        ]}>
         <Text
           style={[
             styles.label,
             small ? styles.fontSmall : styles.fontMedium,
             outline ? Font.PRIMARY : Font.WHITE,
             remove && Font.DANGER,
-          ]}
-        >
+          ]}>
           {title.toUpperCase()}
         </Text>
       </TouchableOpacity>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
   },
   label: {
     ...Font.BLACK,
-    textAlign: 'center',
+    textAlign: "center",
   },
   fontSmall: {
     ...Font.Regular,

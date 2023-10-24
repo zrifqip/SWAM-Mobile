@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -8,29 +8,33 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
-} from 'react-native';
-import {BaseContainer, ModalMinWithdrawl, ModalBankTransfer} from '@components';
-import {Avatar, Icon} from 'native-base';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import {Images} from '@assets';
-import {base_uri} from '@constants/BASE_URL';
-import {useTranslation} from '@utils';
-import {GetUsersDetail} from '@actions';
-import {currencyFloat} from '@constants';
-import store from '@stores/store';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MMKVStorage from 'react-native-mmkv-storage';
+} from "react-native";
+import {
+  BaseContainer,
+  ModalMinWithdrawl,
+  ModalBankTransfer,
+} from "@components";
+import { Avatar, Icon } from "native-base";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import { Images } from "@assets";
+import { base_uri } from "@constants/BASE_URL";
+import { useTranslation } from "@utils";
+import { GetUsersDetail } from "@actions";
+import { currencyFloat } from "@constants";
+import store from "@stores/store";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MMKVStorage from "react-native-mmkv-storage";
 
-function Account({navigation, users}) {
-  const {translations} = useTranslation();
+function Account({ navigation, users }) {
+  const { translations } = useTranslation();
   let user = users.users;
   let role = user.role;
   let biodata,
     organization,
-    photo = '';
+    photo = "";
   const refModalMinWithdrawl = useRef();
   const refModalBankTransfer = useRef();
 
@@ -51,14 +55,14 @@ function Account({navigation, users}) {
   }
 
   const navigationMenu = async (menu) => {
-    if (menu.type == 'uri') {
+    if (menu.type == "uri") {
       Linking.openURL(menu.action);
-    } else if (menu.name == 'logout') {
+    } else if (menu.name == "logout") {
       confirmationLogout();
-    } else if (menu.type == 'modal') {
-      if (menu.action == 'minwithdrawl') {
+    } else if (menu.type == "modal") {
+      if (menu.action == "minwithdrawl") {
         refModalMinWithdrawl.current.open();
-      } else if (menu.action == 'bankTransfer') {
+      } else if (menu.action == "bankTransfer") {
         refModalBankTransfer.current.open();
       }
     } else {
@@ -68,117 +72,117 @@ function Account({navigation, users}) {
 
   const confirmationLogout = () => {
     Alert.alert(
-      translations['logout.title'],
-      translations['logout.title'],
+      translations["logout.title"],
+      translations["logout.title"],
       [
         {
-          text: translations['confirmation.no'],
+          text: translations["confirmation.no"],
         },
         {
-          text: translations['confirmation.yes'],
+          text: translations["confirmation.yes"],
           onPress: () => logout(),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
   const logout = async () => {
-    navigation.navigate('OnBoarding');
-    store.dispatch({type: 'SIGN_OUT'});
-    store.dispatch(GetUsersDetail(''));
+    navigation.navigate("OnBoarding");
+    store.dispatch({ type: "SIGN_OUT" });
+    store.dispatch(GetUsersDetail(""));
 
     let storage = new MMKVStorage.Loader().initialize();
-    storage.setItem('token', '');
+    storage.setItem("token", "");
   };
 
   const menu = [
     {
-      menu: translations['account.and.security'],
+      menu: translations["account.and.security"],
       submenu: [
         {
           icon: MaterialCommunityIcons,
-          name: 'account-edit',
-          menu: translations['edit.profile'],
+          name: "account-edit",
+          menu: translations["edit.profile"],
           action:
-            role == 'user'
-              ? 'UsersProfile'
-              : role == 'bank-sampah'
-              ? 'WasteBankProfile'
-              : 'CompanyProfile',
+            role == "user"
+              ? "UsersProfile"
+              : role == "bank-sampah"
+              ? "WasteBankProfile"
+              : "CompanyProfile",
         },
         {
           icon: MaterialCommunityIcons,
-          name: 'wallet',
-          menu: translations['min.withdraw'],
+          name: "wallet",
+          menu: translations["min.withdraw"],
           value:
-            role == 'bank-sampah'
+            role == "bank-sampah"
               ? currencyFloat(organization.minimumWithdrawal)
-              : '',
-          type: 'modal',
-          action: 'minwithdrawl',
-          disabled: role != 'bank-sampah',
+              : "",
+          type: "modal",
+          action: "minwithdrawl",
+          disabled: role != "bank-sampah",
         },
         {
           icon: MaterialCommunityIcons,
-          name: 'wallet',
-          menu: 'Bank Transfer',
+          name: "wallet",
+          menu: "Bank Transfer",
           value:
-            role == 'user'
+            role == "user"
               ? user?.biodata?.bankAccount
                 ? user?.biodata?.bankAccount?.accountName
-                : ''
-              : '',
-          type: 'modal',
-          action: 'bankTransfer',
-          disabled: role != 'user',
+                : ""
+              : "",
+          type: "modal",
+          action: "bankTransfer",
+          disabled: role != "user",
         },
         {
           icon: MaterialCommunityIcons,
-          name: 'account-group',
-          menu: 'Nasabah',
-          action: 'WasteBankCustomers',
-          disabled: role != 'bank-sampah',
+          name: "account-group",
+          menu: "Nasabah",
+          action: "WasteBankCustomers",
+          disabled: role != "bank-sampah",
         },
         {
           icon: MaterialCommunityIcons,
-          name: 'account-cash',
-          menu: translations['withdraw'],
-          action: role == 'user' ? 'UsersWithdraw' : 'WasteBankWithdraw',
-          disabled: role != 'bank-sampah' && role != 'user',
+          name: "account-cash",
+          menu: translations["withdraw"],
+          action: role == "user" ? "UsersWithdraw" : "WasteBankWithdraw",
+          disabled: role != "bank-sampah" && role != "user",
         },
       ],
     },
     {
-      menu: translations['general'],
+      menu: translations["general"],
       submenu: [
         {
           icon: MaterialIcons,
-          name: 'phone-iphone',
-          menu: translations['call'],
-          type: 'uri',
-          action: 'https://wa.me/6282329083354',
+          name: "phone-iphone",
+          menu: translations["call"],
+          type: "uri",
+          action: "https://wa.me/6282329083354",
         },
         {
           icon: MaterialCommunityIcons,
-          name: 'shield-alert',
-          menu: translations['terms.condition'],
-          type: 'uri',
-          action: 'https://api.apps4swam.com/term',
+          name: "shield-alert",
+          menu: translations["terms.condition"],
+          type: "uri",
+          action: "https://api.apps4swam.com/term",
         },
         {
           icon: MaterialCommunityIcons,
-          name: 'lock',
-          menu: 'Kebijakan Privasi',
-          type: 'uri',
-          action: 'https://api.apps4swam.com/privacy-policy',
+          name: "lock",
+          menu: "Kebijakan Privasi",
+          type: "uri",
+          action: "https://api.apps4swam.com/privacy-policy",
         },
         {
           icon: MaterialCommunityIcons,
-          name: 'help-circle',
-          menu: translations['help'],
-          type: 'uri',
-          action: 'https://wa.me/6282329083354',
+          name: "help-circle",
+          menu: translations["help"],
+          type: "uri",
+          action: "https://wa.me/6282329083354",
         },
       ],
     },
@@ -186,11 +190,11 @@ function Account({navigation, users}) {
       submenu: [
         {
           icon: MaterialCommunityIcons,
-          name: 'logout',
-          menu: translations['logout'],
+          name: "logout",
+          menu: translations["logout"],
         },
       ],
-      type: 'logout',
+      type: "logout",
     },
   ];
 
@@ -201,23 +205,23 @@ function Account({navigation, users}) {
           <Avatar
             square
             size="lg"
-            source={photo ? {uri: base_uri + photo} : Images.profile}
+            source={photo ? { uri: base_uri + photo } : Images.profile}
           />
           <View style={styles.contentHeader}>
-            {role == 'bank-sampah' ? (
-              <Text style={[styles.name, {color: Colors.PRIMARY}]}>
+            {role == "bank-sampah" ? (
+              <Text style={[styles.name, { color: Colors.PRIMARY }]}>
                 Bank Sampah
               </Text>
             ) : null}
             <Text style={styles.waste}>
-              {role == 'user'
+              {role == "user"
                 ? user?.biodata?.fullName
-                : role == 'bank-sampah' || role == 'pengepul'
+                : role == "bank-sampah" || role == "pengepul"
                 ? user?.organization?.companyName
                 : null}
             </Text>
             <Text style={styles.street}>
-              {role == 'user'
+              {role == "user"
                 ? biodata?.address?.street
                 : user?.organization?.address?.street}
             </Text>
@@ -225,14 +229,13 @@ function Account({navigation, users}) {
         </View>
         <FlatList
           data={menu}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <View
               style={[
                 styles.cardMenu,
-                {paddingTop: RFValue(item.type == 'logout' ? 0 : 10)},
-              ]}
-            >
-              {item.type != 'logout' ? (
+                { paddingTop: RFValue(item.type == "logout" ? 0 : 10) },
+              ]}>
+              {item.type != "logout" ? (
                 <Text style={styles.name}>{item.menu}</Text>
               ) : null}
               {item.submenu
@@ -240,15 +243,14 @@ function Account({navigation, users}) {
                 .map((submenu) => (
                   <TouchableOpacity
                     style={styles.submenu}
-                    onPress={() => navigationMenu(submenu)}
-                  >
+                    onPress={() => navigationMenu(submenu)}>
                     <View style={styles.icon}>
                       <Icon
                         as={submenu.icon}
                         name={submenu.name}
                         size={RFValue(5)}
                         color={[
-                          item.type == 'logout' ? Colors.PRIMARY : Colors.BLACK,
+                          item.type == "logout" ? Colors.PRIMARY : Colors.BLACK,
                         ]}
                       />
                     </View>
@@ -273,8 +275,8 @@ function Account({navigation, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users} = state;
-  return {users};
+  const { users } = state;
+  return { users };
 };
 
 export default connect(mapStateToProps)(Account);
@@ -321,7 +323,7 @@ const styles = StyleSheet.create({
     paddingVertical: RFValue(12),
     borderBottomWidth: RFValue(1),
     borderColor: Colors.LINE,
-    alignItems: 'center',
+    alignItems: "center",
   },
   icon: {
     width: RFValue(30),

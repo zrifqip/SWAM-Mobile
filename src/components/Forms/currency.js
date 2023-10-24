@@ -1,10 +1,10 @@
-import React from 'react';
-import {Text, View} from 'react-native';
-import {Colors, Font, StC} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {MyView, TypographyText} from '@components';
-import {requireds} from '@constants';
-import CurrencyInput from 'react-native-currency-input';
+import React from "react";
+import { Text, View } from "react-native";
+import { Colors, Font, StC } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { MyView, TypographyText } from "@components";
+import { requireds } from "@constants";
+import CurrencyInput from "react-native-currency-input";
 
 const FormInputCurrency = ({
   hide,
@@ -23,7 +23,7 @@ const FormInputCurrency = ({
   onBlur,
 }) => {
   return (
-    <MyView hide={hide} style={{flex: 1}}>
+    <MyView hide={hide} style={{ flex: 1 }}>
       {label ? (
         <Text style={StC.title}>
           {label} {requireds(required)}
@@ -41,7 +41,7 @@ const FormInputCurrency = ({
           precision={precision}
           style={styles.currencyInput}
           keyboardType="number-pad"
-          placeholder={placeholder ? placeholder : precision == 2 ? '0,0' : '0'}
+          placeholder={placeholder ? placeholder : precision == 2 ? "0,0" : "0"}
           ditabled={false}
           minValue={0}
           maxLength={17}

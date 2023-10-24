@@ -1,30 +1,35 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, FlatList, Text} from 'react-native';
-import {BaseContainer, CardWasteBankList, Search, EmptyData} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {createFilter} from 'react-native-search-filter';
-import {arrSortDistance} from '@constants';
-import {GetWasteBanksDetails} from '@actions';
-import store from '@stores/store';
-import LinearGradient from 'react-native-linear-gradient';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, ScrollView, FlatList, Text } from "react-native";
+import {
+  BaseContainer,
+  CardWasteBankList,
+  Search,
+  EmptyData,
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { createFilter } from "react-native-search-filter";
+import { arrSortDistance } from "@constants";
+import { GetWasteBanksDetails } from "@actions";
+import store from "@stores/store";
+import LinearGradient from "react-native-linear-gradient";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
 const KEYS_TO_FILTERS = [
-  'companyName',
-  'nameCEO',
-  'phoneNumber',
-  'address.country',
-  'address.district',
-  'address.street',
+  "companyName",
+  "nameCEO",
+  "phoneNumber",
+  "address.country",
+  "address.district",
+  "address.street",
 ];
 
-function CompanyWasteBank({navigation, wasteBanks, users}) {
-  const {translations} = useTranslation();
+function CompanyWasteBank({ navigation, wasteBanks, users }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getWasteBanks();
@@ -38,7 +43,7 @@ function CompanyWasteBank({navigation, wasteBanks, users}) {
 
   const getResultWasteBanks = async (item) => {
     store.dispatch(GetWasteBanksDetails(item));
-    navigation.navigate('CompanyWasteBankDetail');
+    navigation.navigate("CompanyWasteBankDetail");
   };
 
   let sortir = arrSortDistance(wasteBanks.list, users?.coordinate);
@@ -48,16 +53,16 @@ function CompanyWasteBank({navigation, wasteBanks, users}) {
   return (
     <BaseContainer loading={loading}>
       <Search
-        placeholder={translations['search.wastebank']}
+        placeholder={translations["search.wastebank"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
       />
       <ScrollView>
-        <View style={{marginTop: RFValue(10)}} />
+        <View style={{ marginTop: RFValue(10) }} />
         {loading ? (
           <View style={styles.wastePlaceholder}>
             {[0, 1, 2].map((index) => (
@@ -71,14 +76,14 @@ function CompanyWasteBank({navigation, wasteBanks, users}) {
         ) : (
           <FlatList
             data={filteredData}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <CardWasteBankList
                 item={item}
                 onPress={() => getResultWasteBanks(item)}
               />
             )}
             ListEmptyComponent={
-              <EmptyData message={translations['empty.wastebank']} />
+              <EmptyData message={translations["empty.wastebank"]} />
             }
           />
         )}
@@ -88,8 +93,8 @@ function CompanyWasteBank({navigation, wasteBanks, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users, wasteBanks} = state;
-  return {users, wasteBanks};
+  const { users, wasteBanks } = state;
+  return { users, wasteBanks };
 };
 
 export default connect(mapStateToProps)(CompanyWasteBank);
@@ -101,7 +106,7 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     borderRadius: RFValue(10),
-    width: '100%',
+    width: "100%",
     height: RFValue(70),
     marginBottom: RFValue(10),
   },

@@ -1,22 +1,21 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {Icon} from 'native-base';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {arrDay} from '@constants';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { Icon } from "native-base";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { arrDay } from "@constants";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-function CardWasteBankScheduleList({item, onPress}) {
+function CardWasteBankScheduleList({ item, onPress }) {
   return (
     <TouchableOpacity
       style={styles.cardMenu}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <View style={styles.cardIcon}>
         <Icon
           as={MaterialCommunityIcons}
-          name={'timetable'}
+          name={"timetable"}
           color={Colors.GRAY_LABEL}
           size={RFValue(8)}
         />
@@ -51,7 +50,7 @@ const styles = {
     shadowRadius: 2,
     shadowColor: Colors.BLACK,
     elevation: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   cardText: {},
   textCompany: {

@@ -1,1 +1,1 @@
-export * from './functionGlobal';
+export * from "./functionGlobal";

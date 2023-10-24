@@ -1,4 +1,4 @@
-import {sendNotifCompany, sendNotifUser} from '@constants/apiSendNotif';
+import { sendNotifCompany, sendNotifUser } from "@constants/apiSendNotif";
 
 class SendNotifUtils {
   async sendNotifCompany(params) {

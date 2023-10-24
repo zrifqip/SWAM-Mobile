@@ -5,13 +5,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_WASTE_BANK_CUSTOMERS':
+    case "GET_WASTE_BANK_CUSTOMERS":
       return {
         ...state,
         ...action.payload,
         customers: action.customers,
       };
-    case 'GET_WITHDRAW':
+    case "GET_WITHDRAW":
       return {
         ...state,
         ...action.payload,

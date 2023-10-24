@@ -3,16 +3,16 @@ const initialState = {
   coordinate: [],
   currentwaste: false,
   address: {
-    country: 'Indonesia',
+    country: "Indonesia",
     region: {
-      province: 'Jawa Timur',
-      city: 'Kediri',
+      province: "Jawa Timur",
+      city: "Kediri",
     },
-    district: 'Kediri',
-    street: '',
+    district: "Kediri",
+    street: "",
     postalCode: 64112,
     loc: {
-      type: 'Point',
+      type: "Point",
       coordinates: [112.011864, -7.82284],
     },
   },
@@ -21,31 +21,31 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_USERS_DETAIL':
+    case "GET_USERS_DETAIL":
       return {
         ...state,
         ...action.payload,
         users: action.users,
       };
-    case 'GET_USERS_COORDINATE':
+    case "GET_USERS_COORDINATE":
       return {
         ...state,
         ...action.payload,
         coordinate: action.coordinate,
       };
-    case 'CURRENT_WASTE':
+    case "CURRENT_WASTE":
       return {
         ...state,
         ...action.payload,
         currentwaste: action.currentwaste,
       };
-    case 'GET_USERS_ADDRESS':
+    case "GET_USERS_ADDRESS":
       return {
         ...state,
         ...action.payload,
         address: action.address,
       };
-    case 'RESULT_CUSTOMERS':
+    case "RESULT_CUSTOMERS":
       return {
         ...state,
         ...action.payload,

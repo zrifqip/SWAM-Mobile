@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -10,32 +10,32 @@ import {
   PermissionsAndroid,
   TouchableOpacity,
   Alert,
-} from 'react-native';
+} from "react-native";
 import {
   BaseContainer,
   CardWasteBank,
   CardTrasactionDashboard,
   MyView,
   CardBannerDashboard,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import {Images, Icons} from '@assets';
-import {useTranslation} from '@utils';
-import {currencyFloat, arrSortDistance} from '@constants';
-import {GetCoordinate, CurrentWaste} from '@actions';
-import store from '@stores/store';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import transactionsUtils from '@utils/TransactionsUtils';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-import LinearGradient from 'react-native-linear-gradient';
-import Geolocation from '@react-native-community/geolocation';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import { Images, Icons } from "@assets";
+import { useTranslation } from "@utils";
+import { currencyFloat, arrSortDistance } from "@constants";
+import { GetCoordinate, CurrentWaste } from "@actions";
+import store from "@stores/store";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import transactionsUtils from "@utils/TransactionsUtils";
+import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
+import LinearGradient from "react-native-linear-gradient";
+import Geolocation from "@react-native-community/geolocation";
 
-function UsersDashboard({navigation, users, wasteBanks, transactions}) {
+function UsersDashboard({ navigation, users, wasteBanks, transactions }) {
   let user = users.users;
 
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
   const [loadingWaste, setLoadingWaste] = useState(false);
   const [loadingTrans, setLoadingTrans] = useState(false);
 
@@ -57,7 +57,7 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
       getModal();
     }
 
-    const navFocusListener = navigation.addListener('didFocus', () => {
+    const navFocusListener = navigation.addListener("didFocus", () => {
       setDisabled();
     });
 
@@ -69,15 +69,15 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
   const getModal = async () => {
     if (!user?.biodata?.companyID) {
       Alert.alert(
-        'Informasi',
-        'Anda belum terdaftar menjadi Nasabah, silahkan pilih Bank Sampah terlebih dahulu',
+        "Informasi",
+        "Anda belum terdaftar menjadi Nasabah, silahkan pilih Bank Sampah terlebih dahulu",
         [
           {
-            text: 'Pilih Bank Sampah',
-            onPress: () => navigation.navigate('UsersWasteBank'),
+            text: "Pilih Bank Sampah",
+            onPress: () => navigation.navigate("UsersWasteBank"),
           },
         ],
-        {cancelable: false},
+        { cancelable: false },
       );
     }
   };
@@ -100,12 +100,12 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
 
   const getResultWasteBanks = async (id) => {
     await wasteBanksUtils.getWasteBanksDetails(id);
-    navigation.navigate('UsersWasteBankDetail');
+    navigation.navigate("UsersWasteBankDetail");
   };
 
   const getTransactionDetail = async (id) => {
     await transactionsUtils.getTransactionsUsersDetail(id);
-    navigation.navigate('UsersTransactionDetails');
+    navigation.navigate("UsersTransactionDetails");
   };
 
   // LOCATION
@@ -115,14 +115,14 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           {
-            title: 'Location Access Required',
-            message: 'This App needs to Access your location',
+            title: "Location Access Required",
+            message: "This App needs to Access your location",
           },
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           callLocation();
         } else {
-          alert('Aktifkan GPS');
+          alert("Aktifkan GPS");
         }
       } catch (err) {}
     }
@@ -141,7 +141,7 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
         storeCoordinate(coordinate);
       },
       (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000000, maximumAge: 1000},
+      { enableHighAccuracy: true, timeout: 20000000, maximumAge: 1000 },
     );
     watchID = Geolocation.watchPosition((position) => {
       let coordinate = {
@@ -162,32 +162,30 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
   return (
     <BaseContainer>
       <StatusBar barStyle="light-content" backgroundColor={Colors.PRIMARY} />
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <LinearGradient
           colors={[Colors.PRIMARY, Colors.PRIMARY]}
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 0}}
-          style={styles.header}
-        >
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.header}>
           <Image source={Images.swam_putih} style={styles.logo} />
           <Text
             style={styles.welcome}
-            numberOfLines={2}
-          >{`${translations['hello']}, ${user?.biodata?.fullName}, ${translations['how.are.you']}`}</Text>
-          <View style={[StC.flexR, {alignItems: 'center'}]}>
+            numberOfLines={
+              2
+            }>{`${translations["hello"]}, ${user?.biodata?.fullName}, ${translations["how.are.you"]}`}</Text>
+          <View style={[StC.flexR, { alignItems: "center" }]}>
             <Image source={Icons.location} style={styles.iconPin} />
             <Text
               style={styles.address}
-              numberOfLines={1}
-            >{`${user?.biodata?.address?.street}`}</Text>
+              numberOfLines={1}>{`${user?.biodata?.address?.street}`}</Text>
           </View>
         </LinearGradient>
         <View style={styles.cardSaldo}>
           <TouchableOpacity
             style={styles.itemSaldo}
             activeOpacity={0.5}
-            onPress={() => navigation.navigate('UsersWithdraw')}
-          >
+            onPress={() => navigation.navigate("UsersWithdraw")}>
             <Text style={styles.saldo}>
               {currencyFloat(user?.biodata?.balance)}
             </Text>
@@ -195,11 +193,11 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
           </TouchableOpacity>
           <View style={styles.itemSaldo}>
             <Image source={Images.logo_biru} style={styles.icon} />
-            <Text style={styles.labelSaldo}>{translations['waste.bank']}</Text>
+            <Text style={styles.labelSaldo}>{translations["waste.bank"]}</Text>
           </View>
         </View>
         <MyView hide={users?.currentwaste}>
-          <Text style={styles.waste}>{translations['waste.banks']}</Text>
+          <Text style={styles.waste}>{translations["waste.banks"]}</Text>
           {loadingWaste ? (
             <View style={styles.wastePlaceholder}>
               {[0, 1, 2].map((item, index) => (
@@ -221,7 +219,7 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
               horizontal
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item._id}
-              renderItem={({item, index}) =>
+              renderItem={({ item, index }) =>
                 index < 10 ? (
                   <CardWasteBank
                     item={item}
@@ -235,7 +233,7 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
         </MyView>
         <CardBannerDashboard />
         <MyView hide={history.length == 0} style={styles.cardLine}>
-          <Text style={styles.waste}>{translations['transaction']}</Text>
+          <Text style={styles.waste}>{translations["transaction"]}</Text>
           {loadingTrans ? (
             <View style={styles.wastePlaceholder}>
               {[0, 1, 2].map((item, index) => (
@@ -257,7 +255,7 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
               horizontal
               showsHorizontalScrollIndicator={false}
               keyExtractor={(item) => item._id}
-              renderItem={({item, index}) =>
+              renderItem={({ item, index }) =>
                 index < 10 ? (
                   <CardTrasactionDashboard
                     item={item}
@@ -275,15 +273,15 @@ function UsersDashboard({navigation, users, wasteBanks, transactions}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users, wasteBanks, transactions} = state;
-  return {users, wasteBanks, transactions};
+  const { users, wasteBanks, transactions } = state;
+  return { users, wasteBanks, transactions };
 };
 
 export default connect(mapStateToProps)(UsersDashboard);
 
 const styles = StyleSheet.create({
   header: {
-    width: '100%',
+    width: "100%",
     height: RFValue(160),
     borderBottomLeftRadius: RFValue(20),
     borderBottomRightRadius: RFValue(20),
@@ -294,7 +292,7 @@ const styles = StyleSheet.create({
     width: RFValue(100),
     height: RFValue(30),
     marginTop: RFValue(20),
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   icon: {
     width: RFValue(30),
@@ -304,7 +302,7 @@ const styles = StyleSheet.create({
     marginRight: RFValue(10),
     width: RFValue(13),
     height: RFValue(13),
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   welcome: {
     ...Font.F12,
@@ -336,8 +334,8 @@ const styles = StyleSheet.create({
   },
   itemSaldo: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   saldo: {
     ...Font.F14,

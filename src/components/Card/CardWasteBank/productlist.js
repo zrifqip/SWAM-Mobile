@@ -1,24 +1,23 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {currencyFloat, numberFloat} from '@constants';
-import {MyView} from '@components';
-import {base_uri} from '@constants/BASE_URL';
+import React from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { currencyFloat, numberFloat } from "@constants";
+import { MyView } from "@components";
+import { base_uri } from "@constants/BASE_URL";
 
-function CardWasteBankProductList({item, onPress, type, all}) {
+function CardWasteBankProductList({ item, onPress, type, all }) {
   return (
     <TouchableOpacity
-      style={[styles.cardMenu, {height: RFValue(all ? 95 : 80)}]}
+      style={[styles.cardMenu, { height: RFValue(all ? 95 : 80) }]}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <Image
         source={{
           uri:
             item?.images?.length > 0
               ? base_uri + item?.images[0]?.original?.path
-              : 'https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg',
+              : "https://www.haliburtonforest.com/wp-content/uploads/2017/08/placeholder-square.jpg",
         }}
         style={styles.image}
       />
@@ -31,25 +30,25 @@ function CardWasteBankProductList({item, onPress, type, all}) {
         </View>
         <View style={styles.cardPrice}>
           {all ? (
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
               <Text style={styles.price}>
                 Harga Beli: {currencyFloat(item.purchasePrice)}
               </Text>
               <Text style={styles.price}>
-                Harga Jual:{' '}
-                {item.sellingPrice ? currencyFloat(item.sellingPrice) : '-'}
+                Harga Jual:{" "}
+                {item.sellingPrice ? currencyFloat(item.sellingPrice) : "-"}
               </Text>
             </View>
           ) : (
-            <Text style={[styles.price, {flex: 1}]}>
-              {type == 'user' ? '' : currencyFloat(item.sellingPrice)}
+            <Text style={[styles.price, { flex: 1 }]}>
+              {type == "user" ? "" : currencyFloat(item.sellingPrice)}
             </Text>
           )}
-          {type != 'user' ? (
+          {type != "user" ? (
             <Text style={styles.distance}>{numberFloat(item.weight)} kg</Text>
           ) : null}
         </View>
-        <MyView style={styles.info} hide={!item.isSell || type == 'user'} />
+        <MyView style={styles.info} hide={!item.isSell || type == "user"} />
       </View>
     </TouchableOpacity>
   );
@@ -84,7 +83,7 @@ const styles = {
   },
   image: {
     width: RFValue(90),
-    height: '100%',
+    height: "100%",
     borderRadius: 10,
   },
   textServices: {
@@ -110,13 +109,13 @@ const styles = {
   cardPrice: {
     ...StC.flexR,
     ...StC.mT5,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   info: {
     width: RFValue(10),
     height: RFValue(5),
     backgroundColor: Colors.PRIMARY,
-    position: 'absolute',
+    position: "absolute",
     top: RFValue(5),
     right: RFValue(5),
     borderRadius: RFValue(5),

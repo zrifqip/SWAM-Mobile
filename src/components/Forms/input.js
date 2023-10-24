@@ -1,11 +1,11 @@
-import React from 'react';
-import {Text} from 'react-native';
-import {Icon, Input} from 'native-base';
-import {Colors, Font, StC} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {MyView, TypographyText} from '@components';
-import {requireds} from '@constants';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { Text } from "react-native";
+import { Icon, Input } from "native-base";
+import { Colors, Font, StC } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { MyView, TypographyText } from "@components";
+import { requireds } from "@constants";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const FormInput = ({
   hide,
@@ -37,7 +37,7 @@ const FormInput = ({
         placeholder={placeholder}
         style={[
           styles.input,
-          editable == false && {backgroundColor: Colors.GRAY_SOFT},
+          editable == false && { backgroundColor: Colors.GRAY_SOFT },
         ]}
         secureTextEntry={secureTextEntry}
         editable={editable}
@@ -47,11 +47,11 @@ const FormInput = ({
             <Icon
               as={
                 <MaterialCommunityIcons
-                  name={secureTextEntry ? 'eye' : 'eye-off'}
+                  name={secureTextEntry ? "eye" : "eye-off"}
                 />
               }
               size={RFValue(5)}
-              style={{marginRight: RFValue(10)}}
+              style={{ marginRight: RFValue(10) }}
               color={Colors.GRAY}
               onPress={setShow}
             />

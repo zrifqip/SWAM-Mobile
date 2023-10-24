@@ -1,14 +1,14 @@
-import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
-import HTML from 'react-native-render-html';
-import {SIZES, FONT_SIZES, LINE_HEIGHTS} from './fontSize';
-import {Colors} from '../../styles';
+import React from "react";
+import { Platform, StyleSheet } from "react-native";
+import HTML from "react-native-render-html";
+import { SIZES, FONT_SIZES, LINE_HEIGHTS } from "./fontSize";
+import { Colors } from "../../styles";
 
 export default function TypographyHTML({
-  fontType = 'regular',
-  fontSize = 's',
+  fontType = "regular",
+  fontSize = "s",
   color = Colors.BLACK,
-  text = '',
+  text = "",
   style = {},
   ...otherProps
 }) {
@@ -18,18 +18,18 @@ export default function TypographyHTML({
       : 1;
 
   const getTextHtml = () => {
-    const pureText = [undefined, null].includes(text) ? '' : String(text);
-    return Platform.OS === 'ios'
-      ? pureText.replace(/<span>/g, '<b>').replace(/<\/span>/g, '</b>')
+    const pureText = [undefined, null].includes(text) ? "" : String(text);
+    return Platform.OS === "ios"
+      ? pureText.replace(/<span>/g, "<b>").replace(/<\/span>/g, "</b>")
       : text;
   };
 
   const textStyle = {
-    fontFamily: 'Lato-Regular',
+    fontFamily: "Lato-Regular",
     fontSize: FONT_SIZES[idx],
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    textAlign: 'left',
+    fontWeight: "normal",
+    fontStyle: "normal",
+    textAlign: "left",
 
     lineHeight: LINE_HEIGHTS[idx],
     color,
@@ -39,10 +39,10 @@ export default function TypographyHTML({
   return (
     <HTML
       // ignoredStyles={['font-family', 'letter-spacing']}
-      source={{html: getTextHtml()}}
+      source={{ html: getTextHtml() }}
       tagsStyles={{
         span: {
-          fontFamily: 'Lato-Bold',
+          fontFamily: "Lato-Bold",
         },
       }}
       baseFontStyle={textStyle}

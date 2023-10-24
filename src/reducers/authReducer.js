@@ -7,21 +7,21 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'RESTORE_TOKEN':
+    case "RESTORE_TOKEN":
       return {
         ...state,
         ...action.payload,
         token: action.token,
         isLoading: false,
       };
-    case 'SIGN_IN':
+    case "SIGN_IN":
       return {
         ...state,
         isLoggedIn: true,
         token: action.token,
         isLoading: false,
       };
-    case 'SIGN_UP':
+    case "SIGN_UP":
       return {
         ...state,
         isLoggedIn: false,
@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
         isLoading: true,
         token: action.token,
       };
-    case 'SIGN_OUT':
+    case "SIGN_OUT":
       return {
         ...state,
         isLoggedIn: false,

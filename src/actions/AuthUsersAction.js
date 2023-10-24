@@ -1,6 +1,9 @@
-import * as ACTION_TYPES from '@constants/ActionTypes';
+import * as ACTION_TYPES from "@constants/ActionTypes";
 
-export const SignIn = (signIn) => ({type: ACTION_TYPES.SIGN_IN, token: signIn});
+export const SignIn = (signIn) => ({
+  type: ACTION_TYPES.SIGN_IN,
+  token: signIn,
+});
 export const SignInFail = (signInFail) => ({
   type: ACTION_TYPES.SIGN_IN_FAIL,
   token: signInFail,

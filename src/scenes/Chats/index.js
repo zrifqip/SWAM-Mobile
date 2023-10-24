@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, RefreshControl} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, RefreshControl } from "react-native";
 import {
   BaseContainer,
   EmptyData,
   CardChats,
   AppBar,
   ButtonFab,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import chatsUtils from '@utils/ChatsUtils';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import chatsUtils from "@utils/ChatsUtils";
 
-function Chats({navigation, chats}) {
+function Chats({ navigation, chats }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,18 +27,18 @@ function Chats({navigation, chats}) {
 
   const getChatsRoom = async (item) => {
     await chatsUtils.chatsCompanyDetail(item._id);
-    navigation.navigate('ChatsRoom');
+    navigation.navigate("ChatsRoom");
   };
 
   return (
     <BaseContainer loading={loading}>
-      <AppBar navigation={navigation} title={'Pesan'} />
+      <AppBar navigation={navigation} title={"Pesan"} />
       <FlatList
         data={chats.chats}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <CardChats item={item} onPress={() => getChatsRoom(item)} />
         )}
-        ListEmptyComponent={<EmptyData message={'Belum ada pesan!'} />}
+        ListEmptyComponent={<EmptyData message={"Belum ada pesan!"} />}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={() => getChats()} />
         }
@@ -49,8 +49,8 @@ function Chats({navigation, chats}) {
 }
 
 const mapStateToProps = function (state) {
-  const {chats} = state;
-  return {chats};
+  const { chats } = state;
+  return { chats };
 };
 
 export default connect(mapStateToProps)(Chats);
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     paddingVertical: RFValue(12),
     borderBottomWidth: RFValue(1),
     borderColor: Colors.GRAY_LIGHT,
-    alignItems: 'center',
+    alignItems: "center",
   },
   icon: {
     width: RFValue(30),

@@ -1,17 +1,16 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {arrDayAll} from '@constants';
+import React from "react";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { arrDayAll } from "@constants";
 
-function FilterDays({selected, onPress}) {
+function FilterDays({ selected, onPress }) {
   return (
-    <View style={{paddingBottom: RFValue(5)}}>
+    <View style={{ paddingBottom: RFValue(5) }}>
       <ScrollView
         horizontal
-        style={{paddingLeft: RFValue(15)}}
-        showsHorizontalScrollIndicator={false}
-      >
+        style={{ paddingLeft: RFValue(15) }}
+        showsHorizontalScrollIndicator={false}>
         {arrDayAll().map((item, index) => (
           <TouchableOpacity
             onPress={() => onPress(item.key)}
@@ -21,15 +20,13 @@ function FilterDays({selected, onPress}) {
                 backgroundColor:
                   selected == item.key ? Colors.PRIMARY : Colors.GRAY_SOFT,
               },
-              index == 7 && {marginRight: RFValue(30)},
-            ]}
-          >
+              index == 7 && { marginRight: RFValue(30) },
+            ]}>
             <Text
               style={[
                 styles.labelFilter,
-                {color: selected == item.key ? Colors.WHITE : Colors.BLACK},
-              ]}
-            >
+                { color: selected == item.key ? Colors.WHITE : Colors.BLACK },
+              ]}>
               {item.name}
             </Text>
           </TouchableOpacity>

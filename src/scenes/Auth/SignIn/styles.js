@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {StC, Font, Colors} from '@styles';
+import { StyleSheet } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
+import { StC, Font, Colors } from "@styles";
 
 export default StyleSheet.create({
   cover: {
@@ -22,6 +22,6 @@ export default StyleSheet.create({
     ...Font.F11,
     ...Font.Medium,
     ...Font.PRIMARY,
-    textAlign: 'right',
+    textAlign: "right",
   },
 });

@@ -1,37 +1,36 @@
-import React from 'react';
-import {View, Text} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {formatDateTime, currencyFloat} from '@constants';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React from "react";
+import { View, Text } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { formatDateTime, currencyFloat } from "@constants";
+import { RFValue } from "react-native-responsive-fontsize";
 
-function CardWithdrawUsers({item}) {
+function CardWithdrawUsers({ item }) {
   return (
     <View style={styles.cardMenu}>
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Text style={styles.textDate} numberOfLines={1}>
           {formatDateTime(item.createdAt)}
         </Text>
         <Text style={styles.status}>{currencyFloat(item.nominal)}</Text>
       </View>
-      <View style={{alignItems: 'flex-end'}}>
+      <View style={{ alignItems: "flex-end" }}>
         <Text
           style={[
             styles.textType,
             {
               backgroundColor:
-                item.status == 'pending'
+                item.status == "pending"
                   ? Colors.THIRD
-                  : item.status == 'accept'
+                  : item.status == "accept"
                   ? Colors.SECONDARY
                   : Colors.DANGER,
             },
           ]}
-          numberOfLines={1}
-        >
+          numberOfLines={1}>
           {item.status}
         </Text>
         <Text style={styles.method}>
-          {item.method == 'cash' ? 'Cash' : 'Transfer'}
+          {item.method == "cash" ? "Cash" : "Transfer"}
         </Text>
       </View>
     </View>

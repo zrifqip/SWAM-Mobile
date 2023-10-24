@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, FlatList} from 'react-native';
+import React, { useState, useEffect, useRef } from "react";
+import { View, FlatList } from "react-native";
 import {
   BaseContainer,
   CardWasteBankProductCategory,
@@ -8,23 +8,23 @@ import {
   AppBar,
   ButtonFab,
   ModalCategory,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {createFilter} from 'react-native-search-filter';
-import {SelectedCategory} from '@actions';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import store from '@stores/store';
-const KEYS_TO_FILTERS = ['name', 'desc', 'type'];
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { createFilter } from "react-native-search-filter";
+import { SelectedCategory } from "@actions";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import store from "@stores/store";
+const KEYS_TO_FILTERS = ["name", "desc", "type"];
 
-function ResultsCategory({navigation, wasteBanks}) {
-  const {translations} = useTranslation();
+function ResultsCategory({ navigation, wasteBanks }) {
+  const { translations } = useTranslation();
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [id, setId] = useState('');
-  const [name, setName] = useState('');
-  const [desc, setDesc] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
   const refModalCategory = useRef();
 
   let category = [];
@@ -46,9 +46,9 @@ function ResultsCategory({navigation, wasteBanks}) {
   };
 
   const detailCategory = async (item) => {
-    setName('');
-    setDesc('');
-    setId('');
+    setName("");
+    setDesc("");
+    setId("");
 
     if (item) {
       setName(item.name);
@@ -64,20 +64,20 @@ function ResultsCategory({navigation, wasteBanks}) {
 
   return (
     <BaseContainer>
-      <AppBar navigation={navigation} title={translations['category']} />
+      <AppBar navigation={navigation} title={translations["category"]} />
       <Search
-        placeholder={translations['search.category']}
+        placeholder={translations["search.category"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
       />
-      <View style={{marginTop: RFValue(4)}} />
+      <View style={{ marginTop: RFValue(4) }} />
       <FlatList
         data={filteredData}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <CardWasteBankProductCategory
             item={item}
             onPress={() => setCategory(item)}
@@ -85,11 +85,11 @@ function ResultsCategory({navigation, wasteBanks}) {
           />
         )}
         ListEmptyComponent={
-          <EmptyData message={translations['empty.category']} />
+          <EmptyData message={translations["empty.category"]} />
         }
       />
       <ButtonFab
-        label={translations['add']}
+        label={translations["add"]}
         onPress={() => detailCategory(null)}
       />
       <ModalCategory
@@ -106,8 +106,8 @@ function ResultsCategory({navigation, wasteBanks}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(ResultsCategory);

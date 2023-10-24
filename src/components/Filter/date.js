@@ -1,13 +1,13 @@
-import React, {useState, useCallback} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
-import {Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Icon} from 'native-base';
-import MonthPicker from 'react-native-month-year-picker';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import moment from 'moment';
+import React, { useState, useCallback } from "react";
+import { Text, TouchableOpacity } from "react-native";
+import { Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Icon } from "native-base";
+import MonthPicker from "react-native-month-year-picker";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import moment from "moment";
 
-function FilterDate({date, setDate}) {
+function FilterDate({ date, setDate }) {
   const [show, setShow] = useState(false);
 
   const showPicker = useCallback((value) => setShow(value), []);
@@ -18,7 +18,7 @@ function FilterDate({date, setDate}) {
 
       showPicker(false);
 
-      if (event != 'dismissedAction') {
+      if (event != "dismissedAction") {
         setDate(selectedDate);
       }
     },
@@ -28,10 +28,10 @@ function FilterDate({date, setDate}) {
   return (
     <>
       <TouchableOpacity style={styles.filter} onPress={() => showPicker(true)}>
-        <Text style={styles.label}>{moment(date).format('MMMM Y')}</Text>
+        <Text style={styles.label}>{moment(date).format("MMMM Y")}</Text>
         <Icon
           as={FontAwesome}
-          name={'caret-down'}
+          name={"caret-down"}
           size={RFValue(4)}
           color={Colors.GRAY_LABEL}
         />
@@ -57,7 +57,7 @@ const styles = {
     backgroundColor: Colors.GRAY_LIGHT,
     paddingVertical: RFValue(4),
     paddingHorizontal: RFValue(9),
-    flexDirection: 'row',
+    flexDirection: "row",
   },
   label: {
     ...Font.F12,

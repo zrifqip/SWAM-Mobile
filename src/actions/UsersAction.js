@@ -1,4 +1,4 @@
-import * as ACTION_TYPES from '@constants/ActionTypes';
+import * as ACTION_TYPES from "@constants/ActionTypes";
 
 export const CurrentWaste = (currentwaste) => ({
   type: ACTION_TYPES.CURRENT_WASTE,

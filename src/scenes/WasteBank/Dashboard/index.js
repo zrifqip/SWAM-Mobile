@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 import {
   BaseContainer,
   CardWasteBankProduct,
@@ -16,23 +16,23 @@ import {
   CardTrasactionDashboardWasteBank,
   CardBannerDashboard,
   FilterDate,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Icon, HStack, Center} from 'native-base';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import {Images, Icons} from '@assets';
-import {useTranslation} from '@utils';
-import {numberFloat} from '@constants';
-import LinearGradient from 'react-native-linear-gradient';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-import transactionsUtils from '@utils/TransactionsUtils';
-import Entypo from 'react-native-vector-icons/Entypo';
-import moment from 'moment';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Icon, HStack, Center } from "native-base";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import { Images, Icons } from "@assets";
+import { useTranslation } from "@utils";
+import { numberFloat } from "@constants";
+import LinearGradient from "react-native-linear-gradient";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
+import transactionsUtils from "@utils/TransactionsUtils";
+import Entypo from "react-native-vector-icons/Entypo";
+import moment from "moment";
 
-function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
-  const {translations} = useTranslation();
+function WasteBankDashboard({ navigation, users, wasteBanks, transactions }) {
+  const { translations } = useTranslation();
   let user = users.users;
   const [loadingProduct, setLoadingProduct] = useState(false);
   const [loadingSummary, setLoadingSummary] = useState(false);
@@ -61,43 +61,42 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
     setDate(val);
     setLoadingSummary(true);
     await wasteBanksUtils.getSummary(
-      `year=${moment(val).format('YYYY')}&month=${moment(val).format('M')}`,
+      `year=${moment(val).format("YYYY")}&month=${moment(val).format("M")}`,
     );
     setLoadingSummary(false);
   };
 
   const getDetailProduct = async (id) => {
     await wasteBanksUtils.getWasteBanksProductDetail(id);
-    navigation.navigate('WasteBankProductForm');
+    navigation.navigate("WasteBankProductForm");
   };
 
   const getTransactionDetail = async (id) => {
     await transactionsUtils.getTransactionsWasteBanksDetail(id);
-    navigation.navigate('WasteBankTransactionDetails');
+    navigation.navigate("WasteBankTransactionDetails");
   };
 
   return (
     <BaseContainer>
       <StatusBar barStyle="light-content" backgroundColor={Colors.PRIMARY} />
-      <ScrollView style={{backgroundColor: 'white'}}>
+      <ScrollView style={{ backgroundColor: "white" }}>
         <LinearGradient
           colors={[Colors.PRIMARY, Colors.PRIMARY]}
-          start={{x: 0, y: 1}}
-          end={{x: 1, y: 0}}
-          style={styles.header}
-        >
+          start={{ x: 0, y: 1 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.header}>
           <Image source={Images.swam_putih} style={styles.logo} />
           <Text style={styles.welcome}>Bank Sampah</Text>
           <Text
             style={styles.nameBank}
-            numberOfLines={2}
-          >{`${user?.organization?.companyName}`}</Text>
-          <View style={[StC.flexR, {alignItems: 'center'}]}>
+            numberOfLines={2}>{`${user?.organization?.companyName}`}</Text>
+          <View style={[StC.flexR, { alignItems: "center" }]}>
             <Image source={Icons.location} style={styles.iconPin} />
             <Text
               style={styles.address}
-              numberOfLines={1}
-            >{`${user?.organization?.address?.street}`}</Text>
+              numberOfLines={
+                1
+              }>{`${user?.organization?.address?.street}`}</Text>
           </View>
         </LinearGradient>
         <View style={styles.cardSaldo}>
@@ -105,13 +104,13 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
             <Text style={styles.saldo}>
               {numberFloat(transactions?.transactions?.length)}
             </Text>
-            <Text style={styles.labelSaldo}>{translations['transaction']}</Text>
+            <Text style={styles.labelSaldo}>{translations["transaction"]}</Text>
           </View>
           <View style={styles.itemSaldo}>
             <Text style={styles.saldo}>
               {numberFloat(wasteBanks?.product?.length)}
             </Text>
-            <Text style={styles.labelSaldo}>{translations['product']}</Text>
+            <Text style={styles.labelSaldo}>{translations["product"]}</Text>
           </View>
         </View>
         <View style={styles.summary}>
@@ -123,7 +122,7 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
             <HStack>
               <Icon
                 as={Entypo}
-                name={'dot-single'}
+                name={"dot-single"}
                 size={RFValue(5)}
                 color={Colors.GRAY_LABEL}
               />
@@ -140,7 +139,7 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
           )}
         </View>
         <MyView hide={wasteBanks.product?.length == 0}>
-          <Text style={styles.waste}>{translations['product']}</Text>
+          <Text style={styles.waste}>{translations["product"]}</Text>
           {loadingProduct ? (
             <View style={styles.wastePlaceholder}>
               {[0, 1, 2].map((item, index) => (
@@ -161,7 +160,7 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
               data={wasteBanks.product}
               horizontal
               showsHorizontalScrollIndicator={false}
-              renderItem={({item, index}) => (
+              renderItem={({ item, index }) => (
                 <CardWasteBankProduct
                   item={item}
                   index={index}
@@ -174,9 +173,8 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
         <CardBannerDashboard />
         <MyView
           hide={transactions.transactions.length == 0}
-          style={styles.cardLine}
-        >
-          <Text style={styles.waste}>{translations['transaction']}</Text>
+          style={styles.cardLine}>
+          <Text style={styles.waste}>{translations["transaction"]}</Text>
           {loadingTransaction ? (
             <View style={styles.wastePlaceholder}>
               {[0, 1, 2].map((item, index) => (
@@ -197,7 +195,7 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
               data={transactions.transactions}
               horizontal
               showsHorizontalScrollIndicator={false}
-              renderItem={({item, index}) =>
+              renderItem={({ item, index }) =>
                 index < 10 ? (
                   <CardTrasactionDashboardWasteBank
                     item={item}
@@ -213,8 +211,7 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
       <TouchableOpacity
         style={styles.btnChat}
         activeOpacity={0.5}
-        onPress={() => navigation.navigate('Chats')}
-      >
+        onPress={() => navigation.navigate("Chats")}>
         <Image source={Icons.chat} style={styles.iconChat} />
         <Text style={styles.count}></Text>
       </TouchableOpacity>
@@ -223,15 +220,15 @@ function WasteBankDashboard({navigation, users, wasteBanks, transactions}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users, wasteBanks, transactions} = state;
-  return {users, wasteBanks, transactions};
+  const { users, wasteBanks, transactions } = state;
+  return { users, wasteBanks, transactions };
 };
 
 export default connect(mapStateToProps)(WasteBankDashboard);
 
 const styles = StyleSheet.create({
   header: {
-    width: '100%',
+    width: "100%",
     height: RFValue(175),
     borderBottomLeftRadius: RFValue(20),
     borderBottomRightRadius: RFValue(20),
@@ -242,7 +239,7 @@ const styles = StyleSheet.create({
     width: RFValue(100),
     height: RFValue(30),
     marginTop: RFValue(20),
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   icon: {
     width: RFValue(30),
@@ -252,7 +249,7 @@ const styles = StyleSheet.create({
     marginRight: RFValue(10),
     width: RFValue(13),
     height: RFValue(13),
-    resizeMode: 'contain',
+    resizeMode: "contain",
   },
   welcome: {
     ...Font.F12,
@@ -290,8 +287,8 @@ const styles = StyleSheet.create({
   },
   itemSaldo: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
+    justifyContent: "flex-end",
+    alignItems: "center",
   },
   summary: {
     marginTop: RFValue(20),
@@ -363,19 +360,19 @@ const styles = StyleSheet.create({
   btnChat: {
     width: RFValue(50),
     height: RFValue(50),
-    position: 'absolute',
+    position: "absolute",
     bottom: RFValue(10),
     right: RFValue(10),
   },
   iconChat: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   count: {
     ...Font.F12,
     ...Font.PRIMARY,
     ...Font.SemiBold,
-    position: 'absolute',
+    position: "absolute",
     left: RFValue(18),
     top: RFValue(12),
   },

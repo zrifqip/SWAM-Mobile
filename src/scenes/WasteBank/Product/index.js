@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, FlatList } from "react-native";
 import {
   BaseContainer,
   CardWasteBankProductList,
@@ -7,30 +7,30 @@ import {
   EmptyData,
   ButtonFab,
   FilterCategory,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {useTranslation} from '@utils';
-import {createFilter} from 'react-native-search-filter';
-import {GetWasteBanksProductDetail} from '@actions';
-import LinearGradient from 'react-native-linear-gradient';
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
-import store from '@stores/store';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { useTranslation } from "@utils";
+import { createFilter } from "react-native-search-filter";
+import { GetWasteBanksProductDetail } from "@actions";
+import LinearGradient from "react-native-linear-gradient";
+import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
+import store from "@stores/store";
 const KEYS_TO_FILTERS = [
-  'category.name',
-  'category.type',
-  'sellingPrice',
-  'purchasePrice',
-  'weight',
+  "category.name",
+  "category.type",
+  "sellingPrice",
+  "purchasePrice",
+  "weight",
 ];
 
-function WasteBankProduct({navigation, wasteBanks}) {
-  const {translations} = useTranslation();
+function WasteBankProduct({ navigation, wasteBanks }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectCategory, setSelectCategory] = useState('Semua');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectCategory, setSelectCategory] = useState("Semua");
 
   useEffect(() => {
     getWasteBanksProduct();
@@ -48,11 +48,11 @@ function WasteBankProduct({navigation, wasteBanks}) {
     } else {
       store.dispatch(GetWasteBanksProductDetail(null));
     }
-    navigation.navigate('WasteBankProductForm');
+    navigation.navigate("WasteBankProductForm");
   };
 
   const filter =
-    selectCategory == 'Semua'
+    selectCategory == "Semua"
       ? wasteBanks.product
       : wasteBanks.product.filter((x) => x.category._id == selectCategory);
   const filteredData = filter.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
@@ -60,10 +60,10 @@ function WasteBankProduct({navigation, wasteBanks}) {
   return (
     <BaseContainer>
       <Search
-        placeholder={translations['search.product']}
+        placeholder={translations["search.product"]}
         search={searchContent}
         searchContent={(res) => {
-          setSearchContent(res), setSearchTerm('');
+          setSearchContent(res), setSearchTerm("");
         }}
         searchUpdated={(res) => setSearchTerm(res)}
         searchTerm={searchTerm}
@@ -85,7 +85,7 @@ function WasteBankProduct({navigation, wasteBanks}) {
       ) : (
         <FlatList
           data={filteredData}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <CardWasteBankProductList
               item={item}
               onPress={() => getDetailProduct(item._id)}
@@ -93,12 +93,12 @@ function WasteBankProduct({navigation, wasteBanks}) {
             />
           )}
           ListEmptyComponent={
-            <EmptyData message={translations['empty.product']} />
+            <EmptyData message={translations["empty.product"]} />
           }
         />
       )}
       <ButtonFab
-        label={translations['add']}
+        label={translations["add"]}
         onPress={() => getDetailProduct()}
       />
     </BaseContainer>
@@ -106,8 +106,8 @@ function WasteBankProduct({navigation, wasteBanks}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users, wasteBanks} = state;
-  return {users, wasteBanks};
+  const { users, wasteBanks } = state;
+  return { users, wasteBanks };
 };
 
 export default connect(mapStateToProps)(WasteBankProduct);
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     borderRadius: RFValue(10),
-    width: '100%',
+    width: "100%",
     height: RFValue(90),
     marginBottom: RFValue(10),
   },

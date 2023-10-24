@@ -1,11 +1,11 @@
-import {Chats, ChatsDetail} from '@actions';
-import {showToast} from '@constants';
+import { Chats, ChatsDetail } from "@actions";
+import { showToast } from "@constants";
 import {
   chatsCompany,
   chatsCompanyDetail,
   chatsCompanyStart,
-} from '@constants/apiChats';
-import store from '@stores/store';
+} from "@constants/apiChats";
+import store from "@stores/store";
 
 class ChatsUtils {
   async chatsCompanyStart(id) {
@@ -17,7 +17,7 @@ class ChatsUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           this.chatsCompanyDetail(respon.data._id);
           return 200;
         }
@@ -31,7 +31,7 @@ class ChatsUtils {
     return await chatsCompany(params)
       .then((response) => {
         const respon = response.data;
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           let sorted = [];
           if (respon.data.length != 0) {
             sorted = respon.data
@@ -57,7 +57,7 @@ class ChatsUtils {
       .then((response) => {
         const respon = response.data;
 
-        if (respon.message == 'success') {
+        if (respon.message == "success") {
           return store.dispatch(ChatsDetail(respon.data));
         }
       })

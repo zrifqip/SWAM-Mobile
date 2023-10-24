@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
+import React, { useEffect } from "react";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
 
-function FilterCategory({selected, onPress, wasteBanks, data}) {
-  let category = [{_id: 'Semua', name: 'Semua'}];
+function FilterCategory({ selected, onPress, wasteBanks, data }) {
+  let category = [{ _id: "Semua", name: "Semua" }];
 
   if (data) {
     category = [...category, ...data];
@@ -26,12 +26,11 @@ function FilterCategory({selected, onPress, wasteBanks, data}) {
   };
 
   return (
-    <View style={{paddingBottom: RFValue(5)}}>
+    <View style={{ paddingBottom: RFValue(5) }}>
       <ScrollView
         horizontal
-        style={{paddingLeft: RFValue(15)}}
-        showsHorizontalScrollIndicator={false}
-      >
+        style={{ paddingLeft: RFValue(15) }}
+        showsHorizontalScrollIndicator={false}>
         {category.map((item, index) => (
           <TouchableOpacity
             onPress={() => onPress(item._id)}
@@ -41,15 +40,13 @@ function FilterCategory({selected, onPress, wasteBanks, data}) {
                 backgroundColor:
                   selected == item._id ? Colors.PRIMARY : Colors.GRAY_SOFT,
               },
-              category.length == index + 1 && {marginRight: RFValue(30)},
-            ]}
-          >
+              category.length == index + 1 && { marginRight: RFValue(30) },
+            ]}>
             <Text
               style={[
                 styles.labelFilter,
-                {color: selected == item._id ? Colors.WHITE : Colors.BLACK},
-              ]}
-            >
+                { color: selected == item._id ? Colors.WHITE : Colors.BLACK },
+              ]}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -60,8 +57,8 @@ function FilterCategory({selected, onPress, wasteBanks, data}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(FilterCategory);

@@ -1,42 +1,42 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Text, ScrollView, FlatList} from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, View, Text, ScrollView, FlatList } from "react-native";
 import {
   BaseContainer,
   AppBar,
   CardWasteBankProductList,
   ButtonFlex,
   FilterCategory,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import {CurrentWaste} from '@actions';
-import {useTranslation} from '@utils';
-import {arrTypeCompany, filterCategory, showToast} from '@constants';
-import store from '@stores/store';
-import usersUtils from '@utils/UsersUtils';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import { CurrentWaste } from "@actions";
+import { useTranslation } from "@utils";
+import { arrTypeCompany, filterCategory, showToast } from "@constants";
+import store from "@stores/store";
+import usersUtils from "@utils/UsersUtils";
 
-function UsersWasteBankDetail({navigation, wasteBanks}) {
-  const {translations} = useTranslation();
-  const [selectCategory, setSelectCategory] = useState('Semua');
+function UsersWasteBankDetail({ navigation, wasteBanks }) {
+  const { translations } = useTranslation();
+  const [selectCategory, setSelectCategory] = useState("Semua");
   const [loading, setLoading] = useState(false);
   let details = wasteBanks.details;
 
   let arr = [
     {
-      name: translations['organization.name'],
+      name: translations["organization.name"],
       value: details.companyName,
     },
     {
-      name: translations['ceo.name'],
+      name: translations["ceo.name"],
       value: details.nameCEO,
     },
     {
-      name: translations['address'],
+      name: translations["address"],
       value: details.address?.street,
     },
     {
-      name: translations['type'] + ' ' + translations['waste.bank'],
+      name: translations["type"] + " " + translations["waste.bank"],
       value: arrTypeCompany(details.companyType),
     },
   ];
@@ -51,7 +51,7 @@ function UsersWasteBankDetail({navigation, wasteBanks}) {
     let respons = await usersUtils.usersUpdate(params);
 
     if (respons == 200) {
-      showToast(translations['save.success']);
+      showToast(translations["save.success"]);
 
       setTimeout(() => {
         store.dispatch(CurrentWaste(true));
@@ -63,7 +63,7 @@ function UsersWasteBankDetail({navigation, wasteBanks}) {
   };
 
   const filter =
-    selectCategory == 'Semua'
+    selectCategory == "Semua"
       ? wasteBanks?.items
       : wasteBanks?.items.filter((x) => x.category._id == selectCategory);
 
@@ -71,13 +71,13 @@ function UsersWasteBankDetail({navigation, wasteBanks}) {
     <BaseContainer loading={loading}>
       <AppBar
         navigation={navigation}
-        title={'Detail ' + translations['waste.banks']}
+        title={"Detail " + translations["waste.banks"]}
       />
       <ScrollView>
         <View style={styles.card}>
           <FlatList
             data={arr}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <View style={styles.flex}>
                 <Text style={styles.txtName}>{item.name}</Text>
                 <Text style={styles.txtValue}>{item.value}</Text>
@@ -85,8 +85,8 @@ function UsersWasteBankDetail({navigation, wasteBanks}) {
             )}
           />
         </View>
-        <Text style={[styles.txtTitle, StC.mB5, {marginLeft: RFValue(15)}]}>
-          {translations['product']}
+        <Text style={[styles.txtTitle, StC.mB5, { marginLeft: RFValue(15) }]}>
+          {translations["product"]}
         </Text>
         <FilterCategory
           selected={selectCategory}
@@ -95,13 +95,13 @@ function UsersWasteBankDetail({navigation, wasteBanks}) {
         />
         <FlatList
           data={filter}
-          renderItem={({item}) => (
-            <CardWasteBankProductList item={item} type={'user'} />
+          renderItem={({ item }) => (
+            <CardWasteBankProductList item={item} type={"user"} />
           )}
         />
       </ScrollView>
       <ButtonFlex
-        title={'Pilih Bank Sampah ini'}
+        title={"Pilih Bank Sampah ini"}
         onPress={() => chooseWasteBank()}
         style={{
           marginHorizontal: RFValue(15),
@@ -114,8 +114,8 @@ function UsersWasteBankDetail({navigation, wasteBanks}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(UsersWasteBankDetail);

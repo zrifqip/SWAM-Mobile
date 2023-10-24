@@ -1,37 +1,37 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Text, ScrollView, Alert} from 'react-native';
+import React, { useState } from "react";
+import { StyleSheet, View, Text, ScrollView, Alert } from "react-native";
 import {
   BaseContainer,
   AppBar,
   FormInput,
   ButtonFlex,
   FormInputPhoto,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors} from '@styles';
-import {useTranslation} from '@utils';
-import {phoneRegex, requireds, showToast, arrTypeCompany} from '@constants';
-import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
-import {Formik} from 'formik';
-import {base_uri} from '@constants/BASE_URL';
-import {Picker} from '@react-native-community/picker';
-import * as yup from 'yup';
-import usersUtils from '@utils/UsersUtils';
-import MMKVStorage from 'react-native-mmkv-storage';
-import Axios from 'axios';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors } from "@styles";
+import { useTranslation } from "@utils";
+import { phoneRegex, requireds, showToast, arrTypeCompany } from "@constants";
+import { launchImageLibrary, launchCamera } from "react-native-image-picker";
+import { Formik } from "formik";
+import { base_uri } from "@constants/BASE_URL";
+import { Picker } from "@react-native-community/picker";
+import * as yup from "yup";
+import usersUtils from "@utils/UsersUtils";
+import MMKVStorage from "react-native-mmkv-storage";
+import Axios from "axios";
 const AxiosForm = Axios.create();
 
-function CompanyProfile({navigation, users}) {
+function CompanyProfile({ navigation, users }) {
   let user = users.users;
-  const {translations} = useTranslation();
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [companyType, setCompanyType] = useState(
     user?.organization?.companyType,
   );
 
   let organization,
-    photo = '';
+    photo = "";
   if (user.organization) {
     organization = user.organization;
 
@@ -41,15 +41,15 @@ function CompanyProfile({navigation, users}) {
   }
 
   const usersValidationSchema = yup.object().shape({
-    companyName: yup.string().required(translations['companyName.required']),
-    nameCEO: yup.string().required(translations['nameCEO.required']),
+    companyName: yup.string().required(translations["companyName.required"]),
+    nameCEO: yup.string().required(translations["nameCEO.required"]),
     phoneNumber: yup
       .string()
-      .min(10, ({min}) => `Nomor handphone minimal ${min} digit`)
-      .max(13, ({max}) => `Nomor handphone maksimal ${max} digit`)
-      .matches(phoneRegex(), 'Format nomor handphone sesuai')
-      .required(translations['phoneNumber.required']),
-    address: yup.string().required(translations['fill.address']),
+      .min(10, ({ min }) => `Nomor handphone minimal ${min} digit`)
+      .max(13, ({ max }) => `Nomor handphone maksimal ${max} digit`)
+      .matches(phoneRegex(), "Format nomor handphone sesuai")
+      .required(translations["phoneNumber.required"]),
+    address: yup.string().required(translations["fill.address"]),
   });
 
   const handleUpdate = async (values) => {
@@ -60,19 +60,19 @@ function CompanyProfile({navigation, users}) {
       nameCEO: values.fullName,
       companyType: companyType,
       phoneNumber: values.phoneNumber,
-      role: 'bank-sampah',
+      role: "bank-sampah",
       companyService: user?.organization?.service,
       address: {
-        country: 'Indonesia',
+        country: "Indonesia",
         region: {
-          province: 'Jawa Timur',
-          city: 'Lamongan',
+          province: "Jawa Timur",
+          city: "Lamongan",
         },
-        district: 'Lamongan',
+        district: "Lamongan",
         street: values.address,
-        postalCode: '638392',
+        postalCode: "638392",
         loc: {
-          type: 'Point',
+          type: "Point",
           coordinates: [-44.54561, -12.12227],
         },
       },
@@ -81,7 +81,7 @@ function CompanyProfile({navigation, users}) {
 
     let respons = await usersUtils.companyUpdate(params);
     if (respons == 200) {
-      showToast(translations['save.success']);
+      showToast(translations["save.success"]);
 
       setTimeout(() => {
         navigation.goBack();
@@ -92,26 +92,26 @@ function CompanyProfile({navigation, users}) {
   };
 
   const handlePickImage = (type) => {
-    if (type == 'camera') {
+    if (type == "camera") {
       launchCamera(
         {
-          mediaType: 'photo',
+          mediaType: "photo",
           quality: 0.5,
         },
         (response) => {
           if (response.didCancel) {
-            console.log('User cancelled image picker');
+            console.log("User cancelled image picker");
           } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
+            console.log("ImagePicker Error: ", response.error);
           } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
+            console.log("User tapped custom button: ", response.customButton);
           } else {
             const res = response?.assets?.[0];
 
             if (res) {
               handleUpdatePhoto(res);
             } else {
-              console.log('Fail to pick image!');
+              console.log("Fail to pick image!");
             }
           }
         },
@@ -119,23 +119,23 @@ function CompanyProfile({navigation, users}) {
     } else {
       launchImageLibrary(
         {
-          mediaType: 'photo',
+          mediaType: "photo",
           quality: 0.5,
         },
         (response) => {
           if (response.didCancel) {
-            console.log('User cancelled image picker');
+            console.log("User cancelled image picker");
           } else if (response.error) {
-            console.log('ImagePicker Error: ', response.error);
+            console.log("ImagePicker Error: ", response.error);
           } else if (response.customButton) {
-            console.log('User tapped custom button: ', response.customButton);
+            console.log("User tapped custom button: ", response.customButton);
           } else {
             const res = response?.assets?.[0];
 
             if (res) {
               handleUpdatePhoto(res);
             } else {
-              console.log('Fail to pick image!');
+              console.log("Fail to pick image!");
             }
           }
         },
@@ -146,12 +146,12 @@ function CompanyProfile({navigation, users}) {
   const handleUpdatePhoto = async (respons) => {
     const storage = new MMKVStorage.Loader().initialize();
 
-    const session = await storage.getItem('token');
+    const session = await storage.getItem("token");
 
     const formData = new FormData();
-    formData.append('image', {
+    formData.append("image", {
       uri: respons.uri,
-      type: 'image/png',
+      type: "image/png",
       name: respons.fileName,
     });
 
@@ -159,51 +159,51 @@ function CompanyProfile({navigation, users}) {
 
     AxiosForm({
       url: api,
-      method: 'PATCH',
+      method: "PATCH",
       data: formData,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
         Authorization: `Gosnix ${session}`,
       },
     })
       .then(function (response) {
         const respon = response.data;
-        if (respon.status == 'success') {
+        if (respon.status == "success") {
           usersUtils.companyDetail();
-          showToast(translations['save.success']);
+          showToast(translations["save.success"]);
         } else {
-          showToast(translations['save.failed']);
+          showToast(translations["save.failed"]);
         }
       })
       .catch(function (error) {
-        showToast(translations['save.failed']);
+        showToast(translations["save.failed"]);
       });
   };
 
   const setModal = async () => {
     Alert.alert(
-      'Upload Photo From',
-      '',
+      "Upload Photo From",
+      "",
       [
         {
-          text: 'Close',
+          text: "Close",
         },
         {
-          text: 'Galery',
-          onPress: () => handlePickImage('galery'),
+          text: "Galery",
+          onPress: () => handlePickImage("galery"),
         },
         {
-          text: 'Camera',
-          onPress: () => handlePickImage('camera'),
+          text: "Camera",
+          onPress: () => handlePickImage("camera"),
         },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
   };
 
   return (
     <BaseContainer loading={loading}>
-      <AppBar navigation={navigation} title={translations['edit.profile']} />
+      <AppBar navigation={navigation} title={translations["edit.profile"]} />
       <Formik
         validationSchema={usersValidationSchema}
         isValidating={true}
@@ -213,8 +213,7 @@ function CompanyProfile({navigation, users}) {
           phoneNumber: user?.phoneNumber,
           address: user?.organization?.address?.street,
         }}
-        onSubmit={(value) => handleUpdate(value)}
-      >
+        onSubmit={(value) => handleUpdate(value)}>
         {({
           handleChange,
           handleSubmit,
@@ -228,27 +227,26 @@ function CompanyProfile({navigation, users}) {
               <View style={styles.authCont}>
                 <FormInputPhoto
                   onPress={() => setModal()}
-                  label={'Photo'}
-                  fileUri={photo ? base_uri + photo : ''}
+                  label={"Photo"}
+                  fileUri={photo ? base_uri + photo : ""}
                 />
                 <FormInput
-                  label={translations['organization.name']}
-                  placeholder={translations['organization.name']}
+                  label={translations["organization.name"]}
+                  placeholder={translations["organization.name"]}
                   value={values.companyName}
-                  onChangeText={handleChange('companyName')}
-                  onBlur={handleBlur('companyName')}
+                  onChangeText={handleChange("companyName")}
+                  onBlur={handleBlur("companyName")}
                   isError={errors.companyName && touched.companyName}
                   errorMessage={errors.companyName}
                 />
                 <Text style={StC.title}>
-                  {translations['type'] + ' ' + translations['waste.bank']}{' '}
-                  {requireds('*')}
+                  {translations["type"] + " " + translations["waste.bank"]}{" "}
+                  {requireds("*")}
                 </Text>
                 <View style={styles.border}>
                   <Picker
                     selectedValue={companyType}
-                    onValueChange={(itemValue) => setCompanyType(itemValue)}
-                  >
+                    onValueChange={(itemValue) => setCompanyType(itemValue)}>
                     {arrTypeCompany().map((item) => (
                       <Picker.Item label={item.name} value={item.key} />
                     ))}
@@ -256,33 +254,33 @@ function CompanyProfile({navigation, users}) {
                 </View>
                 <View style={StC.mB10} />
                 <FormInput
-                  label={translations['ceo.name']}
-                  placeholder={translations['ceo.name']}
+                  label={translations["ceo.name"]}
+                  placeholder={translations["ceo.name"]}
                   value={values.nameCEO}
-                  onChangeText={handleChange('nameCEO')}
-                  onBlur={handleBlur('nameCEO')}
+                  onChangeText={handleChange("nameCEO")}
+                  onBlur={handleBlur("nameCEO")}
                   isError={errors.nameCEO && touched.nameCEO}
                   errorMessage={errors.nameCEO}
                   required
                 />
                 <FormInput
-                  label={translations['phone.number'] + ' (WhatsApp)'}
-                  placeholder={translations['phone.number']}
+                  label={translations["phone.number"] + " (WhatsApp)"}
+                  placeholder={translations["phone.number"]}
                   value={values.phoneNumber}
-                  onChangeText={handleChange('phoneNumber')}
-                  onBlur={handleBlur('phoneNumber')}
+                  onChangeText={handleChange("phoneNumber")}
+                  onBlur={handleBlur("phoneNumber")}
                   isError={errors.phoneNumber && touched.phoneNumber}
                   errorMessage={errors.phoneNumber}
-                  keyboardType={'number-pad'}
+                  keyboardType={"number-pad"}
                   required
                   editable={false}
                 />
                 <FormInput
-                  label={translations['address']}
-                  placeholder={translations['address']}
+                  label={translations["address"]}
+                  placeholder={translations["address"]}
                   value={values.address}
-                  onChangeText={handleChange('address')}
-                  onBlur={handleBlur('address')}
+                  onChangeText={handleChange("address")}
+                  onBlur={handleBlur("address")}
                   isError={errors.address && touched.address}
                   errorMessage={errors.address}
                   required
@@ -290,9 +288,9 @@ function CompanyProfile({navigation, users}) {
               </View>
             </ScrollView>
             <ButtonFlex
-              title={translations['save']}
+              title={translations["save"]}
               onPress={() => handleSubmit()}
-              style={{marginTop: RFValue(20)}}
+              style={{ marginTop: RFValue(20) }}
               form
             />
           </>
@@ -303,8 +301,8 @@ function CompanyProfile({navigation, users}) {
 }
 
 const mapStateToProps = function (state) {
-  const {users, wasteBanks} = state;
-  return {users, wasteBanks};
+  const { users, wasteBanks } = state;
+  return { users, wasteBanks };
 };
 
 export default connect(mapStateToProps)(CompanyProfile);

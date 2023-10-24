@@ -1,10 +1,10 @@
-import React from 'react';
-import {View} from 'react-native';
-import {Colors, Font, StC} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import SearchInput from 'react-native-search-filter';
+import React from "react";
+import { View } from "react-native";
+import { Colors, Font, StC } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import SearchInput from "react-native-search-filter";
 
-const Search = ({searchUpdated, placeholder}) => {
+const Search = ({ searchUpdated, placeholder }) => {
   return (
     <View style={styles.content}>
       <View style={styles.search}>

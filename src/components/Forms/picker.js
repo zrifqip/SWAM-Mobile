@@ -1,11 +1,11 @@
-import React from 'react';
-import {TouchableOpacity, Text} from 'react-native';
-import {Icon} from 'native-base';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {requireds} from '@constants';
-import {MyView} from '@components';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { TouchableOpacity, Text } from "react-native";
+import { Icon } from "native-base";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { requireds } from "@constants";
+import { MyView } from "@components";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const FormInputPicker = ({
   hide,
@@ -19,7 +19,7 @@ const FormInputPicker = ({
   errorMessage,
   disabledIcon,
 }) => (
-  <MyView style={[{flex: 1}, StC.mB10]} hide={hide}>
+  <MyView style={[{ flex: 1 }, StC.mB10]} hide={hide}>
     {label ? (
       <Text style={StC.title}>
         {label} {requireds(required)}
@@ -28,8 +28,7 @@ const FormInputPicker = ({
     <TouchableOpacity
       onPress={disabled ? null : onPress}
       activeOpacity={0.5}
-      style={styles.border}
-    >
+      style={styles.border}>
       <Text style={styles.text} numberOfLines={1}>
         {value ? value : placeholder}
       </Text>
@@ -37,7 +36,7 @@ const FormInputPicker = ({
         <Icon
           as={
             <MaterialCommunityIcons
-              name={disabled ? 'lock' : 'chevron-right'}
+              name={disabled ? "lock" : "chevron-right"}
             />
           }
           size={RFValue(disabled ? 5 : 7)}
@@ -80,7 +79,7 @@ const styles = {
     borderColor: Colors.GRAY_SOFT,
     borderRadius: RFValue(5),
     height: RFValue(40),
-    alignItems: 'center',
+    alignItems: "center",
     paddingLeft: RFValue(15),
     paddingRight: RFValue(5),
   },

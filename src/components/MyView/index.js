@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {View, ViewPropTypes} from 'react-native';
+import React from "react";
+import PropTypes from "prop-types";
+import { View, ViewPropTypes } from "react-native";
 
 const MyView = (props) => {
-  const {children, hide, style, show} = props;
+  const { children, hide, style, show } = props;
   if (hide) {
     return null;
   }

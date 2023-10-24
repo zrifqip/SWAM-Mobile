@@ -1,16 +1,15 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {formatDateTime, currencyFloat} from '@constants';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { formatDateTime, currencyFloat } from "@constants";
+import { RFValue } from "react-native-responsive-fontsize";
 
-function CardWithdrawWasteBank({item, onPress}) {
+function CardWithdrawWasteBank({ item, onPress }) {
   return (
     <TouchableOpacity
       style={styles.cardMenu}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <View style={StC.flexR}>
         <Text style={styles.textName} numberOfLines={1}>
           {item.customer?.fullName}
@@ -20,15 +19,14 @@ function CardWithdrawWasteBank({item, onPress}) {
             styles.textType,
             {
               backgroundColor:
-                item.status == 'pending' ? Colors.THIRD : Colors.SECONDARY,
+                item.status == "pending" ? Colors.THIRD : Colors.SECONDARY,
             },
           ]}
-          numberOfLines={1}
-        >
+          numberOfLines={1}>
           {item.status}
         </Text>
       </View>
-      <View style={[StC.flexR, StC.mT10, {alignItems: 'flex-end'}]}>
+      <View style={[StC.flexR, StC.mT10, { alignItems: "flex-end" }]}>
         <Text style={styles.status}>{currencyFloat(item.nominal)}</Text>
         <Text style={styles.textDate}>{formatDateTime(item.createdAt)}</Text>
       </View>

@@ -1,5 +1,5 @@
-import React from 'react';
-import {BaseContainer} from '@components';
+import React from "react";
+import { BaseContainer } from "@components";
 
 class AuthCheck extends React.Component {
   render() {

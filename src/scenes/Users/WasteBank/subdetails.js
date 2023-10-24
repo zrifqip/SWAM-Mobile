@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,44 +6,44 @@ import {
   ScrollView,
   FlatList,
   ActivityIndicator,
-} from 'react-native';
+} from "react-native";
 import {
   BaseContainer,
   CardWasteBankProductList,
   FilterCategory,
-} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors, Font} from '@styles';
-import {useTranslation} from '@utils';
-import {arrTypeCompany, filterCategory} from '@constants';
+} from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors, Font } from "@styles";
+import { useTranslation } from "@utils";
+import { arrTypeCompany, filterCategory } from "@constants";
 
-function SubDetails({wasteBanks, loading}) {
-  const {translations} = useTranslation();
-  const [selectCategory, setSelectCategory] = useState('Semua');
+function SubDetails({ wasteBanks, loading }) {
+  const { translations } = useTranslation();
+  const [selectCategory, setSelectCategory] = useState("Semua");
   let details = wasteBanks.details;
 
   let arr = [
     {
-      name: translations['organization.name'],
+      name: translations["organization.name"],
       value: details?.companyName,
     },
     {
-      name: translations['ceo.name'],
+      name: translations["ceo.name"],
       value: details?.nameCEO,
     },
     {
-      name: translations['address'],
+      name: translations["address"],
       value: details?.address?.street,
     },
     {
-      name: translations['type'] + ' ' + translations['waste.bank'],
-      value: details?.companyType ? arrTypeCompany(details?.companyType) : '',
+      name: translations["type"] + " " + translations["waste.bank"],
+      value: details?.companyType ? arrTypeCompany(details?.companyType) : "",
     },
   ];
 
   const filter =
-    selectCategory == 'Semua'
+    selectCategory == "Semua"
       ? wasteBanks?.items
       : wasteBanks?.items.filter((x) => x.category._id == selectCategory);
 
@@ -56,12 +56,12 @@ function SubDetails({wasteBanks, loading}) {
           <View style={styles.card}>
             <View style={styles.separator}>
               <Text style={styles.txtTitle}>
-                {'Detail ' + translations['waste.bank']}
+                {"Detail " + translations["waste.bank"]}
               </Text>
             </View>
             <FlatList
               data={arr}
-              renderItem={({item}) => (
+              renderItem={({ item }) => (
                 <View style={styles.flex}>
                   <Text style={styles.txtName}>{item.name}</Text>
                   <Text style={styles.txtValue}>{item.value}</Text>
@@ -69,8 +69,8 @@ function SubDetails({wasteBanks, loading}) {
               )}
             />
           </View>
-          <Text style={[styles.txtTitle, StC.mB5, {marginLeft: RFValue(15)}]}>
-            {translations['product']}
+          <Text style={[styles.txtTitle, StC.mB5, { marginLeft: RFValue(15) }]}>
+            {translations["product"]}
           </Text>
           <FilterCategory
             selected={selectCategory}
@@ -79,8 +79,8 @@ function SubDetails({wasteBanks, loading}) {
           />
           <FlatList
             data={filter}
-            renderItem={({item}) => (
-              <CardWasteBankProductList item={item} type={'user'} />
+            renderItem={({ item }) => (
+              <CardWasteBankProductList item={item} type={"user"} />
             )}
           />
         </ScrollView>
@@ -90,8 +90,8 @@ function SubDetails({wasteBanks, loading}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(SubDetails);

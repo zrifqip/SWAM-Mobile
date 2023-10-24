@@ -1,17 +1,17 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Font, StC} from '@styles';
-import {FormInput} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {showToast} from '@constants';
-import {ButtonFlex} from '@components';
-import {useTranslation} from '@utils';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import wasteBanksUtils from '@utils/WasteBanksUtils';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Font, StC } from "@styles";
+import { FormInput } from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { showToast } from "@constants";
+import { ButtonFlex } from "@components";
+import { useTranslation } from "@utils";
+import RBSheet from "react-native-raw-bottom-sheet";
+import wasteBanksUtils from "@utils/WasteBanksUtils";
 
-function ModalCategory({open, onPress, id, name, desc, setName, setDesc}) {
-  const {translations} = useTranslation();
+function ModalCategory({ open, onPress, id, name, desc, setName, setDesc }) {
+  const { translations } = useTranslation();
 
   const saveCategory = async () => {
     let params = {
@@ -22,7 +22,7 @@ function ModalCategory({open, onPress, id, name, desc, setName, setDesc}) {
     if (!id) {
       let respons = await wasteBanksUtils.addWasteBanksProductCategory(params);
       if (respons == 200) {
-        showToast(translations['save.success']);
+        showToast(translations["save.success"]);
 
         setTimeout(() => {
           onPress();
@@ -37,7 +37,7 @@ function ModalCategory({open, onPress, id, name, desc, setName, setDesc}) {
         merge,
       );
       if (respons == 200) {
-        showToast(translations['save.success']);
+        showToast(translations["save.success"]);
 
         setTimeout(() => {
           onPress();
@@ -55,28 +55,27 @@ function ModalCategory({open, onPress, id, name, desc, setName, setDesc}) {
         container: {
           ...StC.centerPage,
         },
-      }}
-    >
+      }}>
       <View style={styles.modal}>
-        <Text style={styles.service}>{translations['category']}</Text>
+        <Text style={styles.service}>{translations["category"]}</Text>
         <FormInput
-          label={translations['name']}
-          placeholder={translations['name']}
+          label={translations["name"]}
+          placeholder={translations["name"]}
           value={name}
           onChangeText={(val) => setName(val)}
           required
         />
         <FormInput
-          label={translations['desc']}
-          placeholder={translations['desc']}
+          label={translations["desc"]}
+          placeholder={translations["desc"]}
           value={desc}
           onChangeText={(val) => setDesc(val)}
         />
         <ButtonFlex
-          title={translations['save']}
+          title={translations["save"]}
           onPress={() => saveCategory()}
           style={StC.mT30}
-          disabled={name == ''}
+          disabled={name == ""}
         />
       </View>
     </RBSheet>
@@ -84,8 +83,8 @@ function ModalCategory({open, onPress, id, name, desc, setName, setDesc}) {
 }
 
 const mapStateToProps = function (state) {
-  const {wasteBanks} = state;
-  return {wasteBanks};
+  const { wasteBanks } = state;
+  return { wasteBanks };
 };
 
 export default connect(mapStateToProps)(ModalCategory);

@@ -1,9 +1,9 @@
-import React, {Fragment} from 'react';
-import {StatusBar, SafeAreaView, StyleSheet} from 'react-native';
-import {Colors} from '@styles';
-import {Loading} from '@components';
+import React, { Fragment } from "react";
+import { StatusBar, SafeAreaView, StyleSheet } from "react-native";
+import { Colors } from "@styles";
+import { Loading } from "@components";
 
-const BaseContainer = ({children, loading}) => {
+const BaseContainer = ({ children, loading }) => {
   return (
     <Fragment>
       <SafeAreaView style={styles.bottomSafeArea}>

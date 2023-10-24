@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -7,27 +7,27 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-} from 'react-native';
-import {BaseContainer, AppBar, MyView, ModalPreview} from '@components';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {connect} from 'react-redux';
-import {StC, Colors, Font, Shadow} from '@styles';
-import {useTranslation} from '@utils';
-import {base_uri} from '@constants/BASE_URL';
+} from "react-native";
+import { BaseContainer, AppBar, MyView, ModalPreview } from "@components";
+import { RFValue } from "react-native-responsive-fontsize";
+import { connect } from "react-redux";
+import { StC, Colors, Font, Shadow } from "@styles";
+import { useTranslation } from "@utils";
+import { base_uri } from "@constants/BASE_URL";
 import {
   currencyFloat,
   formatDateTime,
   numberFloat,
   arrStatus,
-} from '@constants';
+} from "@constants";
 
-function WasteBankTransactionDetails({navigation, transactions}) {
-  const {translations} = useTranslation();
+function WasteBankTransactionDetails({ navigation, transactions }) {
+  const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   let details = transactions.details;
 
-  let image = '';
+  let image = "";
 
   if (details.images?.length > 0) {
     image = details.images[0].original.path;
@@ -36,37 +36,37 @@ function WasteBankTransactionDetails({navigation, transactions}) {
   let status = arrStatus(details.status);
   let arr = [
     {
-      name: translations['transaction'],
-      type: 'detail',
+      name: translations["transaction"],
+      type: "detail",
       submenu: [
         {
-          name: 'Status',
+          name: "Status",
           value: status.label,
           color: status.color,
         },
         {
-          name: translations['created'],
+          name: translations["created"],
           value: formatDateTime(details.date),
         },
       ],
     },
     {
-      name: translations['order.detail'],
-      type: 'detail',
+      name: translations["order.detail"],
+      type: "detail",
       submenu: [
         {
-          name: translations['name'],
+          name: translations["name"],
           value: details.customer?.fullName,
         },
         {
-          name: translations['address'],
+          name: translations["address"],
           value: details.customer?.address?.street,
         },
       ],
     },
     {
-      name: translations['waste.list'],
-      type: 'item',
+      name: translations["waste.list"],
+      type: "item",
       submenu: details.detail,
     },
   ];
@@ -75,27 +75,26 @@ function WasteBankTransactionDetails({navigation, transactions}) {
     <BaseContainer loading={loading}>
       <AppBar
         navigation={navigation}
-        title={'Detail ' + translations['transaction']}
+        title={"Detail " + translations["transaction"]}
       />
       <ScrollView>
         <FlatList
           data={arr}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <View style={styles.card}>
               <View style={styles.separator}>
                 <Text style={styles.txtTitle}>{item.name}</Text>
               </View>
               {item.submenu.map((res) => (
                 <View style={styles.flex}>
-                  {item.type == 'detail' ? (
+                  {item.type == "detail" ? (
                     <>
                       <Text style={styles.txtName}>{res.name}</Text>
                       <Text
                         style={[
                           styles.txtValue,
-                          res.color && {color: res.color},
-                        ]}
-                      >
+                          res.color && { color: res.color },
+                        ]}>
                         {res.value}
                       </Text>
                     </>
@@ -111,7 +110,7 @@ function WasteBankTransactionDetails({navigation, transactions}) {
                   )}
                 </View>
               ))}
-              <MyView style={styles.flex} hide={item.type != 'item'}>
+              <MyView style={styles.flex} hide={item.type != "item"}>
                 <Text style={styles.txtName}>Total</Text>
                 <Text style={styles.txtValue}>
                   {currencyFloat(details.totalPrice)}
@@ -121,14 +120,13 @@ function WasteBankTransactionDetails({navigation, transactions}) {
           )}
         />
         <View style={styles.card}>
-          <Text style={styles.txtTitle}>{translations['photo']}</Text>
+          <Text style={styles.txtTitle}>{translations["photo"]}</Text>
           {image ? (
             <TouchableOpacity
               style={styles.cardImage}
               activeOpacity={0.5}
-              onPress={() => setIsVisible(true)}
-            >
-              <Image source={{uri: base_uri + image}} style={styles.image} />
+              onPress={() => setIsVisible(true)}>
+              <Image source={{ uri: base_uri + image }} style={styles.image} />
             </TouchableOpacity>
           ) : (
             <Text>-</Text>
@@ -145,8 +143,8 @@ function WasteBankTransactionDetails({navigation, transactions}) {
 }
 
 const mapStateToProps = function (state) {
-  const {transactions} = state;
-  return {transactions};
+  const { transactions } = state;
+  return { transactions };
 };
 
 export default connect(mapStateToProps)(WasteBankTransactionDetails);
@@ -187,15 +185,15 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     ...StC.centerPage,
-    width: '100%',
+    width: "100%",
     height: RFValue(150),
     borderWidth: RFValue(1),
     borderRadius: RFValue(5),
     borderColor: Colors.GRAY_SOFT,
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     borderRadius: RFValue(5),
   },
   btn: {
@@ -225,6 +223,6 @@ const styles = StyleSheet.create({
     ...Font.Regular,
     ...Font.F12,
     ...Font.WHITE,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });

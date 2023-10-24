@@ -1,18 +1,17 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {StC, Font, Colors} from '@styles';
-import {currencyFloat, formatDateDay, arrStatus} from '@constants';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { StC, Font, Colors } from "@styles";
+import { currencyFloat, formatDateDay, arrStatus } from "@constants";
+import { RFValue } from "react-native-responsive-fontsize";
 
-function CardTrasactionDashboardWasteBank({item, onPress, index}) {
+function CardTrasactionDashboardWasteBank({ item, onPress, index }) {
   let status = arrStatus(item.status);
 
   return (
     <TouchableOpacity
-      style={[styles.cardMenu, index == 0 && {marginLeft: RFValue(15)}]}
+      style={[styles.cardMenu, index == 0 && { marginLeft: RFValue(15) }]}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <Text style={styles.name} numberOfLines={1}>
         {item?.customer?.fullName}
       </Text>
@@ -22,7 +21,7 @@ function CardTrasactionDashboardWasteBank({item, onPress, index}) {
       </Text>
       <View style={[StC.flexR, StC.mT10]}>
         <Text style={styles.date}>{formatDateDay(item.date)}</Text>
-        <Text style={[styles.status, {color: status.color}]}>
+        <Text style={[styles.status, { color: status.color }]}>
           {status.label}
         </Text>
       </View>

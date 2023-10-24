@@ -1,5 +1,5 @@
 export const Normal = {
-  shadowColor: 'rgba(46, 50, 132, 0.15)',
+  shadowColor: "rgba(46, 50, 132, 0.15)",
   shadowOffset: {
     width: 0,
     height: 3,
@@ -10,7 +10,7 @@ export const Normal = {
 };
 
 export const Top = {
-  shadowColor: 'rgba(46, 50, 132, 0.15)',
+  shadowColor: "rgba(46, 50, 132, 0.15)",
   shadowOffset: {
     width: 0,
     height: -10,
@@ -21,7 +21,7 @@ export const Top = {
 };
 
 export const Bottom = {
-  shadowColor: 'rgba(46, 50, 132, 0.15)',
+  shadowColor: "rgba(46, 50, 132, 0.15)",
   shadowOffset: {
     width: 0,
     height: 12,

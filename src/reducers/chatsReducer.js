@@ -5,13 +5,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'CHATS':
+    case "CHATS":
       return {
         ...state,
         ...action.payload,
         chats: action.chats,
       };
-    case 'CHATS_DETAIL':
+    case "CHATS_DETAIL":
       return {
         ...state,
         ...action.payload,

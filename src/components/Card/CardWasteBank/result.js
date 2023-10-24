@@ -1,33 +1,31 @@
-import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
-import {Icon} from 'native-base';
-import {StC, Font, Colors} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {serviceWasteBank, numberFloat} from '@constants';
-import {MyView} from '@components';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { Icon } from "native-base";
+import { StC, Font, Colors } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { serviceWasteBank, numberFloat } from "@constants";
+import { MyView } from "@components";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-function CardWasteBankResult({item, onPress}) {
+function CardWasteBankResult({ item, onPress }) {
   return (
     <TouchableOpacity
       style={styles.cardMenu}
       activeOpacity={0.5}
-      onPress={onPress}
-    >
+      onPress={onPress}>
       <View style={styles.cardText}>
         <Text style={styles.textCompany} numberOfLines={1}>
           {item?.companyName}
         </Text>
         <View style={StC.flexR}>
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <View style={[StC.flexR, StC.mT10]}>
               {serviceWasteBank(item?.companyService).map((service) => (
                 <Text
                   style={[
                     styles.textServices,
-                    {backgroundColor: service.color},
-                  ]}
-                >
+                    { backgroundColor: service.color },
+                  ]}>
                   {service.name}
                 </Text>
               ))}
@@ -37,15 +35,14 @@ function CardWasteBankResult({item, onPress}) {
             </Text>
           </View>
           <MyView
-            style={{justifyContent: 'flex-end', alignItems: 'flex-end'}}
-            hide={parseFloat(item.distance) < 5}
-          >
+            style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
+            hide={parseFloat(item.distance) < 5}>
             <Text style={styles.distance}>Jarak terlalu jauh</Text>
           </MyView>
         </View>
       </View>
       <Icon
-        as={<MaterialCommunityIcons name={'chevron-right'} />}
+        as={<MaterialCommunityIcons name={"chevron-right"} />}
         size={RFValue(6)}
         color={Colors.GRAY_SOFT}
       />
@@ -61,7 +58,7 @@ const styles = {
     backgroundColor: Colors.WHITE,
     borderBottomWidth: RFValue(2),
     borderColor: Colors.BACKGROUND,
-    alignItems: 'center',
+    alignItems: "center",
     paddingLeft: RFValue(15),
     paddingRight: RFValue(10),
     paddingVertical: RFValue(10),

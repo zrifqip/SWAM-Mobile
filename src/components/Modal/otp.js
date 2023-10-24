@@ -1,11 +1,17 @@
-import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
-import {Colors, Font, StC} from '@styles';
-import {Icon} from 'native-base';
-import {RFValue} from 'react-native-responsive-fontsize';
-import RBSheet from 'react-native-raw-bottom-sheet';
-import Feather from 'react-native-vector-icons/Feather';
-import authUtils from '@utils/AuthUtils';
+import React, { Component } from "react";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+} from "react-native";
+import { Colors, Font, StC } from "@styles";
+import { Icon } from "native-base";
+import { RFValue } from "react-native-responsive-fontsize";
+import RBSheet from "react-native-raw-bottom-sheet";
+import Feather from "react-native-vector-icons/Feather";
+import authUtils from "@utils/AuthUtils";
 
 const number = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -20,18 +26,18 @@ class ModalOTP extends Component {
     super(props);
     this.state = {
       inputOTP: [],
-      dottedStatus: '',
+      dottedStatus: "",
     };
   }
 
   _handleInputOTP = (OTP) => {
-    const {inputOTP} = {...this.state};
+    const { inputOTP } = { ...this.state };
     const currentState = inputOTP;
     if (currentState.length > 5) return;
     currentState.push(OTP);
-    this.setState({inputOTP: currentState});
+    this.setState({ inputOTP: currentState });
     if (inputOTP.length === 6) {
-      let resultOTP = '';
+      let resultOTP = "";
       currentState.forEach((OTP) => {
         resultOTP += OTP;
       });
@@ -49,16 +55,16 @@ class ModalOTP extends Component {
     const verif = await authUtils.verifyOTP(temp);
 
     if (verif == 200) {
-      this.props.navigation.navigate('dashboard');
+      this.props.navigation.navigate("dashboard");
     } else {
-      this.setState({inputOTP: []});
+      this.setState({ inputOTP: [] });
     }
   };
 
   _handleDeleteInputOTP = () => {
-    const {inputOTP} = {...this.state};
+    const { inputOTP } = { ...this.state };
     inputOTP.splice(inputOTP.length - 1, 1);
-    this.setState({inputOTP: inputOTP});
+    this.setState({ inputOTP: inputOTP });
   };
 
   _handleLongPress = () => {
@@ -72,7 +78,7 @@ class ModalOTP extends Component {
   };
 
   render() {
-    const {inputOTP} = this.state;
+    const { inputOTP } = this.state;
     let dotted = [];
     for (var i = 1; i <= 6; i++) {
       dotted.push(
@@ -93,8 +99,7 @@ class ModalOTP extends Component {
           container: {
             ...StC.centerPage,
           },
-        }}
-      >
+        }}>
         <View style={styles.modal}>
           <Text style={Font.titleCenter}>Masukkan Kode OTP</Text>
           <Text style={styles.descOTP}>
@@ -107,11 +112,10 @@ class ModalOTP extends Component {
             scrollEnabled={false}
             showsVerticalScrollIndicator={false}
             numColumns={3}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <TouchableOpacity
                 style={styles.padButton}
-                onPress={() => this._handleInputOTP(item)}
-              >
+                onPress={() => this._handleInputOTP(item)}>
                 <Text style={styles.inputPad}>{item}</Text>
               </TouchableOpacity>
             )}
@@ -120,18 +124,16 @@ class ModalOTP extends Component {
                 <View style={styles.padButton} />
                 <TouchableOpacity
                   style={styles.padButton}
-                  onPress={() => this._handleInputOTP(0)}
-                >
+                  onPress={() => this._handleInputOTP(0)}>
                   <Text style={styles.inputPad}>0</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.padButton}
                   onPress={() => this._handleDeleteInputOTP()}
-                  onLongPress={() => this._handleLongPress()}
-                >
+                  onLongPress={() => this._handleLongPress()}>
                   <Icon
                     as={Feather}
-                    name={'delete'}
+                    name={"delete"}
                     color={Colors.DARK}
                     size={RFValue(5)}
                   />
@@ -152,12 +154,12 @@ const styles = StyleSheet.create({
     ...StC.wh100,
     borderRadius: RFValue(100),
     paddingVertical: RFValue(20),
-    alignItems: 'center',
+    alignItems: "center",
   },
   dottedContainer: {
     ...StC.flexR,
     marginVertical: RFValue(20),
-    alignItems: 'center',
+    alignItems: "center",
   },
   dotted: {
     ...StC.centerPage,
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
     width: RFValue(8),
     height: RFValue(8),
     borderRadius: RFValue(5),
-    backgroundColor: '#696969',
+    backgroundColor: "#696969",
   },
   txtCode: {
     ...Font.F11,
@@ -197,8 +199,8 @@ const styles = StyleSheet.create({
     width: RFValue(50),
     height: RFValue(50),
     borderRadius: RFValue(25),
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginHorizontal: RFValue(30),
     marginBottom: RFValue(30),
   },

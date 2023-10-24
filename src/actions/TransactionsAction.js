@@ -1,4 +1,4 @@
-import * as ACTION_TYPES from '@constants/ActionTypes';
+import * as ACTION_TYPES from "@constants/ActionTypes";
 
 export const GetTransactionsUsers = (transactions) => ({
   type: ACTION_TYPES.GET_TRANS_USERS,

@@ -1,14 +1,14 @@
-import React from 'react';
-import {View, TouchableOpacity, Image, Text} from 'react-native';
-import {StC, Colors, Font} from '@styles';
-import {Icon} from 'native-base';
-import {RFValue} from 'react-native-responsive-fontsize';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { View, TouchableOpacity, Image, Text } from "react-native";
+import { StC, Colors, Font } from "@styles";
+import { Icon } from "native-base";
+import { RFValue } from "react-native-responsive-fontsize";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const IconCamera = () => {
   return (
     <Icon
-      as={<MaterialCommunityIcons name={'account'} />}
+      as={<MaterialCommunityIcons name={"account"} />}
       size={RFValue(8)}
       color={Colors.GRAY}
     />
@@ -16,14 +16,14 @@ const IconCamera = () => {
 };
 
 const FormInputPhoto = (props) => (
-  <View style={[StC.flexR, {flex: 1}]}>
+  <View style={[StC.flexR, { flex: 1 }]}>
     <View style={styles.cardImage}>
-      {props.fileUri == '' ? (
+      {props.fileUri == "" ? (
         IconCamera()
       ) : (
         <Image
-          style={[StC.wh100, {borderRadius: RFValue(7)}]}
-          source={{uri: props.fileUri}}
+          style={[StC.wh100, { borderRadius: RFValue(7) }]}
+          source={{ uri: props.fileUri }}
         />
       )}
     </View>
@@ -32,8 +32,7 @@ const FormInputPhoto = (props) => (
       <TouchableOpacity
         style={styles.btnUpload}
         activeOpacity={0.6}
-        onPress={props.onPress}
-      >
+        onPress={props.onPress}>
         <Text style={styles.labelUpload}>UPLOAD PHOTO</Text>
       </TouchableOpacity>
     </View>
@@ -54,7 +53,7 @@ const styles = {
   },
   cardLabel: {
     paddingTop: RFValue(2),
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   note: {
     ...Font.F9,

@@ -1,17 +1,23 @@
-import React from 'react';
-import {Text, TouchableOpacity} from 'react-native';
-import {Colors, Font, StC, Shadow} from '@styles';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {MyView} from '@components';
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
+import { Colors, Font, StC, Shadow } from "@styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { MyView } from "@components";
 
-const FormInputSwitch = ({label, onPress, hide, loading, isSwitch, style}) => (
+const FormInputSwitch = ({
+  label,
+  onPress,
+  hide,
+  loading,
+  isSwitch,
+  style,
+}) => (
   <MyView hide={hide} style={[styles.card, style]}>
     <TouchableOpacity
       activeOpacity={0.5}
       style={[styles.flex, isSwitch ? styles.active : styles.inactive]}
       disabled={loading}
-      onPress={() => onPress()}
-    >
+      onPress={() => onPress()}>
       <Text style={[styles.label, isSwitch ? Font.BLACK : Font.WHITE]}>
         {label[0]}
       </Text>
@@ -20,8 +26,7 @@ const FormInputSwitch = ({label, onPress, hide, loading, isSwitch, style}) => (
       activeOpacity={0.5}
       style={[styles.flex, !isSwitch ? styles.active : styles.inactive]}
       disabled={loading}
-      onPress={() => onPress()}
-    >
+      onPress={() => onPress()}>
       <Text style={[styles.label, !isSwitch ? Font.BLACK : Font.WHITE]}>
         {label[1]}
       </Text>
