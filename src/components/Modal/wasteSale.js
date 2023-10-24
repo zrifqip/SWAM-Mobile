@@ -58,15 +58,12 @@ function ModalWasteSale({ open, wasteBanks, onPress }) {
         },
       }}>
       <View style={styles.modal}>
-        <Text style={StC.title}>
-          {translations["waste.type"]} {requireds("*")}
-        </Text>
         <PickerModal
           renderSelectView={(disabled, selected, showModal) => (
             <View style={styles.dropdown}>
               <FormInputPicker
-                label={"Nasabah"}
-                placeholder={"Pilih Nasabah"}
+                label={"Jenis Sampah"}
+                placeholder={"Pilih Sampah"}
                 value={type.Name}
                 onPress={showModal}
                 required
