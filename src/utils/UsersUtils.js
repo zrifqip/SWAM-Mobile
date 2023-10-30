@@ -20,6 +20,7 @@ class UsersUtils {
       })
       .catch((error) => {
         showToast(error);
+        return "error";
       });
   }
 

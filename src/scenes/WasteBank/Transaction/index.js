@@ -53,8 +53,6 @@ function WasteBankTransaction({ navigation, transactions }) {
 
     let arr = [];
 
-    console.log(trans);
-
     for (let i = 0; i < trans.length; i++) {
       let temp = {
         Nasabah: trans[i]?.customer?.fullName,
@@ -84,7 +82,7 @@ function WasteBankTransaction({ navigation, transactions }) {
 
     writeFile(file, wbout, "ascii")
       .then((r) => {
-        showToast("Laporan berhasil di download");
+        showToast("Laporan berhasil di download, Cek folder Downloads Anda");
       })
       .catch((e) => {
         showToast("Laporan gagal di download : " + e.toString());
@@ -93,13 +91,10 @@ function WasteBankTransaction({ navigation, transactions }) {
 
   const handleClick = async () => {
     try {
-      // Check for Permission (check if permission is already given or not)
-      let isPermitedExternalStorage = await PermissionsAndroid.check(
+      let isPermittedExternalStorage = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       );
-
-      if (!isPermitedExternalStorage) {
-        // Ask for permission
+      if (!isPermittedExternalStorage) {
         const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
           {
@@ -111,17 +106,12 @@ function WasteBankTransaction({ navigation, transactions }) {
         );
 
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          // Permission Granted (calling our exportDataToExcel function)
           exportDataToExcel();
-          console.log("Permission granted");
-        } else {
-          // Permission denied
-          console.log("Permission denied");
+          return;
         }
-      } else {
-        // Already have Permission (calling our exportDataToExcel function)
-        exportDataToExcel();
       }
+
+      exportDataToExcel();
     } catch (e) {
       console.log("Error while checking permission");
       console.log(e);

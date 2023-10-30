@@ -9,28 +9,49 @@ import { Images } from "@assets";
 import { BaseContainer, TypographyText, ButtonFlex } from "@components";
 import { useTranslation } from "@utils";
 import { RFValue } from "react-native-responsive-fontsize";
+import { showToast } from "@constants";
 import { SignIn } from "@actions";
+import { GetUsersDetail } from "@actions";
 import store from "@stores/store";
 import usersUtils from "@utils/UsersUtils";
 import MMKVStorage from "react-native-mmkv-storage";
 import AsyncStorage from "@react-native-community/async-storage";
 
 const OnBoarding = ({ navigation }) => {
-  useEffect(async () => {
+  const checkCurrentToken = async () => {
     const storage = new MMKVStorage.Loader().initialize();
 
-    const session = storage.getItem("token");
+    try {
+      const session = storage.getItem("token");
 
-    if (JSON.stringify(session).length > 100) {
-      store.dispatch(SignIn(session));
-      const value = await AsyncStorage.getItem("role");
+      if (JSON.stringify(session).length > 100) {
+        store.dispatch(SignIn(session));
+        const value = await AsyncStorage.getItem("role");
+        let res;
 
-      if (value == "user") {
-        usersUtils.usersDetail();
-      } else {
-        usersUtils.companyDetail();
+        if (value == "user") {
+          res = await usersUtils.usersDetail();
+        } else {
+          res = await usersUtils.companyDetail();
+        }
+
+        if (res === "error") {
+          throw new Error("Terjadi kesalahan, Silahkan Login ulang");
+        }
       }
+    } catch (error) {
+      showToast(error.message);
+
+      navigation.navigate("OnBoarding");
+      store.dispatch({ type: "SIGN_OUT" });
+      store.dispatch(GetUsersDetail(""));
+
+      storage.setItem("token", "");
     }
+  };
+
+  useEffect(() => {
+    checkCurrentToken();
   }, []);
 
   const { translations } = useTranslation();

@@ -6,11 +6,13 @@
     "env:dev": "node src/envs/set-environment.js development",
     "env:prod": "node src/envs/set-environment.js production",
     "env:staging": "node src/envs/set-environment.js staging",
-    "android": "react-native run-android",
+    "android": "yarn env:dev && react-native run-android",
+    "android:prod": "yarn env:prod && react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "release": "yarn env:prod && cd android && ./gradlew clean && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
