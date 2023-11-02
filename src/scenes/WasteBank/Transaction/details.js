@@ -101,7 +101,7 @@ function WasteBankTransactionDetails({ navigation, transactions }) {
                   ) : (
                     <>
                       <Text style={styles.txtName}>
-                        {res?.item?.name} {numberFloat(res?.weight)} kg
+                        {res?.name} {numberFloat(res?.weight)} kg
                       </Text>
                       <Text style={styles.txtValue}>
                         {currencyFloat(res.totalPrice)}
