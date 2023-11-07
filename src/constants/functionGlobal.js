@@ -125,11 +125,14 @@ export const phoneRegex = () => {
   return /^08[1-9][0-9]{7,10}$/;
 };
 
-export const showToast = async (msg) => {
+export const showToast = async (msg, isLong = false) => {
   if (Platform.OS == "ios") {
-    Toast.show(`${msg}`, Toast.SHORT);
+    Toast.show(`${msg}`, isLong ? ToastAndroid.LONG : ToastAndroid.SHORT);
   } else {
-    ToastAndroid.show(`${msg}`, ToastAndroid.SHORT);
+    ToastAndroid.show(
+      `${msg}`,
+      isLong ? ToastAndroid.LONG : ToastAndroid.SHORT,
+    );
   }
 };
 

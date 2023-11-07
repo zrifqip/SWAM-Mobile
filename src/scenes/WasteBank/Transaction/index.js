@@ -74,18 +74,25 @@ function WasteBankTransaction({ navigation, transactions }) {
     const wbout = XLSX.write(wb, { type: "binary", bookType: "xlsx" });
 
     var RNFS = require("react-native-fs");
+
+    const checkDownloadsPath = await RNFS.exists(RNFS.DownloadDirectoryPath);
+    let baseUrl;
+
+    if (checkDownloadsPath) {
+      baseUrl = RNFS.DownloadDirectoryPath;
+    } else {
+      baseUrl = RNFS.ExternalDirectoryPath;
+    }
+
     var file =
-      RNFS.DownloadDirectoryPath +
-      "/" +
-      moment().format("DDMMYY-kkmmss-") +
-      "Transaction.xlsx";
+      baseUrl + "/" + moment().format("DDMMYY-kkmmss-") + "Transaction.xlsx";
 
     writeFile(file, wbout, "ascii")
       .then((r) => {
-        showToast("Laporan berhasil di download, Cek folder Downloads Anda");
+        showToast("Download berhasil: " + file, true);
       })
       .catch((e) => {
-        showToast("Laporan gagal di download : " + e.toString());
+        showToast("Download gagal: " + e.toString(), true);
       });
   };
 
