@@ -71,6 +71,8 @@ function WasteBankTransactionForm({ navigation, wasteBanks, users }) {
       let temp = {
         itemID: active[i].itemID,
         weight: active[i].weight,
+        price: active[i].price,
+
       };
 
       items.push(temp);

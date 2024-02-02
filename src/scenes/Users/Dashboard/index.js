@@ -35,36 +35,39 @@ import Geolocation from "@react-native-community/geolocation";
 function UsersDashboard({ navigation, users, wasteBanks, transactions }) {
   let user = users.users;
 
-  const { translations } = useTranslation();
-  const [loadingWaste, setLoadingWaste] = useState(false);
-  const [loadingTrans, setLoadingTrans] = useState(false);
+  const { translations }                  = useTranslation()
+  const [loadingWaste, setLoadingWaste]   = useState(false)
+  const [loadingTrans, setLoadingTrans]   = useState(false)
+  const [balance, setBalance]             = useState(user?.biodata?.balance);
 
-  let history = [];
-  if (transactions) {
-    if (transactions?.transactions.length != 0) {
-      history = transactions.transactions;
+  let history = []
+  if(transactions){
+    if(transactions?.transactions.length !=0){
+      history = transactions.transactions
     }
   }
 
   useEffect(() => {
-    const isFocused = navigation.isFocused();
+      const isFocused = navigation.isFocused();
 
-    if (isFocused) {
-      loadLocation();
-      getTransaction();
-      getWasteBanks();
-      setDisabled();
-      getModal();
-    }
+      if (isFocused) {
+          loadLocation()
+          getTransaction()
+          getWasteBanks()   
+          setDisabled()
+          setModal()      
+        }
 
-    const navFocusListener = navigation.addListener("didFocus", () => {
-      setDisabled();
-    });
+        const navFocusListener = navigation.addListener('didFocus', () => {
+            setDisabled()
+            setBalance(users?.biodata?.balance);
+        });
 
-    // return () => {
-    //     navFocusListener.remove();
-    // };
-  }, []);
+        return () => {
+            navFocusListener.remove();
+        };
+    }, [navigation, users?.biodata?.balance]);
+
 
   const getModal = async () => {
     if (!user?.biodata?.companyID) {

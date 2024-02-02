@@ -28,15 +28,23 @@ function WasteBankTransaction({ navigation, transactions }) {
   const [loading, setLoading] = useState(false);
   const [searchContent, setSearchContent] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     getTransaction();
   }, []);
 
   const getTransaction = async () => {
-    setLoading(true);
-    await transactionsUtils.getTransactionsWasteBanks();
-    setLoading(false);
+    try {
+        setRefreshing(true);
+        setLoading(true);
+        await transactionsUtils.getTransactionsWasteBanks();
+    } catch (error) {
+        console.error('Error fetching transactions:', error);
+    } finally {
+        setLoading(false);
+        setRefreshing(false);
+    }
   };
 
   const getTransactionDetail = async (id) => {

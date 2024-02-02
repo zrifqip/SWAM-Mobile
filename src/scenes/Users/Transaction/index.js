@@ -13,19 +13,30 @@ import transactionsUtils from "@utils/TransactionsUtils";
 const KEYS_TO_FILTERS = ["status", "totalWeight", "totalPrice", "date"];
 
 function UsersTransaction({ navigation, transactions }) {
-  const { translations } = useTranslation();
+  const { translations }                  = useTranslation();
   const [searchContent, setSearchContent] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm]       = useState("");
+  const [loading, setLoading]             = useState(false);
+  const [refreshing, setRefreshing]       = useState(false);
 
   useEffect(() => {
     getTransaction();
   }, []);
 
   const getTransaction = async () => {
-    setLoading(true);
-    await transactionsUtils.getTransactionsUsers();
-    setLoading(false);
+    try {
+      setRefreshing(true);
+      setLoading(true);
+      await transactionsUtils.getTransactionsWasteBanks();
+    }
+    catch (error) {
+      console.error('Error fetching transactions:', error);
+    } 
+    finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+
   };
 
   const getTransactionDetail = async (id) => {
@@ -63,7 +74,8 @@ function UsersTransaction({ navigation, transactions }) {
         ListEmptyComponent={
           <EmptyData message={translations["empty.transaction"]} />
         }
-        refreshControl={<RefreshControl onRefresh={getTransaction} />}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={getTransaction}/>
+        }
       />
     </BaseContainer>
   );
