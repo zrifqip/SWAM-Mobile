@@ -161,7 +161,7 @@ function WasteBankTransaction({ navigation, transactions }) {
         ListEmptyComponent={
           <EmptyData message={translations["empty.transaction"]} />
         }
-        refreshControl={<RefreshControl onRefresh={getTransaction} />}
+        refreshControl={<RefreshControl  refreshing={refreshing} onRefresh={getTransaction} />}
       />
       {transactions.transactions.length != 0 ? (
         <ButtonFab label={"Download"} onPress={() => handleClick()} />
