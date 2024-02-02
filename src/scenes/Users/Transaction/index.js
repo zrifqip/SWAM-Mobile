@@ -27,7 +27,7 @@ function UsersTransaction({ navigation, transactions }) {
     try {
       setRefreshing(true);
       setLoading(true);
-      await transactionsUtils.getTransactionsWasteBanks();
+      await transactionsUtils.getTransactionsUsers();
     }
     catch (error) {
       console.error('Error fetching transactions:', error);
