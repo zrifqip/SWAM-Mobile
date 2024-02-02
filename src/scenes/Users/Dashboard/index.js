@@ -55,7 +55,7 @@ function UsersDashboard({ navigation, users, wasteBanks, transactions }) {
           getTransaction()
           getWasteBanks()   
           setDisabled()
-          setModal()      
+          getModal()      
         }
 
         const navFocusListener = navigation.addListener('didFocus', () => {
