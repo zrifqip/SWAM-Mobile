@@ -72,7 +72,7 @@ function WasteBankTransactionForm({ navigation, wasteBanks, users }) {
         itemID: active[i].itemID,
         weight: active[i].weight,
         price: active[i].price,
-
+        name: active[i].itemName,
       };
 
       items.push(temp);
