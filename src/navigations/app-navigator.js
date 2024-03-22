@@ -34,6 +34,8 @@ import {
   WasteBankTransactionDetails,
   WasteBankTransactionForm,
   WasteBankWithdraw,
+  addUserForm,
+  EditCustomerForm
 } from "@scenes";
 import { Icons } from "@assets";
 import { Colors, Font } from "@styles";
@@ -250,6 +252,7 @@ const MainTabWasteBank = () => {
         component={Account}
         options={{ headerShown: false }}
       />
+      
     </Tab.Navigator>
   );
 };
@@ -358,6 +361,7 @@ const AppNavigator = ({ users }) => {
               cardStyleInterpolator: HorizontalSlide,
             }}
           />
+          
           <Stack.Screen
             name="UsersTransactionDetails"
             component={UsersTransactionDetails}
@@ -390,6 +394,15 @@ const AppNavigator = ({ users }) => {
               cardStyleInterpolator: HorizontalSlide,
             }}
           />
+          
+          <Stack.Screen
+            name="EditCustomerForm"
+            component={EditCustomerForm}
+            options={{ 
+              headerShown: false,
+              cardStyleInterpolator: HorizontalSlide, }}
+            />
+
           <Stack.Screen
             name="WasteBankProductForm"
             component={WasteBankProductForm}
@@ -413,6 +426,13 @@ const AppNavigator = ({ users }) => {
               headerShown: false,
               cardStyleInterpolator: HorizontalSlide,
             }}
+          />
+          <Stack.Screen
+            name="addUserForm"
+            component={addUserForm}
+            options={{ 
+              headerShown: false,
+              cardStyleInterpolator: HorizontalSlide, }}
           />
           <Stack.Screen
             name="WasteBankWithdraw"

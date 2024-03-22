@@ -1,6 +1,7 @@
 import { GetWasteBanksCustomers, GetWithdraw } from "@actions";
 import {
   getWasteBanksCustomers,
+  updateWasteBanksCustomer,
   getWasteBanksWithdraw,
   acceptWasteBanksWithdraw,
   getUsersWithdraw,
@@ -24,8 +25,21 @@ class WithdrawUtils {
         return 400;
       });
   }
-
+  async updateWasteBanksCustomer(params) {
+    return await updateWasteBanksCustomer(params)
+      .then((response) => {
+        const respon = response.data;
+        if (respon.status == "success") {
+          return 200;
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating Waste Banks customer:", error);
+        return 400;
+      });
+  }
   async getWasteBanksWithdraw(params) {
+    
     return await getWasteBanksWithdraw(params)
       .then((response) => {
         const respon = response.data;

@@ -30,9 +30,12 @@ import WasteBankTransaction from "./WasteBank/Transaction";
 import WasteBankTransactionDetails from "./WasteBank/Transaction/details";
 import WasteBankTransactionForm from "./WasteBank/Transaction/form";
 import WasteBankWithdraw from "./WasteBank/Withdraw";
+import addUserForm from "./WasteBank/Customers/form";
+import EditCustomerForm from "./WasteBank/Customers/EditCustomerForm";
 
 export {
   Account,
+  addUserForm,
   Chats,
   ChatsRoom,
   CompanyDashboard,
@@ -64,4 +67,5 @@ export {
   WasteBankTransactionDetails,
   WasteBankTransactionForm,
   WasteBankWithdraw,
+  EditCustomerForm
 };

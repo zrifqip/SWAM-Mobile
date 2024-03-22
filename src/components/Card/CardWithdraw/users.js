@@ -4,9 +4,9 @@ import { StC, Font, Colors } from "@styles";
 import { formatDateTime, currencyFloat } from "@constants";
 import { RFValue } from "react-native-responsive-fontsize";
 
-function CardWithdrawUsers({ item }) {
+function CardWithdrawUsers({ item,onpress }) {
   return (
-    <View style={styles.cardMenu}>
+    <TouchableOpacity onPress={onPress} style={styles.cardMenu}>
       <View style={{ flex: 1 }}>
         <Text style={styles.textDate} numberOfLines={1}>
           {formatDateTime(item.createdAt)}
@@ -33,7 +33,7 @@ function CardWithdrawUsers({ item }) {
           {item.method == "cash" ? "Cash" : "Transfer"}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

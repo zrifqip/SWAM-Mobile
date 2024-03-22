@@ -11,3 +11,10 @@ export const getUsersWithdraw = (payload) =>
   Axios.get(`${base_uri}users/client/withdraw`);
 export const createUsersWithdraw = (payload) =>
   Axios.post(`${base_uri}users/client/withdraw`, payload);
+export const updateWasteBanksCustomer = (payload) =>{
+  Axios.patch(`${base_uri}company/customer?id=` + payload.phoneNumber, payload.params);
+}
+export const EditWasteBank = (payload) =>
+  Axios.patch(`${base_uri}company/customer?id=` + payload);
+export const getCustomerDetail = (payload) =>     
+  Axios.get(`${base_uri}company/customer/` + payload);

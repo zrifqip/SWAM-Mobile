@@ -9,6 +9,7 @@ import {
 import {
   BaseContainer,
   CardCustomers,
+  ButtonFab,
   Search,
   EmptyData,
   AppBar,
@@ -41,7 +42,9 @@ function WasteBankCustomers({ navigation, withdraw }) {
   const filteredData = withdraw.customers.filter(
     createFilter(searchTerm, KEYS_TO_FILTERS),
   );
-
+  const handleClick = () => {
+    navigation.navigate("addUserForm");
+  };
   return (
     <BaseContainer>
       <AppBar navigation={navigation} title={translations["customers"]} />
@@ -69,7 +72,8 @@ function WasteBankCustomers({ navigation, withdraw }) {
         ) : (
           <FlatList
             data={filteredData}
-            renderItem={({ item }) => <CardCustomers item={item} customers />}
+            renderItem={({ item }) => <CardCustomers i item={item}
+            onPress={() => navigation.navigate('EditCustomerForm', { user: item })} />}
             ListEmptyComponent={
               <EmptyData message={translations["empty.customers"]} />
             }
@@ -79,6 +83,7 @@ function WasteBankCustomers({ navigation, withdraw }) {
           />
         )}
       </ScrollView>
+      <ButtonFab label={"Tambah Nasabah"} onPress={() => handleClick()} />
     </BaseContainer>
   );
 }

@@ -186,7 +186,6 @@ class WasteBanksUtils {
       .then((response) => {
         const respon = response.data;
         if (respon.status == "success") {
-          this.getWasteBanksProduct();
           return 200;
         }
       })
