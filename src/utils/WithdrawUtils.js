@@ -1,4 +1,8 @@
-import { GetWasteBanksCustomers, GetWithdraw } from "@actions";
+import {
+  GetWasteBanksCustomers,
+  GetWithdraw,
+  GetCustomerDetails,
+} from "@actions";
 import {
   getWasteBanksCustomers,
   updateWasteBanksCustomer,
@@ -6,6 +10,8 @@ import {
   acceptWasteBanksWithdraw,
   getUsersWithdraw,
   createUsersWithdraw,
+  getCustomerDetails,
+  updateCustomer,
 } from "@constants/apiWithdraw";
 import store from "@stores/store";
 import usersUtils from "@utils/UsersUtils";
@@ -17,8 +23,7 @@ class WithdrawUtils {
         const respon = response.data;
 
         if (respon.message == "success") {
-          store.dispatch(GetWasteBanksCustomers(respon.data));
-          return 200;
+          return store.dispatch(GetWasteBanksCustomers(respon.data));
         }
       })
       .catch((error) => {
@@ -39,7 +44,6 @@ class WithdrawUtils {
       });
   }
   async getWasteBanksWithdraw(params) {
-    
     return await getWasteBanksWithdraw(params)
       .then((response) => {
         const respon = response.data;
@@ -73,7 +77,6 @@ class WithdrawUtils {
     return await getUsersWithdraw(params)
       .then((response) => {
         const respon = response.data;
-
         if (respon.status == "success") {
           store.dispatch(GetWithdraw(respon.data));
           return 200;
@@ -83,12 +86,38 @@ class WithdrawUtils {
         return 400;
       });
   }
+  async getCustomerDetails(params) {
+    try {
+      const response = await getCustomerDetails(params);
+      const respon = response.data;
 
+      if (respon.status == "success") {
+        store.dispatch(GetCustomerDetails(respon.data));
+      } else {
+        console.error("Failed to get customer details:", respon.message);
+      }
+    } catch (error) {
+      console.error("Error fetching customer details:", error);
+    }
+  }
+  async updateCustomer(params) {
+    return (params = await updateCustomer(params)
+      .then((response) => {
+        const respon = response.data;
+        if (respon.status == "success") {
+          return 200;
+        }
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error updating Waste Banks customer:", error);
+        return 400;
+      }));
+  }
   async createUsersWithdraw(params) {
     return await createUsersWithdraw(params)
       .then((response) => {
         const respon = response.data;
-
         if (respon.status == "success") {
           usersUtils.usersDetail(params);
           this.getUsersWithdraw();

@@ -17,6 +17,7 @@ import {
 import { RFValue } from "react-native-responsive-fontsize";
 import { connect } from "react-redux";
 import { useTranslation } from "@utils";
+import { GetCustomerDetails } from "@actions";
 import { createFilter } from "react-native-search-filter";
 import LinearGradient from "react-native-linear-gradient";
 import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
@@ -38,6 +39,13 @@ function WasteBankCustomers({ navigation, withdraw }) {
     await withdrawUtils.getWasteBanksCustomers(1000);
     setLoading(false);
   };
+
+  const getDetailCustomer = async (id) => {
+    if (id) {
+      await withdrawUtils.getCustomerDetails(id);
+    }
+    navigation.navigate("EditCustomerForm");
+  }
 
   const filteredData = withdraw.customers.filter(
     createFilter(searchTerm, KEYS_TO_FILTERS),
@@ -72,8 +80,13 @@ function WasteBankCustomers({ navigation, withdraw }) {
         ) : (
           <FlatList
             data={filteredData}
-            renderItem={({ item }) => <CardCustomers i item={item}
-            onPress={() => navigation.navigate('EditCustomerForm', { user: item })} />}
+            renderItem={({ item }) => (
+              <CardCustomers 
+                item={item}
+                onPress={() => 
+                  getDetailCustomer(item._id)}
+              />
+            )}
             ListEmptyComponent={
               <EmptyData message={translations["empty.customers"]} />
             }

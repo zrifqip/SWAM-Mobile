@@ -1,6 +1,7 @@
 const initialState = {
   customers: [],
   withdraw: [],
+  customerDetail: null,
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +17,12 @@ export default (state = initialState, action) => {
         ...state,
         ...action.payload,
         withdraw: action.withdraw,
+      };
+    case "GET_CUSTOMER_DETAIL":
+      return {
+        ...state,
+        ...action.payload,
+        customerDetail: action.customerDetail,
       };
     default:
       return state;

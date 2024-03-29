@@ -14,7 +14,13 @@ export const createUsersWithdraw = (payload) =>
 export const updateWasteBanksCustomer = (payload) =>{
   Axios.patch(`${base_uri}company/customer?id=` + payload.phoneNumber, payload.params);
 }
-export const EditWasteBank = (payload) =>
-  Axios.patch(`${base_uri}company/customer?id=` + payload);
-export const getCustomerDetail = (payload) =>     
-  Axios.get(`${base_uri}company/customer/` + payload);
+export const getCustomerDetails = (payload) =>     
+  Axios.get(`${base_uri}company/customer/detail/` + payload);
+export const updateCustomer = (payload) =>     {
+  console.log("Payload " + payload.params)
+  Axios.patch(`${base_uri}company/customer/detail?id=` + payload._id, payload.params)
+  Axios.patch(
+    `${base_uri}company/customer/detail?id=` + payload._id,
+    payload.params,
+  );;
+}

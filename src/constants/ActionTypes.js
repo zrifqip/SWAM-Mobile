@@ -25,6 +25,7 @@ export const GET_STOCK = "GET_STOCK";
 export const GET_SUMMARY = "GET_SUMMARY";
 export const GET_WITHDRAW = "GET_WITHDRAW";
 export const RESULT_CUSTOMERS = "RESULT_CUSTOMERS";
+export const GET_CUSTOMER_DETAIL = "GET_CUSTOMER_DETAIL";
 export const SELECTED_CATEGORY = "SELECTED_CATEGORY";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";

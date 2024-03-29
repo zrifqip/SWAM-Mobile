@@ -15,69 +15,65 @@ import { Switch } from "native-base";
 import { connect } from "react-redux";
 import { useTranslation } from "@utils";
 import { Colors, StC, Font } from "@styles";
+import withdrawUtils from "@utils/WithdrawUtils";
 import { AnimationLayout, showToast } from "@constants";
 import { launchImageLibrary, launchCamera } from "react-native-image-picker";
 import { base_uri } from "@constants/BASE_URL";
 import { SelectedCategory } from "@actions";
-import wasteBanksUtils from "@utils/WasteBanksUtils";
 import store from "@stores/store";
 
-function EditCustomerForm({ navigation, users }) {
-  let user = users.users;
+function EditCustomerForm({ customerDetail, navigation }) {
   const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [address, setAddress] = useState("");
-  const [balance, setBalance] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(customerDetail.phoneNumber);
+  const [fullName, setFullName] = useState(customerDetail.fullName);
+  const [address, setAddress] = useState(customerDetail.address.street);
 
   const handleSave = async () => {
-    // setLoading(true);
+    setLoading(true); // Show loading indicator
 
     let params = {
-      fullName: values.fullName,
-      sex: sex ? "Male" : "Female",
-      phoneNumber: values.phoneNumber,
+      phoneNumber: phoneNumber,
+      fullName: fullName,
       address: {
-        country: "Indonesia",
-        region: {
-          province: "",
-          city: "",
-        },
-        district: "",
-        street: values.address,
-        postalCode: "",
+        ...customerDetail.address,
+        street: address,
       },
     };
-    navigation.goBack();
-    let respons = await usersUtils.usersUpdate(params);
+    let merge = {
+      _id: customerDetail._id,
+      params: params,
+    };
 
-    if (respons == 200) {
-      showToast(translations["save.success"]);
-
-      setTimeout(() => {
+    try {
+      let response = await withdrawUtils.updateCustomer(merge);
+      if (response === 200) {
+        Alert.alert("Success", "Customer details updated successfully.");
         navigation.goBack();
-      }, 1000);
+      } else {
+        Alert.alert("Error", "Failed to update customer details.");
+      }
+    } catch (error) {
+      console.error("Error updating customer details:", error);
+      Alert.alert(
+        "Error",
+        "An error occurred while updating customer details.",
+      );
+    } finally {
+      setLoading(false);
     }
-
-    // setLoading(false);
   };
-
-  
-  
-
   return (
     <BaseContainer loading={loading}>
       <AppBar navigation={navigation} title={translations["edit.customer"]} />
       <Formik
         initialValues={{
-          phoneNumber: '',
-          fullName: '',
-          address: '',
-          balance: '',
+          phoneNumber: customerDetail.phoneNumber,
+          fullName: customerDetail.fullName,
+          address: customerDetail.address.street,
+          balance: customerDetail.balance,
         }}
-        onSubmit={(values) => handleUpdate(values)}
-      >
+        onSubmit={(values) => handleUpdate(values)}>
         {({
           handleChange,
           handleSubmit,
@@ -91,42 +87,42 @@ function EditCustomerForm({ navigation, users }) {
               <View style={styles.authCont}>
                 <FormInput
                   label="Phone Number"
-                  value={values.phoneNumber}
-                  onChangeText={handleChange('phoneNumber')}
-                  onBlur={handleBlur('phoneNumber')}
+                  value={phoneNumber}
+                  onChangeText={(val) => setPhoneNumber(val)}
+                  onBlur={handleBlur("phoneNumber")}
                   placeholder="Enter phone number"
                   isError={errors.phoneNumber && touched.phoneNumber}
                   errorMessage={errors.phoneNumber}
                 />
                 <FormInput
                   label="Full Name"
-                  value={values.fullName}
-                  onChangeText={handleChange('fullName')}
-                  onBlur={handleBlur('fullName')}
+                  value={fullName}
+                  onChangeText={(val) => setFullName(val)}
+                  onBlur={handleBlur("fullName")}
                   placeholder="Enter full name"
                   isError={errors.fullName && touched.fullName}
                   errorMessage={errors.fullName}
                 />
                 <FormInput
-                  label="Address"
-                  value={values.address}
-                  onChangeText={handleChange('address')}
-                  onBlur={handleBlur('address')}
+                  label="Alamat" // Assuming "Alamat" is meant to be "Address" in the backend
+                  value={address}
+                  onChangeText={(val) => setAddress(val)}
+                  onBlur={handleBlur("address")}
                   placeholder="Enter address"
                   isError={errors.address && touched.address}
                   errorMessage={errors.address}
                 />
-                <FormInputCurrency
+                <FormInput
                   label="Balance"
                   value={values.balance}
-                  onChangeText={handleChange('balance')}
-                  onBlur={handleBlur('balance')}
+                  onBlur={handleBlur("balance")}
                   placeholder="Rp 0"
                   prefix="Rp "
                   keyboardType="number-pad"
                   precision={0}
                   isError={errors.balance && touched.balance}
                   errorMessage={errors.balance}
+                  editable={false}
                 />
               </View>
             </ScrollView>
@@ -142,10 +138,9 @@ function EditCustomerForm({ navigation, users }) {
   );
 }
 
-const mapStateToProps = function (state) {
-  const { users } = state;
-  return { users };
-};
+const mapStateToProps = (state) => ({
+  customerDetail: state.withdraw.customerDetail,
+});
 
 export default connect(mapStateToProps)(EditCustomerForm);
 

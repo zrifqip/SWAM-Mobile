@@ -8,3 +8,7 @@ export const GetWithdraw = (withdraw) => ({
   type: ACTION_TYPES.GET_WITHDRAW,
   withdraw: withdraw,
 });
+export const GetCustomerDetails = (customerDetail) => ({
+  type: ACTION_TYPES.GET_CUSTOMER_DETAIL,
+  customerDetail: customerDetail,
+});
