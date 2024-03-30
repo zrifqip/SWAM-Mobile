@@ -34,7 +34,7 @@ import {
   WasteBankTransactionDetails,
   WasteBankTransactionForm,
   WasteBankWithdraw,
-  addUserForm,
+  AddUserForm,
   EditCustomerForm
 } from "@scenes";
 import { Icons } from "@assets";
@@ -381,6 +381,7 @@ const AppNavigator = ({ users }) => {
         </>
       ) : user.role == "bank-sampah" ? (
         <>
+          
           <Stack.Screen
             name="MainTabWasteBank"
             component={MainTabWasteBank}
@@ -394,7 +395,13 @@ const AppNavigator = ({ users }) => {
               cardStyleInterpolator: HorizontalSlide,
             }}
           />
-          
+          <Stack.Screen
+            name="AddUserForm"
+            component={AddUserForm}
+            options={{ 
+              headerShown: false,
+              cardStyleInterpolator: HorizontalSlide, }}
+          />
           <Stack.Screen
             name="EditCustomerForm"
             component={EditCustomerForm}
@@ -427,13 +434,7 @@ const AppNavigator = ({ users }) => {
               cardStyleInterpolator: HorizontalSlide,
             }}
           />
-          <Stack.Screen
-            name="addUserForm"
-            component={addUserForm}
-            options={{ 
-              headerShown: false,
-              cardStyleInterpolator: HorizontalSlide, }}
-          />
+          
           <Stack.Screen
             name="WasteBankWithdraw"
             component={WasteBankWithdraw}

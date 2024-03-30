@@ -22,6 +22,7 @@ import { createFilter } from "react-native-search-filter";
 import LinearGradient from "react-native-linear-gradient";
 import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
 import withdrawUtils from "@utils/WithdrawUtils";
+import store from "@stores/store";
 const KEYS_TO_FILTERS = ["fullName", "address.street"];
 
 function WasteBankCustomers({ navigation, withdraw }) {
@@ -50,8 +51,9 @@ function WasteBankCustomers({ navigation, withdraw }) {
   const filteredData = withdraw.customers.filter(
     createFilter(searchTerm, KEYS_TO_FILTERS),
   );
-  const handleClick = () => {
-    navigation.navigate("addUserForm");
+  const handleClick = async () => {
+    store.dispatch(GetCustomerDetails(null));
+    navigation.navigate("AddUserForm");
   };
   return (
     <BaseContainer>

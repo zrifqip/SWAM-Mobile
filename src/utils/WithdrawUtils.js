@@ -15,13 +15,13 @@ import {
 } from "@constants/apiWithdraw";
 import store from "@stores/store";
 import usersUtils from "@utils/UsersUtils";
+import { showToast } from "@constants";
 
 class WithdrawUtils {
   async getWasteBanksCustomers(params) {
     return await getWasteBanksCustomers(params)
       .then((response) => {
         const respon = response.data;
-
         if (respon.message == "success") {
           return store.dispatch(GetWasteBanksCustomers(respon.data));
         }
@@ -31,17 +31,21 @@ class WithdrawUtils {
       });
   }
   async updateWasteBanksCustomer(params) {
-    return await updateWasteBanksCustomer(params)
-      .then((response) => {
-        const respon = response.data;
-        if (respon.status == "success") {
-          return 200;
-        }
-      })
-      .catch((error) => {
-        console.error("Error updating Waste Banks customer:", error);
+    try {
+      const response = await updateWasteBanksCustomer(params);
+      const respon = response.data
+  
+      if (respon.status === "success") {
+        showToast(respon.message);
+        return 200;
+      } else {
+        showToast(respon.message);
         return 400;
-      });
+      }
+    } catch (error) {
+      console.error("Error updating Waste Banks customer:", error);
+      return 400;
+    }
   }
   async getWasteBanksWithdraw(params) {
     return await getWasteBanksWithdraw(params)
@@ -101,8 +105,9 @@ class WithdrawUtils {
     }
   }
   async updateCustomer(params) {
-    return (params = await updateCustomer(params)
+    return  await updateCustomer(params)
       .then((response) => {
+        console.log(response)
         const respon = response.data;
         if (respon.status == "success") {
           return 200;
@@ -112,7 +117,7 @@ class WithdrawUtils {
       .catch((error) => {
         console.error("Error updating Waste Banks customer:", error);
         return 400;
-      }));
+      });
   }
   async createUsersWithdraw(params) {
     return await createUsersWithdraw(params)

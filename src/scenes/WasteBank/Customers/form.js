@@ -25,23 +25,32 @@ import { connect } from "react-redux";
 import authUtils from "@utils/AuthUtils";
 import * as yup from "yup";
 import { showToast } from "@constants";
-import WithdrawUtils from "@utils/WithdrawUtils";
+import withdrawUtils from "@utils/WithdrawUtils";
 
-const AddUserForm = ({navigation}) => {
 
+const AddUserForm = ({navigation,customer}) => {
   const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [sex, setSex] = useState(true);
   const [hasAccount, setHasAccount] = useState(true);
+
   const chooseWasteBank = async (values) => {
-    let params = {phoneNumber: values}; 
-    const isSuccess = await WithdrawUtils.updateWasteBanksCustomer(params)
-    if (isSuccess == 200) {
-      showToast(translations["save.success"]);
-      navigation.goBack();
-    }
-    else {
-      showToast(translations["save.failed"]);
+    setLoading(true);
+    let params = { phoneNumber: values };
+  
+    try {
+      const response = await withdrawUtils.updateWasteBanksCustomer(params);
+      if (response === 200) {
+        showToast(translations["save.success"]);
+        navigation.goBack();
+      } else {
+        showToast(translations["save.failed"]);
+      }
+    } catch (error) {
+      console.error("Error updating Waste Banks customer:", error);
+      showToast("An error occurred while updating the customer");
+    } finally {
+      setLoading(false);
     }
   };
   const usersValidationSchema = yup.object().shape({
@@ -53,8 +62,7 @@ const AddUserForm = ({navigation}) => {
     address: yup.string().required(translations["fill.address"]),
   });
 
-  const handleSignUp = async (values) => {
-    console.log(values);
+  const handleSubmit = async (values) => {
     if(hasAccount) {
       return await chooseWasteBank(values.phoneNumber);
     }
@@ -106,7 +114,7 @@ const AddUserForm = ({navigation}) => {
               phoneNumber: "",
               address: "",
             }}
-            onSubmit={(value) => handleSignUp(value)}>
+            onSubmit={(value) => handleSubmit(value)}>
             {({
               handleChange,
               handleSubmit,
@@ -206,8 +214,8 @@ const AddUserForm = ({navigation}) => {
                 )}
                 <ButtonFlex
                   title={translations["addcustomer"]}
-                  onPress={() => handleSignUp(values)}
-                  style={{ marginTop: RFValue(20) }}
+                  onPress={() => handleSubmit(values)}
+                  style={{ marginTop: RFValue(40) }}
                   flex
                 />
               </>
@@ -219,15 +227,23 @@ const AddUserForm = ({navigation}) => {
   );
 };
 
-const mapStateToProps = function (state) {
-  const { users } = state;
-  return { users };
-};
+const mapStateToProps = (state) => ({
+  customer: state.withdraw.customerDetail,
+});
 
 export default connect(mapStateToProps)(AddUserForm);
 
 const styles = StyleSheet.create({
   authCont: {
-    paddingHorizontal: RFValue(15),
+    padding: RFValue(15),
+    backgroundColor: Colors.WHITE,
   },
+  desc: {
+    ...Font.F10,
+    ...Font.GRAY_LABEL,
+    ...Font.Regular,
+    ...StC.mB5,
+    marginTop: RFValue(-5),
+  },
+  
 });

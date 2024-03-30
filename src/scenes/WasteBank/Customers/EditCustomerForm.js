@@ -30,8 +30,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
   const [address, setAddress] = useState(customerDetail.address.street);
 
   const handleSave = async () => {
-    setLoading(true); // Show loading indicator
-
+    setLoading(true);
     let params = {
       phoneNumber: phoneNumber,
       fullName: fullName,
@@ -48,24 +47,22 @@ function EditCustomerForm({ customerDetail, navigation }) {
     try {
       let response = await withdrawUtils.updateCustomer(merge);
       if (response === 200) {
-        Alert.alert("Success", "Customer details updated successfully.");
+        showToast("Data Berhasil Diperbarui");
         navigation.goBack();
       } else {
-        Alert.alert("Error", "Failed to update customer details.");
+        showToast("Lengkapi data terlebih dahulu");
       }
     } catch (error) {
       console.error("Error updating customer details:", error);
-      Alert.alert(
-        "Error",
-        "An error occurred while updating customer details.",
-      );
+      showToast("Terjadi Kesalahan");
+
     } finally {
       setLoading(false);
     }
   };
   return (
     <BaseContainer loading={loading}>
-      <AppBar navigation={navigation} title={translations["edit.customer"]} />
+      <AppBar navigation={navigation} title={"Edit Nasabah"} />
       <Formik
         initialValues={{
           phoneNumber: customerDetail.phoneNumber,
@@ -93,6 +90,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
                   placeholder="Enter phone number"
                   isError={errors.phoneNumber && touched.phoneNumber}
                   errorMessage={errors.phoneNumber}
+                  required
                 />
                 <FormInput
                   label="Full Name"
@@ -102,6 +100,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
                   placeholder="Enter full name"
                   isError={errors.fullName && touched.fullName}
                   errorMessage={errors.fullName}
+                  required
                 />
                 <FormInput
                   label="Alamat" // Assuming "Alamat" is meant to be "Address" in the backend
@@ -111,6 +110,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
                   placeholder="Enter address"
                   isError={errors.address && touched.address}
                   errorMessage={errors.address}
+                  required
                 />
                 <FormInput
                   label="Balance"
@@ -129,7 +129,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
             <ButtonFlex
               title="Save"
               onPress={handleSave}
-              style={{ marginTop: RFValue(20) }}
+              style={{ marginTop: RFValue(20)}}
             />
           </>
         )}
