@@ -69,8 +69,6 @@ class WasteBanksUtils {
 
           this.getWasteBanksItems(params);
 
-          console.log(respon.data[0]);
-
           return store.dispatch(GetWasteBanksDetails(respon.data[0]));
         }
       })

@@ -12,3 +12,9 @@ export const GetTransactionsItems = (items) => ({
   type: ACTION_TYPES.GET_TRANS_ITEMS,
   items: items,
 });
+export const GetTransactionsSummary = (summary) => {
+  return {
+    type: ACTION_TYPES.GET_TRANS_SUMMARY,
+    summary: summary,
+  };
+};
