@@ -83,7 +83,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
             <ScrollView>
               <View style={styles.authCont}>
                 <FormInput
-                  label="Phone Number"
+                  label="No Telpon"
                   value={phoneNumber}
                   onChangeText={(val) => setPhoneNumber(val)}
                   onBlur={handleBlur("phoneNumber")}
@@ -93,7 +93,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
                   required
                 />
                 <FormInput
-                  label="Full Name"
+                  label="Nama Lengkap"
                   value={fullName}
                   onChangeText={(val) => setFullName(val)}
                   onBlur={handleBlur("fullName")}
@@ -113,7 +113,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
                   required
                 />
                 <FormInput
-                  label="Balance"
+                  label="Saldo"
                   value={values.balance}
                   onBlur={handleBlur("balance")}
                   placeholder="Rp 0"
@@ -129,7 +129,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
             <ButtonFlex
               title="Save"
               onPress={handleSave}
-              style={{ marginTop: RFValue(20)}}
+              style={{ marginTop: RFValue(40)}}
             />
           </>
         )}
