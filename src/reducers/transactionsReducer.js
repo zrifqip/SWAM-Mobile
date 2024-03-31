@@ -2,6 +2,7 @@ const initialState = {
   transactions: [],
   details: [],
   items: [],
+  summary: [],
 };
 
 export default (state = initialState, action) => {
@@ -23,6 +24,12 @@ export default (state = initialState, action) => {
         ...state,
         ...action.payload,
         items: action.items,
+      };
+    case "GET_TRANS_SUMMARY":
+      return {
+        ...state,
+        ...action.payload,
+        summary: action.summary,
       };
     default:
       return state;

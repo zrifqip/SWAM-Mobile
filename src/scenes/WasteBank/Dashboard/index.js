@@ -8,6 +8,7 @@ import {
   ScrollView,
   FlatList,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import {
   BaseContainer,
@@ -23,27 +24,45 @@ import { connect } from "react-redux";
 import { StC, Colors, Font } from "@styles";
 import { Images, Icons } from "@assets";
 import { useTranslation } from "@utils";
-import { numberFloat } from "@constants";
+import { currencyFloat, numberFloat } from "@constants";
 import LinearGradient from "react-native-linear-gradient";
 import wasteBanksUtils from "@utils/WasteBanksUtils";
 import ShimmerPlaceHolder from "react-native-shimmer-placeholder";
 import transactionsUtils from "@utils/TransactionsUtils";
 import Entypo from "react-native-vector-icons/Entypo";
 import moment from "moment";
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
 
-function WasteBankDashboard({ navigation, users, wasteBanks, transactions }) {
+
+function WasteBankDashboard({ navigation, users, wasteBanks, transactions}) {
   const { translations } = useTranslation();
   let user = users.users;
   const [loadingProduct, setLoadingProduct] = useState(false);
   const [loadingSummary, setLoadingSummary] = useState(false);
+  const [loadingTransactionsSummary, setLoadingTransactionsSummary] = useState(false);
   const [loadingTransaction, setLoadingTransaction] = useState(false);
   const [date, setDate] = useState(new Date());
+
+  // useEffect(() => {
+  //   getWasteBanksProduct();
+  //   getWasteBanksTransaction();
+  //   getSummary(date);
+  // }, []);
 
   useEffect(() => {
     getWasteBanksProduct();
     getWasteBanksTransaction();
     getSummary(date);
+    getTransactionsSummary(date);
   }, []);
+
 
   const getWasteBanksProduct = async () => {
     setLoadingProduct(true);
@@ -66,6 +85,15 @@ function WasteBankDashboard({ navigation, users, wasteBanks, transactions }) {
     setLoadingSummary(false);
   };
 
+  const getTransactionsSummary = async (val) => {
+    setDate(val);
+    setLoadingTransactionsSummary(true);
+    await transactionsUtils.getTransactionsSummary(
+      `year=${moment(val).format("YYYY")}&month=${moment(val).format("M")}`,
+    );
+    setLoadingTransactionsSummary(false);
+  };
+
   const getDetailProduct = async (id) => {
     await wasteBanksUtils.getWasteBanksProductDetail(id);
     navigation.navigate("WasteBankProductForm");
@@ -75,6 +103,7 @@ function WasteBankDashboard({ navigation, users, wasteBanks, transactions }) {
     await transactionsUtils.getTransactionsWasteBanksDetail(id);
     navigation.navigate("WasteBankTransactionDetails");
   };
+
 
   return (
     <BaseContainer>
@@ -116,8 +145,46 @@ function WasteBankDashboard({ navigation, users, wasteBanks, transactions }) {
         <View style={styles.summary}>
           <HStack mb={RFValue(3)}>
             <Text style={styles.titleSummary}>Ringkasan</Text>
-            <FilterDate date={date} setDate={(val) => getSummary(val)} />
+            <FilterDate date={date} setDate={(val) => {
+                getSummary(val);
+                getTransactionsSummary(val);
+              }}  />
           </HStack>
+
+          <Text style={styles.itemSummary}>Total Transaksi Bulan Ini: {currencyFloat(transactions.summary.reduce((acc, item) => acc + item.totalSum, 0))}</Text>
+          
+          {transactions.summary.length > 0 ? (
+            
+            <Center>
+              <LineChart
+                data={{
+                  labels: transactions.summary.map(item => item.day), // Extracting "day" from each item
+                  datasets: [
+                    {
+                      data: transactions.summary.map(item => item.totalSum), // Extracting "totalPrice" from each item
+                    },
+                  ],
+                }}
+                width={Dimensions.get("window").width-RFValue(60)} // from react-native
+                height={210}
+                yAxisLabel=""
+                yAxisSuffix=""
+                yAxisInterval={2} // optional, defaults to 1
+                chartConfig={chartConfig}
+                bezier
+                style={{
+                  marginVertical: 8,
+                  borderRadius: 0,
+                }}
+                fromZero="true"
+              />
+              <Text style={{ marginBottom: 20 }}>Tanggal</Text>
+            </Center>
+            
+          ) : (
+            <Text>No data available</Text>
+          )}
+
           {wasteBanks.summary.map((item, index) => (
             <HStack>
               <Icon
@@ -138,6 +205,7 @@ function WasteBankDashboard({ navigation, users, wasteBanks, transactions }) {
             </Center>
           )}
         </View>
+
         <MyView hide={wasteBanks.product?.length == 0}>
           <Text style={styles.waste}>{translations["product"]}</Text>
           {loadingProduct ? (
@@ -225,6 +293,23 @@ const mapStateToProps = function (state) {
 };
 
 export default connect(mapStateToProps)(WasteBankDashboard);
+
+const chartConfig = {
+  backgroundColor: "#ffffff",
+  backgroundGradientFrom: "#fffff",
+  backgroundGradientTo: "#ffffff",
+  decimalPlaces: 0, // optional, defaults to 2dp
+  color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // White color
+  labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // White color
+  style: {
+    borderRadius: 16
+  },
+  propsForDots: {
+    r: "3",
+    strokeWidth: "2",
+    stroke: "#0000ff" // Adjust as needed
+  }
+};
 
 const styles = StyleSheet.create({
   header: {

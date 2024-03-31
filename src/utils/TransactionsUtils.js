@@ -1,6 +1,7 @@
 import {
   GetTransactionsUsers,
   GetTransactionsUsersDetail,
+  GetTransactionsSummary,
   CurrentWaste,
 } from "@actions";
 import { showToast } from "@constants";
@@ -9,6 +10,7 @@ import {
   getTransactionsUsersDetail,
   getTransactionsWasteBanks,
   getTransactionsWasteBanksDetail,
+  getTransactionsSummary,
   createTransactionsWasteBank,
 } from "@constants/apiTransactions";
 import { base_uri } from "@constants/BASE_URL";
@@ -121,6 +123,22 @@ class TransactionsUtils {
       .catch((error) => {
         showToast(error);
       });
+  }
+
+  async getTransactionsSummary(params) {
+      try {
+          const response = await getTransactionsSummary(params);
+          const respon = response.data;
+          if (respon.status === "success") {
+              store.dispatch(GetTransactionsSummary(respon.data));
+              return respon.data;
+          } else {
+              throw new Error("Failed to get transaction summary");
+          }
+      } catch (error) {
+          console.error("Error in getTransactionsSummary:", error);
+          return 400; // You may want to return an appropriate error code or handle the error differently
+      }
   }
 }
 
