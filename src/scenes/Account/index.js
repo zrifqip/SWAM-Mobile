@@ -151,6 +151,13 @@ function Account({ navigation, users }) {
           action: role == "user" ? "UsersWithdraw" : "WasteBankWithdraw",
           disabled: role != "bank-sampah" && role != "user",
         },
+        {
+          icon: MaterialCommunityIcons,
+          name: "account-interest",
+          menu: translations["interest"],
+          action: "WasteBankInterestForm",
+          disabled: role != "bank-sampah",
+        },
       ],
     },
     {

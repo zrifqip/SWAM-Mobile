@@ -46,3 +46,5 @@ export const getCompanyDashboard = (payload) =>
   Axios.get(`${base_uri}company/dashboard?` + payload);
 export const getStock = (payload) =>
   Axios.get(`${base_uri}company/stock?id=` + payload);
+export const addInterest = (payload) =>
+  Axios.post(`${base_uri}company/interest`, payload);

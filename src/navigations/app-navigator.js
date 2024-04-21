@@ -35,7 +35,8 @@ import {
   WasteBankTransactionForm,
   WasteBankWithdraw,
   AddUserForm,
-  EditCustomerForm
+  EditCustomerForm,
+  WasteBankInterestForm,
 } from "@scenes";
 import { Icons } from "@assets";
 import { Colors, Font } from "@styles";
@@ -413,6 +414,14 @@ const AppNavigator = ({ users }) => {
           <Stack.Screen
             name="WasteBankProductForm"
             component={WasteBankProductForm}
+            options={{
+              headerShown: false,
+              cardStyleInterpolator: HorizontalSlide,
+            }}
+          />
+          <Stack.Screen
+            name="WasteBankInterestForm"
+            component={WasteBankInterestForm}
             options={{
               headerShown: false,
               cardStyleInterpolator: HorizontalSlide,

@@ -32,6 +32,7 @@ import WasteBankTransactionForm from "./WasteBank/Transaction/form";
 import WasteBankWithdraw from "./WasteBank/Withdraw";
 import AddUserForm from "./WasteBank/Customers/form";
 import EditCustomerForm from "./WasteBank/Customers/EditCustomerForm";
+import WasteBankInterestForm from "./WasteBank/Interest/form";
 
 export {
   Account,
@@ -67,5 +68,6 @@ export {
   WasteBankTransactionDetails,
   WasteBankTransactionForm,
   WasteBankWithdraw,
-  EditCustomerForm
+  EditCustomerForm,
+  WasteBankInterestForm,
 };

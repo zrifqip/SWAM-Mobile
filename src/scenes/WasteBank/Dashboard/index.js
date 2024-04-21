@@ -98,7 +98,7 @@ function WasteBankDashboard({ navigation, users, wasteBanks, transactions}) {
     await wasteBanksUtils.getWasteBanksProductDetail(id);
     navigation.navigate("WasteBankProductForm");
   };
-
+  
   const getTransactionDetail = async (id) => {
     await transactionsUtils.getTransactionsWasteBanksDetail(id);
     navigation.navigate("WasteBankTransactionDetails");

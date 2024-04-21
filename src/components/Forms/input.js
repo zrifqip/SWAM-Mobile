@@ -22,6 +22,7 @@ const FormInput = ({
   isError,
   errorMessage,
   required,
+  suffix,
 }) => {
   return (
     <MyView style={styles.cardInput} hide={hide}>

@@ -270,7 +270,18 @@ class WasteBanksUtils {
         return 400;
       }));
   }
-
+  async CreateInterest(params) {
+    return (params = await createWasteBankInterest(params)
+      .then((response) => {
+        const respon = response.data;
+        if (respon.status == "success") {
+          return 200;
+        }
+      })
+      .catch((error) => {
+        return 400;
+      }));
+    }
   async updateWasteBanksSchedule(params) {
     return (params = await updateWasteBanksSchedule(params)
       .then((response) => {
