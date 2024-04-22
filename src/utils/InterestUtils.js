@@ -12,6 +12,8 @@ const AxiosForms = Axios.create();
 
 class InterestUtils {
     async createInterest(params) {
+        console.log("Params:")
+        console.log(params)
         return await createInterest(params)
           .then(async (response) => {
             const respon = response.data;

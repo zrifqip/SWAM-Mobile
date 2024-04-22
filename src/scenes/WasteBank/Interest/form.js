@@ -60,6 +60,9 @@ function WasteBankInterestForm({ navigation, wasteBanks, users }) {
   }
   const _handleSave = async () => {
     setLoading(true);
+
+    let nasabah = users.customers;
+
     let arr = {
       customerID: nasabah?._id,
       interestRate: interestRate,
