@@ -28,6 +28,7 @@ import { useTranslation } from "@utils";
 import { numberFloat, currencyFloat, showToast } from "@constants";
 import wasteBanksUtils from "@utils/WasteBanksUtils";
 import sendNotifUtils from "@utils/SendNotifUtils";
+import interestUtils from "@utils/InterestUtils";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 function WasteBankInterestForm({ navigation, wasteBanks, users }) {
@@ -64,6 +65,11 @@ function WasteBankInterestForm({ navigation, wasteBanks, users }) {
       interestRate: interestRate,
       totalBalance: total,
     };
+
+    const respons = await interestUtils.createInterest(
+      arr
+    );
+
     if (respons == 200) {
       showToast(translations["save.success"]);
       await sendNotifUtils.sendNotifUser(send);
@@ -117,8 +123,8 @@ function WasteBankInterestForm({ navigation, wasteBanks, users }) {
       </ScrollView>
       <ButtonFlex
         disabled={
-          !(users?.customers?.fullName && users?.customers?.fullName != "") ||
-          itemsActive.length == 0
+          !(users?.customers?.fullName && users?.customers?.fullName != "") || 
+          (interestRate == 0) 
         }
         title={translations["save"]}
         onPress={() => _handleSave()}
