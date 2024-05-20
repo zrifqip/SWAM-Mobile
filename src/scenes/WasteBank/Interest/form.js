@@ -54,7 +54,7 @@ function WasteBankInterestForm({ navigation, wasteBanks, users }) {
   }, [interestRate,users?.customers]);
   const computeTotalBalance = () => {
     let userBalance = users?.customers?.balance;
-    const interestAdded = (userBalance * (interestRate / 100));
+    const interestAdded = Math.floor((userBalance * (interestRate / 100)));
     const totalBalance = userBalance + interestAdded;
     setTotal(totalBalance); 
   }
@@ -66,22 +66,18 @@ function WasteBankInterestForm({ navigation, wasteBanks, users }) {
     let arr = {
       customerID: nasabah?._id,
       interestRate: interestRate,
-      totalBalance: total,
+      Balance: balance,
     };
 
     const respons = await interestUtils.createInterest(
       arr
     );
-
+    ;
+    
     if (respons == 200) {
-      showToast(translations["save.success"]);
-      await sendNotifUtils.sendNotifUser(send);
-      setTimeout(() => {
-        navigation.navigate("WasteBankInterestDetail");
-
-      }, 1000);
+      setLoading(false);
+      navigation.goBack()
     }
-
     setLoading(false);
   };
   return (
@@ -103,7 +99,7 @@ function WasteBankInterestForm({ navigation, wasteBanks, users }) {
           <FormInput
             label={"Bunga (%)"}
             placeholder={"0"}
-            value={users?.customers?.interestRate}
+            value={interestRate}
             suffix={" %"}
             keyboardType={"number-pad"}
             onChangeText={(val) => setInterestRate(val)}
@@ -116,7 +112,7 @@ function WasteBankInterestForm({ navigation, wasteBanks, users }) {
           </View>
           <View style={styles.cardPrice}>
           <Text style={styles.labelPrice}>Total Bunga</Text>
-          <Text style={styles.price}>{currencyFloat(balance * (interestRate / 100))}</Text>
+          <Text style={styles.price}>{currencyFloat(Math.floor(balance * (interestRate / 100)))}</Text>
           </View>
           <View style={styles.cardPrice}>
             <Text style={styles.labelPrice}>Total Saldo Nasabah</Text>

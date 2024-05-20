@@ -16,14 +16,22 @@ import store from "@stores/store";
 import usersUtils from "@utils/UsersUtils";
 import MMKVStorage from "react-native-mmkv-storage";
 import AsyncStorage from "@react-native-community/async-storage";
-
+import { getVersion } from 'react-native-device-info';
 const OnBoarding = ({ navigation }) => {
+  const APP_VERSION_KEY = 'app_version';
   const checkCurrentToken = async () => {
     const storage = new MMKVStorage.Loader().initialize();
-
+    const currentAppVersion = getVersion();
     try {
+      const storedAppVersion = await AsyncStorage.getItem(APP_VERSION_KEY);
       const session = storage.getItem("token");
 
+      if (storedAppVersion != currentAppVersion) {
+        // App version has changed, clear storage and log out
+        await AsyncStorage.setItem(APP_VERSION_KEY, currentAppVersion);
+        store.dispatch({ type: "SIGN_OUT" });
+        return;
+      }
       if (JSON.stringify(session).length > 100) {
         store.dispatch(SignIn(session));
         const value = await AsyncStorage.getItem("role");
@@ -40,15 +48,14 @@ const OnBoarding = ({ navigation }) => {
         }
       }
     } catch (error) {
-      showToast(error.message);
-
+      showToast("testing");
       navigation.navigate("OnBoarding");
       store.dispatch({ type: "SIGN_OUT" });
       store.dispatch(GetUsersDetail(""));
-
-      storage.setItem("token", "");
+      storage.removeItem("token");
     }
   };
+  
 
   useEffect(() => {
     checkCurrentToken();

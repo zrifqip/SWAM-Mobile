@@ -8,14 +8,11 @@ import MMKVStorage from "react-native-mmkv-storage";
 import Axios from "axios";
 const AxiosForms = Axios.create();
 
-
-
 class InterestUtils {
     async createInterest(params) {
         return await createInterest(params)
           .then(async (response) => {
             const respon = response.data;
-    
             if (respon.status == "success") {
                 showToast("Save Berhasil");
               return 200;

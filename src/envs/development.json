@@ -1,4 +1,4 @@
 {
   "env": "dev",
-  "base_url": "http://apps4swam.com:8080/"
+  "base_url": "https://riset.its.ac.id/apps4swam/dev/"
 }
