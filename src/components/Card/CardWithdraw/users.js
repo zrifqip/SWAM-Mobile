@@ -1,12 +1,13 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 import { StC, Font, Colors } from "@styles";
+
 import { formatDateTime, currencyFloat } from "@constants";
 import { RFValue } from "react-native-responsive-fontsize";
 
 function CardWithdrawUsers({ item,onpress }) {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.cardMenu}>
+    <TouchableOpacity onPress={onpress} style={styles.cardMenu}>
       <View style={{ flex: 1 }}>
         <Text style={styles.textDate} numberOfLines={1}>
           {formatDateTime(item.createdAt)}

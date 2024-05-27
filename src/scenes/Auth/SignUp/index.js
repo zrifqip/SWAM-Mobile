@@ -301,7 +301,7 @@ const SignUp = ({ navigation, users }) => {
                     style={[Font.SemiBold, Font.PRIMARY]}
                     onPress={actionNavigation.bind(
                       this,
-                      "https://api.apps4swam.com/term",
+                      "https://riset.its.ac.id/apps4swam/term",
                     )}>
                     Syarat dan Ketentuan
                   </Text>{" "}
@@ -310,7 +310,7 @@ const SignUp = ({ navigation, users }) => {
                     style={[Font.SemiBold, Font.PRIMARY]}
                     onPress={actionNavigation.bind(
                       this,
-                      "https://api.apps4swam.com/privacy-policy",
+                      "https://riset.its.ac.id/apps4swam/privacy-policy",
                     )}>
                     Kebijakan Privasi
                   </Text>{" "}

@@ -18,7 +18,7 @@ import { Avatar, Icon } from "native-base";
 import { RFValue } from "react-native-responsive-fontsize";
 import { connect } from "react-redux";
 import { StC, Colors, Font } from "@styles";
-import { Images } from "@assets";
+import { Images, Icons } from "@assets";
 import { base_uri } from "@constants/BASE_URL";
 import { useTranslation } from "@utils";
 import { GetUsersDetail } from "@actions";
@@ -153,7 +153,7 @@ function Account({ navigation, users }) {
         },
         {
           icon: MaterialCommunityIcons,
-          name: "account-interest",
+          name: "sack-percent",
           menu: translations["interest"],
           action: "WasteBankInterestForm",
           disabled: role != "bank-sampah",
@@ -175,14 +175,14 @@ function Account({ navigation, users }) {
           name: "shield-alert",
           menu: translations["terms.condition"],
           type: "uri",
-          action: "https://api.apps4swam.com/term",
+          action: "https://riset.its.ac.id/apps4swam/term",
         },
         {
           icon: MaterialCommunityIcons,
           name: "lock",
           menu: "Kebijakan Privasi",
           type: "uri",
-          action: "https://api.apps4swam.com/privacy-policy",
+          action: "https://riset.its.ac.id/apps4swam/privacy-policy",
         },
         {
           icon: MaterialCommunityIcons,

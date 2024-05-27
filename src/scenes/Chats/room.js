@@ -19,7 +19,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import chatsUtils from "@utils/ChatsUtils";
 
 function ChatsRoom({ navigation, chats, users }) {
-  let socket = socketIOClient("https://api.apps4swam.com/chat", {
+  let socket = socketIOClient("https://riset.its.ac.id/apps4swam/chat", {
     auth: {
       token: "nT4GOTvQ7GhFHuQjzTGw",
     },
