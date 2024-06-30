@@ -26,6 +26,7 @@ function EditCustomerForm({ customerDetail, navigation }) {
   const { translations } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(customerDetail.phoneNumber);
+  const [balance, setBalance] = useState(customerDetail.balance);
   const [fullName, setFullName] = useState(customerDetail.fullName);
   const [address, setAddress] = useState(customerDetail.address.street);
 
@@ -114,7 +115,8 @@ function EditCustomerForm({ customerDetail, navigation }) {
                 />
                 <FormInput
                   label="Saldo"
-                  value={values.balance}
+                  value={"Rp" + balance.toString()}
+                  onChangeText={(val) => setBalance(val)}
                   onBlur={handleBlur("balance")}
                   placeholder="Rp 0"
                   prefix="Rp "
