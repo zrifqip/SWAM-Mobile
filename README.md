@@ -7,7 +7,7 @@
 
 ### Steps to Run the mobile app locally
 1. Open your terminal and run the following command `git clone https://github.com/zrifqip/SWAM-Mobile.git`
-2. Go to the new project directory and open the terminal and run `npm install`
+2. Go to the new project directory, open the terminal and run `npm install`
 3. To run the app using your environment run the command `npx react-native run-android`
 4. To run the app using predefined environment please read the scripts in the package.json file
 5. Your mobile app should be running locally now
