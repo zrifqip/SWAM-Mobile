@@ -11,3 +11,6 @@
 3. To run the app using your environment run the command `npx react-native run-android`
 4. To run the app using predefined environment please read the scripts in the package.json file
 5. Your mobile app should be running locally now
+
+### How to use this app
+Guidebook of how to use this app can be seen <a href = "Guidebook APPS4SWAM.pdf">here</a>
