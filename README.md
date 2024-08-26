@@ -13,4 +13,4 @@
 5. Your mobile app should be running locally now
 
 ### How to use this app
-Guidebook of how to use this app can be seen <a href = "Guidebook APPS4SWAM.pdf">here</a>
+Guidebook of how to use this app can be seen <a href = "Guidebook Apps4swam - En.pdf">here</a>
